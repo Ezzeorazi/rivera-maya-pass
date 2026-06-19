@@ -1,15 +1,36 @@
 {
-  "updatedAt": "2026-06-18T15:00:00Z",
-  "source": "seed",
+  "updatedAt": "2026-06-19T04:51:26Z",
+  "source": "ai",
   "zones": [
-    { "name": "Zona Norte", "status": "clean" },
-    { "name": "Mamitas", "status": "clean" },
-    { "name": "Centro", "status": "clean" },
-    { "name": "Playacar", "status": "moderate" },
-    { "name": "Xcalacoco", "status": "clean" }
+    {
+      "name": "Zona Norte",
+      "status": "seaweed"
+    },
+    {
+      "name": "Mamitas",
+      "status": "seaweed"
+    },
+    {
+      "name": "Centro",
+      "status": "seaweed"
+    },
+    {
+      "name": "Playacar",
+      "status": "seaweed"
+    },
+    {
+      "name": "Xcalacoco",
+      "status": "seaweed"
+    }
   ],
   "summary": {
-    "es": "Las playas de Playa del Carmen amanecen mayormente limpias hoy. Se reporta presencia ligera a moderada de sargazo hacia la zona de Playacar; el resto de las playas del centro y la zona norte presentan condiciones favorables para nadar. Recuerda que las condiciones pueden cambiar durante el día según el viento y las corrientes.",
-    "en": "Playa del Carmen's beaches are mostly clean today. Light to moderate sargassum is reported around the Playacar area; the rest of the downtown and north-zone beaches show favorable conditions for swimming. Keep in mind conditions can change during the day depending on wind and currents."
+    "es": "Hoy, 19 de junio de 2026, las playas de Playa del Carmen se encuentran significativamente afectadas por el sargazo. Se ha reportado un recale intenso y atípico en las últimas semanas, con más de 17 mil toneladas recolectadas en lo que va del año. El viento actual del sureste (SE) está empujando el sargazo directamente desde el mar hacia la costa, contribuyendo a una presencia abundante en todas las zonas de la ciudad.",
+    "en": "Today, June 19, 2026, Playa del Carmen's beaches are significantly affected by sargassum. An intense and atypical influx has been reported in recent weeks, with over 17,000 tons collected so far this year. The current southeast (SE) wind is pushing sargassum directly from the sea towards the coast, contributing to an abundant presence across all areas of the city."
+  },
+  "wind": {
+    "speed_kmh": 18.0,
+    "gust_kmh": 37.8,
+    "dir_deg": 128,
+    "dir_cardinal": "SE"
   }
 }
