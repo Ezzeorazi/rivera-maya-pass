@@ -34,7 +34,10 @@ jobs:
       - name: Generar reporte de sargazo
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          # Opcional: GEMINI_MODEL, SARGAZO_ZONES
+          # Opcionales: si están vacíos, el dataset solo se guarda en el CSV.
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          # Opcional: GEMINI_MODEL, SARGAZO_ZONES, SUPABASE_TABLE
         run: python scripts/sargazo/update_sargazo.py
 
       - name: Commit y push si hubo cambios

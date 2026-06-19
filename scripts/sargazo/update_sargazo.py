@@ -30,6 +30,7 @@ import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
@@ -54,6 +55,11 @@ LONGITUDE = -87.0739
 REPO_ROOT = Path(__file__).resolve().parents[2]
 OUTPUT_PATH = REPO_ROOT / "src" / "data" / "sargazo-report.json"
 HISTORY_PATH = Path(__file__).resolve().parent / "sargazo-history.csv"
+
+# Supabase (opcional). Si no están definidas, el dataset solo se guarda en CSV.
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "").rstrip("/")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
+SUPABASE_TABLE = os.environ.get("SUPABASE_TABLE", "sargazo_history")
 
 
 def get_zones() -> list[str]:
@@ -250,7 +256,21 @@ def validate_and_build(data: dict, zones: list[str], wind: dict | None) -> dict:
     return report
 
 
-# --- Historial CSV (dataset para ML futuro) --------------------------------
+# --- Historial (dataset para ML futuro) ------------------------------------
+
+
+def worst_status(report: dict) -> str:
+    """El peor estado entre todas las zonas (clean < moderate < seaweed)."""
+    return max(
+        (z["status"] for z in report["zones"]),
+        key=lambda s: STATUS_SEVERITY.get(s, 0),
+        default="clean",
+    )
+
+
+def local_date() -> str:
+    return datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d")
+
 
 CSV_FIELDS = [
     "date",
@@ -267,12 +287,8 @@ CSV_FIELDS = [
 
 def append_history(report: dict, wind: dict | None) -> None:
     """Agrega una fila por día. Idempotente: reemplaza la fila si ya existe hoy."""
-    today = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d")
-    worst = max(
-        (z["status"] for z in report["zones"]),
-        key=lambda s: STATUS_SEVERITY.get(s, 0),
-        default="clean",
-    )
+    today = local_date()
+    worst = worst_status(report)
     row = {
         "date": today,
         "captured_at_utc": report["updatedAt"],
@@ -296,6 +312,50 @@ def append_history(report: dict, wind: dict | None) -> None:
         writer.writeheader()
         writer.writerows(existing)
     print(f"Historial actualizado en {HISTORY_PATH} ({len(existing)} filas)")
+
+
+def upsert_supabase(report: dict, wind: dict | None) -> None:
+    """Inserta/actualiza la fila de hoy en Supabase. No-op si no está configurado.
+
+    Usa el endpoint REST (PostgREST) con upsert: si ya existe la fila de hoy
+    (clave primaria `date`), la reemplaza en lugar de duplicar.
+    """
+    if not (SUPABASE_URL and SUPABASE_KEY):
+        print("Supabase no configurado (SUPABASE_URL/SUPABASE_KEY ausentes); se omite.")
+        return
+
+    payload = {
+        "date": local_date(),
+        "captured_at": report["updatedAt"],
+        "source": report["source"],
+        "wind_dir_cardinal": (wind or {}).get("dir_cardinal"),
+        "wind_dir_deg": (wind or {}).get("dir_deg"),
+        "wind_speed_kmh": (wind or {}).get("speed_kmh"),
+        "wind_gust_kmh": (wind or {}).get("gust_kmh"),
+        "worst_status": worst_status(report),
+        "zones": report["zones"],
+        "summary_es": report["summary"]["es"],
+        "summary_en": report["summary"]["en"],
+    }
+
+    url = f"{SUPABASE_URL}/rest/v1/{SUPABASE_TABLE}"
+    headers = {
+        "apikey": SUPABASE_KEY,
+        "Authorization": f"Bearer {SUPABASE_KEY}",
+        "Content-Type": "application/json",
+        "Prefer": "resolution=merge-duplicates,return=minimal",
+    }
+    req = urllib.request.Request(
+        url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST"
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            print(f"Supabase upsert OK (HTTP {resp.status})")
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", "replace")
+        print(f"AVISO: fallo upsert Supabase (HTTP {exc.code}): {body}", file=sys.stderr)
+    except Exception as exc:  # noqa: BLE001 - no debe tumbar el reporte
+        print(f"AVISO: fallo upsert Supabase: {exc}", file=sys.stderr)
 
 
 def main() -> int:
@@ -346,6 +406,7 @@ def main() -> int:
     print(f"Reporte escrito en {OUTPUT_PATH}")
 
     append_history(report, wind)
+    upsert_supabase(report, wind)
 
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0

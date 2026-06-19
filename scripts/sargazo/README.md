@@ -72,11 +72,46 @@ python scripts/sargazo/update_sargazo.py
 
 ## Configuración opcional (variables de entorno)
 
-| Variable         | Por defecto          | Descripción                                  |
-| ---------------- | -------------------- | -------------------------------------------- |
-| `GEMINI_API_KEY` | —                    | **Obligatoria.** API key de Google AI Studio |
-| `GEMINI_MODEL`   | `gemini-2.5-flash`   | Modelo de Gemini a usar                      |
-| `SARGAZO_ZONES`  | 5 zonas de PDC       | Zonas separadas por coma                     |
+| Variable         | Por defecto          | Descripción                                       |
+| ---------------- | -------------------- | ------------------------------------------------- |
+| `GEMINI_API_KEY` | —                    | **Obligatoria.** API key de Google AI Studio      |
+| `GEMINI_MODEL`   | `gemini-2.5-flash`   | Modelo de Gemini a usar                           |
+| `SARGAZO_ZONES`  | 5 zonas de PDC       | Zonas separadas por coma                          |
+| `SUPABASE_URL`   | —                    | (Opcional) URL del proyecto Supabase              |
+| `SUPABASE_KEY`   | —                    | (Opcional) service_role key de Supabase           |
+| `SUPABASE_TABLE` | `sargazo_history`    | (Opcional) nombre de la tabla                     |
+
+## Base de datos Supabase (opcional, recomendado)
+
+El histórico se guarda **siempre** en `sargazo-history.csv`. Si además
+configuras Supabase, cada día se hace **upsert** de la fila en una tabla
+Postgres consultable (ideal como dataset para el modelo de la Fase 2).
+
+> Arquitectura: la **web** sigue leyendo el JSON estático (rápido, sin DB en
+> runtime). Supabase es solo el **almacén de datos histórico**, no sirve la web.
+
+Pasos (una vez):
+
+1. Crea un proyecto gratis en https://supabase.com
+2. `SQL Editor` → pega y ejecuta `scripts/sargazo/supabase_schema.sql`
+3. `Project Settings` → `API`: copia el **Project URL** y la **`service_role`**
+   key (la secreta, no la `anon`).
+4. En GitHub, añade dos secrets más (`Settings → Secrets → Actions`):
+   - `SUPABASE_URL` = el Project URL
+   - `SUPABASE_KEY` = la service_role key
+
+> ⚠️ La `service_role` key es secreta y omite RLS. Solo va en GitHub Secrets,
+> **nunca** en el código del frontend.
+
+## Desplegar la web en Vercel
+
+El sitio **no necesita ninguna variable de entorno** para desplegar (las keys
+viven en GitHub Actions, no en la web).
+
+1. Entra a https://vercel.com/new
+2. Importa el repo de GitHub.
+3. Framework: Next.js (autodetectado) → `Deploy`.
+4. Listo: obtienes una URL pública y **cada push redepliega solo**.
 
 ## Notas
 
