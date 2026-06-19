@@ -1,0 +1,50 @@
+name: Reporte de sargazo diario
+
+on:
+  schedule:
+    # 10:00 hora de Quintana Roo (UTC-5, sin horario de verano) = 15:00 UTC
+    - cron: "0 15 * * *"
+  # Permite ejecutarlo manualmente desde la pestaña Actions de GitHub.
+  workflow_dispatch:
+
+# Necesario para que la Action pueda hacer commit del JSON actualizado.
+permissions:
+  contents: write
+
+# Evita ejecuciones solapadas.
+concurrency:
+  group: sargazo
+  cancel-in-progress: false
+
+jobs:
+  update-sargazo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -r scripts/sargazo/requirements.txt
+
+      - name: Generar reporte de sargazo
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          # Opcional: GEMINI_MODEL, SARGAZO_ZONES
+        run: python scripts/sargazo/update_sargazo.py
+
+      - name: Commit y push si hubo cambios
+        run: |
+          git config user.name "sargazo-bot"
+          git config user.email "bot@rivieramayapass.com"
+          git add src/data/sargazo-report.json
+          if git diff --staged --quiet; then
+            echo "Sin cambios en el reporte; no se hace commit."
+          else
+            git commit -m "chore: actualiza reporte de sargazo $(date -u +%Y-%m-%d)"
+            git push
+          fi

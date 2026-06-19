@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "title": "RivieraMayaPass · Day Passes in Playa del Carmen",
+    "description": "The local day pass specialist. Access pools, beach clubs and clean beaches in Playa del Carmen without staying overnight. Book in 2 minutes."
+  },
+  "nav": {
+    "home": "Home",
+    "properties": "Properties",
+    "beachStatus": "Beach Status",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "PLAYA DEL CARMEN · RIVIERA MAYA",
+    "title": "Your day of pools, beach and luxury",
+    "titleAccent": "without paying for the night",
+    "subtitle": "We're the locals who know every beach club, every pool and every clean beach — and we open the door for you."
+  },
+  "search": {
+    "destination": "Destination",
+    "date": "When are you going?",
+    "button": "Search"
+  },
+  "beachStatus": {
+    "sectionLabel": "BEACH STATUS",
+    "title": "Beach status today",
+    "subtitle": "Up-to-date seaweed info by zone. Exclusive data you won't find on any global OTA.",
+    "clean": "Clean",
+    "moderate": "Moderate",
+    "seaweed": "Seaweed",
+    "updatedAt": "Updated today · real-time conditions",
+    "badgeClean": "Clean beach today"
+  },
+  "properties": {
+    "sectionLabel": "PROPERTIES",
+    "title": "The best day passes in Playa del Carmen",
+    "subtitle": "Curated selection of beach clubs and boutique hotels. Local inventory you won't find on global platforms.",
+    "perDay": "MXN / day",
+    "book": "Book",
+    "includes": "What's included",
+    "location": "Location",
+    "schedule": "Schedule",
+    "seeAll": "See all properties"
+  },
+  "reviews": {
+    "sectionLabel": "REVIEWS",
+    "title": "What our visitors say",
+    "subtitle": "Real travelers who enjoyed an incredible day."
+  },
+  "cta": {
+    "title": "Do you have a hotel or beach club?",
+    "subtitle": "Join our property network in Playa del Carmen and receive day visitors.",
+    "button": "Contact us via WhatsApp"
+  },
+  "footer": {
+    "aboutText": "We are the local day pass specialist in the Riviera Maya. We connect travelers with the best pools, beach clubs and clean beaches.",
+    "links": "Links",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  },
+  "property": {
+    "backToAll": "← All properties",
+    "bookViaWhatsapp": "Book via WhatsApp",
+    "priceFrom": "From",
+    "perPerson": "per person"
+  },
+  "blog": {
+    "sectionLabel": "BLOG",
+    "title": "Guides & tips for your day pass",
+    "subtitle": "Everything you need to know before booking: seaweed, prices, beach clubs and more.",
+    "seeAll": "See all articles",
+    "metaTitle": "Blog · Day Pass Playa del Carmen | RivieraMayaPass",
+    "metaDescription": "Guides, prices and tips about day passes, beach clubs and seaweed in Playa del Carmen. Updated local info 2026.",
+    "pageTitle": "RivieraMayaPass Blog",
+    "pageSubtitle": "Local guides, price comparisons and everything you need to make the most of your day in Playa del Carmen.",
+    "backToBlog": "← Back to blog",
+    "readMore": "Read article",
+    "minRead": "min read",
+    "ctaTitle": "Ready to book your day pass?",
+    "ctaSubtitle": "Message us on WhatsApp — we confirm availability in minutes.",
+    "ctaButton": "Book via WhatsApp"
+  }
+}

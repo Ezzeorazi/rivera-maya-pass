@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RivieraMayaPass · Brand Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ── DESIGN TOKENS (listos para tailwind.config) ── */
+    --ink:        #13302B;   /* texto principal — verde-negro profundo */
+    --ink-soft:   #3D5A52;   /* texto secundario */
+    --sea:        #0B7E78;   /* PRIMARIO — turquesa caribe profundo */
+    --sea-deep:   #075752;   /* hover / variante oscura */
+    --lagoon:     #6FD8C7;   /* acento claro — agua somera */
+    --lagoon-bg:  #DCF4EE;   /* fondo pastel turquesa */
+    --coral:      #F0654C;   /* ACENTO — coral vivo, CTAs energéticos */
+    --coral-bg:   #FDE6E0;   /* fondo pastel coral */
+    --sun:        #E89A2B;   /* cálido — precios, destacados */
+    --sun-bg:     #FBEFD9;   /* fondo pastel arena/sol */
+    --sand:       #FBF6EC;   /* FONDO base — arena crema */
+    --shell:      #FFFFFF;   /* blanco puro — cards */
+    --line:       #E4DDCE;   /* bordes sutiles sobre arena */
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--sand);
+    color:var(--ink);
+    font-family:'Hanken Grotesk',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+
+  /* ── HERO ── */
+  .hero{
+    position:relative;
+    padding:96px 28px 80px;
+    overflow:hidden;
+    background:
+      radial-gradient(120% 80% at 85% -10%, var(--lagoon-bg) 0%, transparent 55%),
+      radial-gradient(90% 70% at -10% 110%, var(--sun-bg) 0%, transparent 50%),
+      var(--sand);
+    border-bottom:1px solid var(--line);
+  }
+  .hero-inner{max-width:1080px;margin:0 auto;position:relative;z-index:2}
+  .eyebrow{
+    font-size:12px;letter-spacing:.32em;text-transform:uppercase;
+    font-weight:600;color:var(--sea);margin-bottom:22px;
+    opacity:0;animation:rise .7s .1s forwards;
+  }
+  .wordmark{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(48px,9vw,104px);
+    line-height:.92;
+    letter-spacing:-.02em;
+    color:var(--ink);
+    opacity:0;animation:rise .8s .2s forwards;
+  }
+  .wordmark .riv{color:var(--sea)}
+  .wordmark .pass{
+    font-style:italic;font-weight:400;color:var(--coral);
+  }
+  .tagline{
+    font-family:'Fraunces',serif;
+    font-size:clamp(19px,2.4vw,27px);
+    font-style:italic;font-weight:400;
+    color:var(--ink-soft);
+    margin-top:26px;max-width:560px;
+    opacity:0;animation:rise .8s .35s forwards;
+  }
+  .hero-sub{
+    margin-top:18px;max-width:520px;font-size:16px;color:var(--ink-soft);
+    opacity:0;animation:rise .8s .45s forwards;
+  }
+  /* sol decorativo */
+  .sun-disc{
+    position:absolute;top:-90px;right:-60px;width:340px;height:340px;
+    border-radius:50%;
+    background:radial-gradient(circle at 50% 50%, var(--sun) 0%, var(--coral) 130%);
+    opacity:.10;z-index:1;filter:blur(2px);
+  }
+  /* línea de horizonte / olas */
+  .waves{position:absolute;bottom:0;left:0;width:100%;height:40px;z-index:1;opacity:.5}
+
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+  /* ── SECCIONES ── */
+  section{padding:64px 0}
+  .sec-label{
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+    font-weight:700;color:var(--coral);margin-bottom:8px;
+  }
+  .sec-title{
+    font-family:'Fraunces',serif;font-weight:500;
+    font-size:clamp(28px,4vw,40px);line-height:1.05;
+    letter-spacing:-.015em;margin-bottom:14px;color:var(--ink);
+  }
+  .sec-intro{max-width:620px;color:var(--ink-soft);font-size:16.5px;margin-bottom:40px}
+  .divider{height:1px;background:var(--line);max-width:1080px;margin:0 auto}
+
+  /* ── POSICIONAMIENTO ── */
+  .pos-card{
+    background:var(--ink);color:var(--sand);
+    border-radius:22px;padding:48px 46px;
+    position:relative;overflow:hidden;
+  }
+  .pos-card::after{
+    content:"";position:absolute;right:-80px;bottom:-80px;
+    width:260px;height:260px;border-radius:50%;
+    background:radial-gradient(circle,var(--sea) 0%,transparent 70%);opacity:.4;
+  }
+  .pos-quote{
+    font-family:'Fraunces',serif;font-size:clamp(22px,3vw,32px);
+    font-weight:400;line-height:1.35;position:relative;z-index:2;
+  }
+  .pos-quote b{color:var(--lagoon);font-weight:600}
+  .pos-foot{margin-top:24px;font-size:14px;letter-spacing:.04em;color:var(--lagoon);position:relative;z-index:2}
+
+  /* ── COLORES ── */
+  .swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .swatch{
+    background:var(--shell);border:1px solid var(--line);border-radius:16px;
+    overflow:hidden;transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .swatch:hover{transform:translateY(-4px);box-shadow:0 14px 30px -16px rgba(19,48,43,.4)}
+  .chip{height:96px;width:100%}
+  .swatch-meta{padding:14px 16px 16px}
+  .swatch-name{font-weight:700;font-size:15px}
+  .swatch-role{font-size:12.5px;color:var(--ink-soft);margin:2px 0 8px;min-height:32px}
+  .swatch-hex{font-family:'Hanken Grotesk';font-size:12px;font-weight:600;
+    letter-spacing:.04em;color:var(--sea);background:var(--lagoon-bg);
+    display:inline-block;padding:3px 9px;border-radius:6px}
+
+  /* ── TIPOGRAFÍA ── */
+  .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  .type-card{background:var(--shell);border:1px solid var(--line);border-radius:18px;padding:34px 32px}
+  .type-tag{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:18px}
+  .type-display{font-family:'Fraunces',serif;font-size:64px;line-height:1;font-weight:500;color:var(--ink)}
+  .type-display .it{font-style:italic;font-weight:400;color:var(--sea)}
+  .type-body-sample{font-family:'Hanken Grotesk';font-size:40px;font-weight:600;color:var(--ink);line-height:1}
+  .type-spec{margin-top:20px;font-size:14px;color:var(--ink-soft);line-height:1.7}
+  .type-spec b{color:var(--ink)}
+  .glyphs{margin-top:16px;font-size:22px;color:var(--ink-soft);letter-spacing:.06em}
+
+  /* ── VOZ ── */
+  .voice-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .voice-card{background:var(--shell);border:1px solid var(--line);border-radius:16px;padding:26px 28px;position:relative}
+  .voice-card h4{font-family:'Fraunces',serif;font-weight:600;font-size:20px;margin-bottom:8px;color:var(--ink)}
+  .voice-card p{font-size:14.5px;color:var(--ink-soft)}
+  .voice-card .pill{position:absolute;top:24px;right:24px;width:10px;height:10px;border-radius:50%}
+  .say{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:24px}
+  .say > div{padding:24px 26px}
+  .say .yes{background:var(--lagoon-bg)}
+  .say .no{background:var(--coral-bg)}
+  .say h5{font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:12px;font-weight:700}
+  .say .yes h5{color:var(--sea-deep)}
+  .say .no h5{color:var(--coral)}
+  .say ul{list-style:none}
+  .say li{font-size:14.5px;margin-bottom:8px;padding-left:20px;position:relative;color:var(--ink)}
+  .say .yes li::before{content:"✓";position:absolute;left:0;color:var(--sea);font-weight:700}
+  .say .no li::before{content:"✕";position:absolute;left:0;color:var(--coral);font-weight:700}
+
+  /* ── LOGO USOS ── */
+  .logos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .logo-box{border-radius:16px;padding:40px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px;gap:6px;border:1px solid var(--line)}
+  .lk{font-family:'Fraunces',serif;font-weight:600;font-size:23px;letter-spacing:-.01em}
+  .lk .p{font-style:italic;font-weight:400}
+  .lk-sub{font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;font-weight:600}
+  .on-sand{background:var(--sand)}
+  .on-sea{background:var(--sea)}
+  .on-ink{background:var(--ink)}
+  .on-sand .lk{color:var(--ink)} .on-sand .lk .riv{color:var(--sea)} .on-sand .lk .p{color:var(--coral)} .on-sand .lk-sub{color:var(--ink-soft)}
+  .on-sea .lk{color:var(--sand)} .on-sea .lk .p{color:var(--lagoon)} .on-sea .lk-sub{color:var(--lagoon)}
+  .on-ink .lk{color:var(--sand)} .on-ink .lk .riv{color:var(--lagoon)} .on-ink .lk .p{color:var(--coral)} .on-ink .lk-sub{color:var(--lagoon)}
+
+  /* monograma */
+  .mono{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap}
+  .mono-mark{width:84px;height:84px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:600;font-size:34px}
+  .m-sea{background:var(--sea);color:var(--sand)}
+  .m-coral{background:var(--coral);color:var(--shell)}
+  .m-out{background:transparent;border:2px solid var(--ink);color:var(--ink)}
+
+  /* ── APLICACIÓN: tarjeta de propiedad mock ── */
+  .app-card{
+    background:var(--shell);border:1px solid var(--line);border-radius:20px;
+    overflow:hidden;max-width:380px;box-shadow:0 20px 50px -28px rgba(19,48,43,.5);
+  }
+  .app-img{height:170px;background:
+    linear-gradient(180deg,rgba(11,126,120,0) 40%,rgba(7,87,82,.55) 100%),
+    radial-gradient(120% 120% at 70% 20%,var(--lagoon) 0%,var(--sea) 60%,var(--sea-deep) 100%);
+    position:relative}
+  .app-badge{position:absolute;top:14px;left:14px;background:var(--shell);color:var(--ink);
+    font-size:11px;font-weight:700;letter-spacing:.04em;padding:6px 11px;border-radius:20px}
+  .app-fav{position:absolute;top:14px;right:14px;background:var(--coral);color:#fff;
+    font-size:11px;font-weight:700;padding:6px 11px;border-radius:20px}
+  .app-body{padding:18px 20px 20px}
+  .app-name{font-family:'Fraunces',serif;font-size:21px;font-weight:600;color:var(--ink)}
+  .app-loc{font-size:13px;color:var(--ink-soft);margin:3px 0 14px}
+  .app-row{display:flex;align-items:center;justify-content:space-between}
+  .app-price{font-family:'Fraunces',serif}
+  .app-price b{font-size:26px;color:var(--ink)}
+  .app-price span{font-size:13px;color:var(--ink-soft)}
+  .app-btn{background:var(--coral);color:#fff;border:none;font-family:'Hanken Grotesk';
+    font-weight:700;font-size:14px;padding:11px 20px;border-radius:12px;cursor:pointer;transition:background .2s}
+  .app-btn:hover{background:#d8492f}
+  .app-side{font-size:13px;color:var(--ink-soft);max-width:300px}
+  .app-side .ic{color:var(--sea);font-weight:700}
+
+  /* ── FOOTER ── */
+  footer{background:var(--ink);color:var(--sand);padding:54px 28px;text-align:center}
+  footer .fk{font-family:'Fraunces',serif;font-size:32px;font-weight:600}
+  footer .fk .riv{color:var(--lagoon)} footer .fk .p{font-style:italic;color:var(--coral)}
+  footer p{color:var(--lagoon);font-size:13px;margin-top:10px;letter-spacing:.04em}
+
+  .two-col{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+
+  @media(max-width:760px){
+    .swatches{grid-template-columns:repeat(2,1fr)}
+    .type-grid,.voice-grid,.say,.two-col{grid-template-columns:1fr}
+    .logos{grid-template-columns:1fr}
+    .type-display{font-size:48px}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="sun-disc"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">Guía de Identidad de Marca · 2026</div>
+    <h1 class="wordmark"><span class="riv">Riviera</span>Maya<span class="pass">Pass</span></h1>
+    <p class="tagline">El especialista local del day pass en la Riviera Maya.</p>
+    <p class="hero-sub">No somos otra plataforma global. Somos los que conocen cada beach club, cada alberca y cada playa limpia de Playa del Carmen — y te abren la puerta.</p>
+  </div>
+  <svg class="waves" viewBox="0 0 1200 40" preserveAspectRatio="none"><path d="M0,20 C150,40 350,0 600,20 C850,40 1050,0 1200,20 L1200,40 L0,40 Z" fill="#0B7E78" opacity="0.25"/></svg>
+</header>
+
+<!-- POSICIONAMIENTO -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">01 — Posicionamiento</div>
+    <h2 class="sec-title">La promesa de marca</h2>
+    <div class="pos-card">
+      <p class="pos-quote">Para el viajero que llegó a la Riviera Maya y quiere un día de alberca, playa y lujo sin pagar la noche, <b>RivieraMayaPass</b> es el especialista local que tiene el inventario que las plataformas globales no consiguen — con precios reales, condiciones de playa al día y atención humana.</p>
+      <p class="pos-foot">★ Local. Curado. Confiable. — vs. el agregador genérico.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COLORES -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">02 — Paleta</div>
+    <h2 class="sec-title">Colores del Caribe</h2>
+    <p class="sec-intro">Tonos saturados para acentos y CTAs; pasteles para fondos. Regla de oro: texto oscuro sobre fondos claros, siempre. El verde-mar es el alma de la marca; el coral es la energía que mueve a la acción.</p>
+    <div class="swatches">
+      <div class="swatch"><div class="chip" style="background:#0B7E78"></div><div class="swatch-meta"><div class="swatch-name">Mar</div><div class="swatch-role">Primario · marca, enlaces, encabezados</div><span class="swatch-hex">#0B7E78</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#075752"></div><div class="swatch-meta"><div class="swatch-name">Mar Profundo</div><div class="swatch-role">Hover y variante oscura del primario</div><span class="swatch-hex">#075752</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#6FD8C7"></div><div class="swatch-meta"><div class="swatch-name">Laguna</div><div class="swatch-role">Acento claro · detalles sobre fondo oscuro</div><span class="swatch-hex">#6FD8C7</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#F0654C"></div><div class="swatch-meta"><div class="swatch-name">Coral</div><div class="swatch-role">Acento · CTAs, botones "Reservar"</div><span class="swatch-hex">#F0654C</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#E89A2B"></div><div class="swatch-meta"><div class="swatch-name">Sol</div><div class="swatch-role">Cálido · precios, badges destacados</div><span class="swatch-hex">#E89A2B</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#FBF6EC;border-bottom:1px solid var(--line)"></div><div class="swatch-meta"><div class="swatch-name">Arena</div><div class="swatch-role">Fondo base de toda la web</div><span class="swatch-hex">#FBF6EC</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#DCF4EE"></div><div class="swatch-meta"><div class="swatch-name">Laguna BG</div><div class="swatch-role">Fondo pastel · secciones suaves</div><span class="swatch-hex">#DCF4EE</span></div></div>
+      <div class="swatch"><div class="chip" style="background:#13302B"></div><div class="swatch-meta"><div class="swatch-name">Tinta</div><div class="swatch-role">Texto principal · footer, contraste</div><span class="swatch-hex">#13302B</span></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TIPOGRAFÍA -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">03 — Tipografía</div>
+    <h2 class="sec-title">Dos voces, un tono</h2>
+    <p class="sec-intro">Un serif editorial con carácter para titulares (calidez, confianza, lujo accesible) y un grotesco limpio para el cuerpo (claridad, modernidad). Ambas gratuitas en Google Fonts.</p>
+    <div class="type-grid">
+      <div class="type-card">
+        <div class="type-tag">Display — Titulares</div>
+        <div class="type-display">Aa <span class="it">Bb</span></div>
+        <div class="glyphs">Reserva tu día perfecto</div>
+        <div class="type-spec"><b>Fraunces</b> · serif con personalidad.<br>Pesos: 400 (cursiva), 500, 600.<br>Uso: logo, titulares, precios, nombres de propiedad. Tracking ajustado (-1.5%).</div>
+      </div>
+      <div class="type-card">
+        <div class="type-tag">Body — Texto</div>
+        <div class="type-body-sample">Aa Bb Cc</div>
+        <div class="glyphs">Albercas, beach clubs y playa limpia, al día.</div>
+        <div class="type-spec"><b>Hanken Grotesk</b> · sans neutral y legible.<br>Pesos: 400, 500, 600, 700.<br>Uso: párrafos, botones, navegación, datos. Interlineado generoso (1.6).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- LOGO -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">04 — Logotipo</div>
+    <h2 class="sec-title">El wordmark y sus usos</h2>
+    <p class="sec-intro">El logotipo juega con tres colores: "Riviera" en mar, "Maya" en tinta, "Pass" en coral cursiva — el acento que invita a la acción. Funciona sobre arena, mar o tinta.</p>
+    <div class="logos">
+      <div class="logo-box on-sand"><div class="lk"><span class="riv">Riviera</span>Maya<span class="p">Pass</span></div><div class="lk-sub">Riviera Maya · México</div></div>
+      <div class="logo-box on-sea"><div class="lk">RivieraMaya<span class="p">Pass</span></div><div class="lk-sub">Day Pass Specialist</div></div>
+      <div class="logo-box on-ink"><div class="lk"><span class="riv">Riviera</span>Maya<span class="p">Pass</span></div><div class="lk-sub">Riviera Maya · México</div></div>
+    </div>
+    <div class="mono">
+      <div class="mono-mark m-sea">R<span style="font-style:italic;color:var(--lagoon)">P</span></div>
+      <div class="mono-mark m-coral">R<span style="font-style:italic">P</span></div>
+      <div class="mono-mark m-out">R<span style="font-style:italic;color:var(--coral)">P</span></div>
+    </div>
+    <p class="type-spec" style="margin-top:14px;max-width:560px">Monograma <b>RP</b> para favicon, app icon y avatar social. La P en cursiva mantiene el guiño del wordmark.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VOZ -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">05 — Voz & Tono</div>
+    <h2 class="sec-title">Cómo hablamos</h2>
+    <p class="sec-intro">Como un amigo que vive aquí y conoce los mejores lugares — no como un folleto turístico ni como un corporativo.</p>
+    <div class="voice-grid">
+      <div class="voice-card"><span class="pill" style="background:var(--sea)"></span><h4>Cercano</h4><p>Hablamos de tú a tú. "Te llevamos al beach club más bonito de Playa." Cálido, directo, sin formalismos vacíos.</p></div>
+      <div class="voice-card"><span class="pill" style="background:var(--coral)"></span><h4>Experto local</h4><p>Sabemos cuál playa está limpia hoy, cuál alberca es para adultos, dónde no hay sargazo. Damos contexto que ninguna OTA tiene.</p></div>
+      <div class="voice-card"><span class="pill" style="background:var(--sun)"></span><h4>Confiable</h4><p>Precios claros, fotos reales, política de reembolso visible. Nada de sorpresas. La confianza se gana con transparencia.</p></div>
+      <div class="voice-card"><span class="pill" style="background:var(--lagoon)"></span><h4>Sin relleno</h4><p>Frases cortas. Datos útiles. El viajero está decidiendo rápido desde el celular — respetamos su tiempo.</p></div>
+    </div>
+    <div class="say">
+      <div class="yes">
+        <h5>Sí decimos</h5>
+        <ul>
+          <li>"Hoy la playa está limpia en esta zona."</li>
+          <li>"Tu día de alberca, sin pagar la noche."</li>
+          <li>"Reserva en 2 minutos, llega y disfruta."</li>
+          <li>"Pregúntanos por WhatsApp, somos de aquí."</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h5>No decimos</h5>
+        <ul>
+          <li>"Vive una experiencia inolvidable única."</li>
+          <li>"Su satisfacción es nuestra prioridad."</li>
+          <li>"Paraíso de ensueño en el Caribe mexicano."</li>
+          <li>Jerga corporativa o clichés de brochure.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- APLICACIÓN -->
+<section>
+  <div class="wrap">
+    <div class="sec-label">06 — En acción</div>
+    <h2 class="sec-title">La marca aplicada</h2>
+    <p class="sec-intro">Así se ve una tarjeta de propiedad en el producto — el átomo de toda la web. Esta es, literalmente, tu carta de presentación cuando toques puertas.</p>
+    <div class="two-col">
+      <div class="app-card">
+        <div class="app-img">
+          <span class="app-badge">★ Playa del Carmen</span>
+          <span class="app-fav">Playa limpia hoy</span>
+        </div>
+        <div class="app-body">
+          <div class="app-name">Mamita's Beach Club</div>
+          <div class="app-loc">Zona Norte · acceso a playa + alberca</div>
+          <div class="app-row">
+            <div class="app-price"><b>$890</b> <span>MXN / día</span></div>
+            <button class="app-btn">Reservar</button>
+          </div>
+        </div>
+      </div>
+      <div class="app-side">
+        <p style="margin-bottom:14px"><span class="ic">→</span> Foto real de la propiedad (nunca stock genérico).</p>
+        <p style="margin-bottom:14px"><span class="ic">→</span> Badge de ubicación en arena + tinta para jerarquía.</p>
+        <p style="margin-bottom:14px"><span class="ic">→</span> El dato de <b>condición de playa</b> en coral — tu diferenciador, imposible de copiar para una OTA global.</p>
+        <p><span class="ic">→</span> Precio en serif (Fraunces) + botón coral. La acción siempre es coral.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fk"><span class="riv">Riviera</span>Maya<span class="p">Pass</span></div>
+  <p>Guía de identidad de marca · v1 · Mayo 2026 · rivieramayapass.com</p>
+</footer>
+
+</body>
+</html>

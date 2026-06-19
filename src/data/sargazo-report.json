@@ -1,0 +1,15 @@
+{
+  "updatedAt": "2026-06-18T15:00:00Z",
+  "source": "seed",
+  "zones": [
+    { "name": "Zona Norte", "status": "clean" },
+    { "name": "Mamitas", "status": "clean" },
+    { "name": "Centro", "status": "clean" },
+    { "name": "Playacar", "status": "moderate" },
+    { "name": "Xcalacoco", "status": "clean" }
+  ],
+  "summary": {
+    "es": "Las playas de Playa del Carmen amanecen mayormente limpias hoy. Se reporta presencia ligera a moderada de sargazo hacia la zona de Playacar; el resto de las playas del centro y la zona norte presentan condiciones favorables para nadar. Recuerda que las condiciones pueden cambiar durante el día según el viento y las corrientes.",
+    "en": "Playa del Carmen's beaches are mostly clean today. Light to moderate sargassum is reported around the Playacar area; the rest of the downtown and north-zone beaches show favorable conditions for swimming. Keep in mind conditions can change during the day depending on wind and currents."
+  }
+}

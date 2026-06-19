@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "title": "RivieraMayaPass · Day Passes en Playa del Carmen",
+    "description": "El especialista local del day pass. Accede a albercas, beach clubs y playas limpias en Playa del Carmen sin hospedarte. Reserva en 2 minutos."
+  },
+  "nav": {
+    "home": "Inicio",
+    "properties": "Propiedades",
+    "beachStatus": "Estado de Playa",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "eyebrow": "PLAYA DEL CARMEN · RIVIERA MAYA",
+    "title": "Tu día de alberca, playa y lujo",
+    "titleAccent": "sin pagar la noche",
+    "subtitle": "Somos los locales que conocen cada beach club, cada alberca y cada playa limpia — y te abren la puerta."
+  },
+  "search": {
+    "destination": "Destino",
+    "date": "¿Cuándo vas?",
+    "button": "Buscar"
+  },
+  "beachStatus": {
+    "sectionLabel": "ESTADO DE PLAYA",
+    "title": "Estado de playa hoy",
+    "subtitle": "Información actualizada de sargazo por zona. Dato exclusivo que ninguna OTA global tiene.",
+    "clean": "Limpia",
+    "moderate": "Moderado",
+    "seaweed": "Sargazo",
+    "updatedAt": "Actualizado hoy · condiciones en tiempo real",
+    "badgeClean": "Playa limpia hoy"
+  },
+  "properties": {
+    "sectionLabel": "PROPIEDADES",
+    "title": "Los mejores day passes de Playa del Carmen",
+    "subtitle": "Selección curada de beach clubs y hoteles boutique. Inventario local que no encontrarás en plataformas globales.",
+    "perDay": "MXN / día",
+    "book": "Reservar",
+    "includes": "Qué incluye",
+    "location": "Ubicación",
+    "schedule": "Horario",
+    "seeAll": "Ver todas las propiedades"
+  },
+  "reviews": {
+    "sectionLabel": "RESEÑAS",
+    "title": "Lo que dicen nuestros visitantes",
+    "subtitle": "Viajeros reales que disfrutaron un día increíble."
+  },
+  "cta": {
+    "title": "¿Tienes un hotel o beach club?",
+    "subtitle": "Únete a nuestra red de propiedades en Playa del Carmen y recibe visitantes de día.",
+    "button": "Contáctanos por WhatsApp"
+  },
+  "footer": {
+    "aboutText": "Somos el especialista local del day pass en la Riviera Maya. Conectamos viajeros con las mejores albercas, beach clubs y playas limpias.",
+    "links": "Enlaces",
+    "contact": "Contacto",
+    "rights": "Todos los derechos reservados."
+  },
+  "property": {
+    "backToAll": "← Todas las propiedades",
+    "bookViaWhatsapp": "Reservar por WhatsApp",
+    "priceFrom": "Desde",
+    "perPerson": "por persona"
+  },
+  "blog": {
+    "sectionLabel": "BLOG",
+    "title": "Guías y consejos para tu day pass",
+    "subtitle": "Todo lo que necesitás saber antes de reservar: sargazo, precios, beach clubs y más.",
+    "seeAll": "Ver todos los artículos",
+    "metaTitle": "Blog · Day Pass Playa del Carmen | RivieraMayaPass",
+    "metaDescription": "Guías, precios y consejos sobre day pass, beach clubs y sargazo en Playa del Carmen. Información local actualizada 2026.",
+    "pageTitle": "Blog RivieraMayaPass",
+    "pageSubtitle": "Guías locales, comparativas de precios y todo lo que necesitás saber para aprovechar al máximo tu día en Playa del Carmen.",
+    "backToBlog": "← Volver al blog",
+    "readMore": "Leer artículo",
+    "minRead": "min de lectura",
+    "ctaTitle": "¿Listo para reservar tu day pass?",
+    "ctaSubtitle": "Consultanos por WhatsApp — confirmamos disponibilidad en minutos.",
+    "ctaButton": "Reservar por WhatsApp"
+  }
+}

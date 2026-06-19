@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Colores de marca ── */
+  --color-ink: #13302B;
+  --color-ink-soft: #3D5A52;
+  --color-sea: #0B7E78;
+  --color-sea-deep: #075752;
+  --color-lagoon: #6FD8C7;
+  --color-lagoon-bg: #DCF4EE;
+  --color-coral: #F0654C;
+  --color-coral-bg: #FDE6E0;
+  --color-sun: #E89A2B;
+  --color-sun-bg: #FBEFD9;
+  --color-sand: #FBF6EC;
+  --color-shell: #FFFFFF;
+  --color-line: #E4DDCE;
+
+  /* ── Tipografía ── */
+  --font-display: var(--font-fraunces), "Fraunces", serif;
+  --font-body: var(--font-hanken), "Hanken Grotesk", sans-serif;
+
+  /* ── Bordes ── */
+  --radius-card: 20px;
+  --radius-badge: 20px;
+  --radius-button: 12px;
+
+  /* ── Animaciones ── */
+  --animate-rise: rise 0.7s ease forwards;
+  --animate-rise-delay: rise 0.7s 0.15s ease forwards;
+  --animate-fade-in: fadeIn 0.5s ease forwards;
+  --animate-pulse-soft: pulseSoft 2s ease-in-out infinite;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes pulseSoft {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.1);
+    }
+  }
+}
+
+/* ── Base Styles ── */
+body {
+  background-color: var(--color-sand);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Typography Defaults ── */
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+
+/* ── Smooth scroll ── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Selection color ── */
+::selection {
+  background-color: var(--color-lagoon-bg);
+  color: var(--color-ink);
+}
