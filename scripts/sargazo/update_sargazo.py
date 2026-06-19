@@ -35,6 +35,7 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 from google import genai
 from google.genai import types
@@ -51,6 +52,10 @@ STATUS_SEVERITY = {"clean": 0, "moderate": 1, "seaweed": 2}
 # Coordenadas de Playa del Carmen para la consulta de viento.
 LATITUDE = 20.6296
 LONGITUDE = -87.0739
+
+# Zona horaria de Quintana Roo (UTC-5 todo el año, sin horario de verano).
+# Se usa para que "hoy" sea siempre la fecha local real, no la del servidor UTC.
+CANCUN_TZ = ZoneInfo("America/Cancun")
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 OUTPUT_PATH = REPO_ROOT / "src" / "data" / "sargazo-report.json"
@@ -269,7 +274,8 @@ def worst_status(report: dict) -> str:
 
 
 def local_date() -> str:
-    return datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d")
+    """Fecha actual en Quintana Roo (no la del runner/UTC)."""
+    return datetime.now(CANCUN_TZ).strftime("%Y-%m-%d")
 
 
 CSV_FIELDS = [
@@ -366,7 +372,7 @@ def main() -> int:
 
     model = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
     zones = get_zones()
-    today = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d")
+    today = local_date()
 
     print("Obteniendo viento de Open-Meteo...")
     wind = fetch_wind()
