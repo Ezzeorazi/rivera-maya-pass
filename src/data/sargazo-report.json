@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-06-19T05:53:26Z",
+  "updatedAt": "2026-06-19T06:30:29Z",
   "source": "ai",
-  "confidence": "medium",
+  "confidence": "high",
   "zones": [
     {
       "name": "Zona Norte",
@@ -25,16 +25,16 @@
     }
   ],
   "summary": {
-    "es": "Hoy, 19 de junio de 2026, las playas de Playa del Carmen enfrentan un arribo de sargazo intenso y atípico, con vientos del sureste empujando constantemente el alga hacia la costa. Se ha reportado que el sargazo oculta incluso los ojos de agua dulce frente al Parque Fundadores y genera malos olores en la zona.",
-    "en": "Today, June 19, 2026, Playa del Carmen's beaches are experiencing an intense and atypical sargassum arrival, with southeast winds consistently pushing the seaweed towards the coast. Sargassum has been reported to obscure freshwater springs in front of Parque Fundadores and generate bad odors in the area."
+    "es": "Hoy, 19 de junio de 2026, las playas de Playa del Carmen enfrentan un arribo de sargazo intenso y atípico, con vientos del sureste que lo empujan constantemente hacia la costa. Las autoridades locales han reportado una recolección significativa de más de 17 mil toneladas en lo que va del año, y se espera que los próximos meses sean aún más intensos.",
+    "en": "Today, June 19, 2026, Playa del Carmen's beaches are experiencing an intense and atypical sargassum arrival, with southeast winds consistently pushing it towards the coast. Local authorities have reported a significant collection of over 17,000 tons so far this year, and the coming months are expected to be even more intense."
   },
   "recommendation": {
-    "es": "Dada la abundancia de sargazo en todas las zonas de Playa del Carmen, se recomienda considerar un plan alternativo para hoy, como disfrutar de las albercas de su hotel o explorar cenotes y parques temáticos cercanos que no dependen de la calidad del mar.",
-    "en": "Given the abundance of sargassum across all zones of Playa del Carmen, it is recommended to consider an alternative plan for today, such as enjoying your hotel's pools or exploring nearby cenotes and theme parks that do not rely on ocean quality."
+    "es": "Dada la situación general de sargazo abundante en todas las zonas de Playa del Carmen, se recomienda considerar alternativas como disfrutar de cenotes, parques temáticos o las piscinas de hoteles y beach clubs. Si aún desea visitar una playa, las playas de la costa oeste de Cozumel suelen tener menos sargazo debido a su orientación.",
+    "en": "Given the general situation of abundant sargassum across all zones of Playa del Carmen, it is recommended to consider alternatives such as enjoying cenotes, theme parks, or hotel and beach club pools. If you still wish to visit a beach, the west coast beaches of Cozumel typically have less sargassum due to their orientation."
   },
   "forecast": {
-    "es": "La tendencia para los próximos 2-3 días indica que el arribo de sargazo se mantendrá o incluso empeorará, ya que los vientos seguirán soplando desde el este y sureste, favoreciendo su llegada a la costa.",
-    "en": "The trend for the next 2-3 days suggests that sargassum arrival will continue or even worsen, as winds will keep blowing from the east and southeast, favoring its accumulation on the coast."
+    "es": "El pronóstico de viento para los próximos días (20 al 22 de junio) indica vientos constantes del sureste y este, lo que sugiere que la tendencia de arribo de sargazo se mantendrá o incluso empeorará.",
+    "en": "The wind forecast for the next few days (June 20-22) indicates consistent southeast and east winds, suggesting that the sargassum arrival trend will continue or even worsen."
   },
   "forecastDays": [
     {
@@ -63,9 +63,9 @@
     }
   ],
   "wind": {
-    "speed_kmh": 17.1,
-    "gust_kmh": 33.8,
-    "dir_deg": 130,
+    "speed_kmh": 17.2,
+    "gust_kmh": 32.8,
+    "dir_deg": 128,
     "dir_cardinal": "SE"
   },
   "hurricaneAlert": {
@@ -73,12 +73,12 @@
   },
   "sources": [
     {
-      "title": "Red de Monitoreo del Sargazo de Quintana Roo",
-      "url": "https://www.facebook.com/RedMonitoreoSargazoQR"
+      "title": "noticaribe.com.mx",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHkUpcRxcNfe6Yt_NMKWKij0QpyfMu7m8WVzR6G0DE4Gjmk1YQVc0qDM2iB1XWHEq3C43yFbx9S0YcuaZYF5Ex8HcPKjgnkpNAEP9pxSAQQImU8mO0nzfX1XjylNFXrCsf5cul1vCAC8p5Kj-PJhosdMtZ1LW7pBsSYlXIHEhrtyvqInoPoYeBit-cV4RcLrlM1ogbvUTE-aAeWyVfbOtE7wuRkitRY8-wy7vtf6N1r"
     },
     {
-      "title": "Reportes locales de sargazo — Playa del Carmen",
-      "url": "https://sargassummonitoring.com/"
+      "title": "chetoba.com.ar",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFaIEtl50ziW9oOyoNLnu6hpUSD3qUsK9_9eHvKTDZGbcc1Oxy4pe3xJYDTWARABth0Hjp2HtY29xaqk0rTjgZNig8-NXUlB--KlYsrliq_TikUUjDK6BZc7KBZgagrNWMP9kVRFCBI5vgJcSyl9Vi_JYfV1cY="
     }
   ]
 }
