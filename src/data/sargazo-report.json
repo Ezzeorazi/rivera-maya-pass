@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-19T04:51:26Z",
+  "updatedAt": "2026-06-19T05:53:26Z",
   "source": "ai",
   "zones": [
     {
@@ -24,29 +24,50 @@
     }
   ],
   "summary": {
-    "es": "Hoy, 19 de junio de 2026, las playas de Playa del Carmen se encuentran significativamente afectadas por el sargazo. Se ha reportado un recale intenso y atípico en las últimas semanas, con más de 17 mil toneladas recolectadas en lo que va del año. El viento actual del sureste (SE) está empujando el sargazo directamente desde el mar hacia la costa, contribuyendo a una presencia abundante en todas las zonas de la ciudad.",
-    "en": "Today, June 19, 2026, Playa del Carmen's beaches are significantly affected by sargassum. An intense and atypical influx has been reported in recent weeks, with over 17,000 tons collected so far this year. The current southeast (SE) wind is pushing sargassum directly from the sea towards the coast, contributing to an abundant presence across all areas of the city."
+    "es": "Hoy, 19 de junio de 2026, las playas de Playa del Carmen enfrentan un arribo de sargazo intenso y atípico, con vientos del sureste empujando constantemente el alga hacia la costa. Se ha reportado que el sargazo oculta incluso los ojos de agua dulce frente al Parque Fundadores y genera malos olores en la zona.",
+    "en": "Today, June 19, 2026, Playa del Carmen's beaches are experiencing an intense and atypical sargassum arrival, with southeast winds consistently pushing the seaweed towards the coast. Sargassum has been reported to obscure freshwater springs in front of Parque Fundadores and generate bad odors in the area."
   },
   "recommendation": {
-    "es": "Hoy todas las playas amanecen con sargazo, así que para no perder el día lo mejor es un plan de alberca o beach club con día de sol garantizado. Si prefieres playa, espera al pronóstico de los próximos días.",
-    "en": "All beaches have sargassum today, so to make the most of your day a pool or beach-club day pass is your best bet. If you'd rather hit the sand, wait for the next few days' outlook."
+    "es": "Dada la abundancia de sargazo en todas las zonas de Playa del Carmen, se recomienda considerar un plan alternativo para hoy, como disfrutar de las albercas de su hotel o explorar cenotes y parques temáticos cercanos que no dependen de la calidad del mar.",
+    "en": "Given the abundance of sargassum across all zones of Playa del Carmen, it is recommended to consider an alternative plan for today, such as enjoying your hotel's pools or exploring nearby cenotes and theme parks that do not rely on ocean quality."
   },
   "forecast": {
-    "es": "El viento se mantiene del sureste los próximos días, por lo que es probable que el sargazo persista. Conviene seguir el reporte diario antes de decidir.",
-    "en": "Southeast winds are expected to hold over the coming days, so sargassum is likely to persist. Keep an eye on the daily report before deciding."
+    "es": "La tendencia para los próximos 2-3 días indica que el arribo de sargazo se mantendrá o incluso empeorará, ya que los vientos seguirán soplando desde el este y sureste, favoreciendo su llegada a la costa.",
+    "en": "The trend for the next 2-3 days suggests that sargassum arrival will continue or even worsen, as winds will keep blowing from the east and southeast, favoring its accumulation on the coast."
   },
   "forecastDays": [
-    { "date": "2026-06-20", "dir_deg": 130, "dir_cardinal": "SE", "speed_kmh": 19.0, "gust_kmh": 36.0, "onshore": true },
-    { "date": "2026-06-21", "dir_deg": 120, "dir_cardinal": "SE", "speed_kmh": 21.0, "gust_kmh": 38.0, "onshore": true },
-    { "date": "2026-06-22", "dir_deg": 100, "dir_cardinal": "E", "speed_kmh": 17.0, "gust_kmh": 31.0, "onshore": true }
+    {
+      "date": "2026-06-20",
+      "dir_deg": 114,
+      "dir_cardinal": "SE",
+      "speed_kmh": 17.8,
+      "gust_kmh": 39.2,
+      "onshore": true
+    },
+    {
+      "date": "2026-06-21",
+      "dir_deg": 117,
+      "dir_cardinal": "SE",
+      "speed_kmh": 25.0,
+      "gust_kmh": 52.6,
+      "onshore": true
+    },
+    {
+      "date": "2026-06-22",
+      "dir_deg": 103,
+      "dir_cardinal": "E",
+      "speed_kmh": 19.6,
+      "gust_kmh": 41.8,
+      "onshore": true
+    }
   ],
+  "wind": {
+    "speed_kmh": 17.1,
+    "gust_kmh": 33.8,
+    "dir_deg": 130,
+    "dir_cardinal": "SE"
+  },
   "hurricaneAlert": {
     "active": false
-  },
-  "wind": {
-    "speed_kmh": 18.0,
-    "gust_kmh": 37.8,
-    "dir_deg": 128,
-    "dir_cardinal": "SE"
   }
 }
