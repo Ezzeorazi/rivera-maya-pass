@@ -10,9 +10,10 @@ GitHub Actions (cron diario 10:00 hora QR)
         │
         ▼
 scripts/sargazo/update_sargazo.py
-   · Open-Meteo: viento real de hoy (dirección/velocidad/ráfagas) — sin API key
-   · Gemini busca en internet el estado del sargazo y CRUZA el viento
-   · Redacta estado por zona + resumen en ES/EN
+   · Open-Meteo: viento de hoy + pronóstico a 3 días (sin API key)
+   · NOAA NHC: tormentas/huracanes activos cerca del Caribe (sin API key)
+   · Gemini busca el sargazo y CRUZA viento + pronóstico + tormentas
+   · Redacta: estado por zona + resumen + recomendación + tendencia (ES/EN)
         │
         ├─► src/data/sargazo-report.json        ← lo muestra el sitio
         └─► scripts/sargazo/sargazo-history.csv  ← 1 fila/día (dataset para ML futuro)
@@ -90,6 +91,11 @@ Postgres consultable (ideal como dataset para el modelo de la Fase 2).
 > Arquitectura: la **web** sigue leyendo el JSON estático (rápido, sin DB en
 > runtime). Supabase es solo el **almacén de datos histórico**, no sirve la web.
 
+> 🔄 **Si ya creaste la tabla antes:** vuelve a ejecutar
+> `scripts/sargazo/supabase_schema.sql` en el SQL Editor. Trae columnas nuevas
+> (`hurricane_active`, `recommendation_*`, `forecast_*`) con `ADD COLUMN IF NOT
+> EXISTS`, así que es seguro re-correrlo: no borra nada.
+
 Pasos (una vez):
 
 1. Crea un proyecto gratis en https://supabase.com
@@ -112,6 +118,25 @@ viven en GitHub Actions, no en la web).
 2. Importa el repo de GitHub.
 3. Framework: Next.js (autodetectado) → `Deploy`.
 4. Listo: obtienes una URL pública y **cada push redepliega solo**.
+
+## Fase 2 — modelo predictivo (futuro, aún NO en producción)
+
+`train_model.py` es el **borrador** del modelo que predecirá el sargazo a
+48-72h. Necesita datos: se niega a entrenar con menos de ~60 días de histórico.
+
+```bash
+pip install -r scripts/sargazo/requirements-ml.txt
+python scripts/sargazo/train_model.py
+```
+
+- Lee de Supabase (o del CSV) y arma características: viento (onshore/velocidad),
+  estacionalidad (el sargazo tiene pico mar-ago) y lags de días anteriores.
+- Entrena un RandomForest con validación temporal y lo compara contra una línea
+  base de "persistencia" (predecir que mañana será como hoy). El modelo solo
+  vale si **supera** esa línea base.
+- Hasta tener ~2-3 meses de datos, seguimos con la predicción heurística (viento
+  + pronóstico) que ya hace el bot. La predicción a varios días de verdad llegará
+  con datos satelitales (AFAI/Copernicus) en una fase posterior.
 
 ## Notas
 
