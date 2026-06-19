@@ -10,15 +10,25 @@ GitHub Actions (cron diario 10:00 hora QR)
         │
         ▼
 scripts/sargazo/update_sargazo.py
-   · Gemini busca en internet el estado del sargazo de hoy
+   · Open-Meteo: viento real de hoy (dirección/velocidad/ráfagas) — sin API key
+   · Gemini busca en internet el estado del sargazo y CRUZA el viento
    · Redacta estado por zona + resumen en ES/EN
         │
-        ▼
-src/data/sargazo-report.json   ← se hace commit automático
+        ├─► src/data/sargazo-report.json        ← lo muestra el sitio
+        └─► scripts/sargazo/sargazo-history.csv  ← 1 fila/día (dataset para ML futuro)
         │
         ▼
 Vercel detecta el push y redepliega → el componente <BeachStatus /> se actualiza
 ```
+
+### ¿Por qué el viento? (Fase 1)
+
+El sargazo ya flota en el Caribe; **el viento local decide a qué playa llega**.
+Viento del **E/SE/S/NE** lo empuja hacia la costa de la Riviera Maya; viento del
+**O/NO/N** lo aleja. Por eso le pasamos a Gemini el dato medido como "dato duro"
+y además lo **registramos cada día** en `sargazo-history.csv`. Ese historial es
+la semilla del modelo predictivo (Fase 2): cuando haya unos meses de datos
+(viento → estado real), un clasificador podrá estimar el arribo a 48-72h.
 
 No necesita servidor propio ni base de datos. El "estado" del sitio vive en un
 simple archivo JSON versionado en el repo.

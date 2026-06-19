@@ -7,6 +7,13 @@ export interface SargazoZone {
   status: BeachStatusType;
 }
 
+export interface SargazoWind {
+  speed_kmh: number | null;
+  gust_kmh: number | null;
+  dir_deg: number | null;
+  dir_cardinal: string;
+}
+
 export interface SargazoReport {
   /** ISO 8601 timestamp of when the report was generated. */
   updatedAt: string;
@@ -17,6 +24,8 @@ export interface SargazoReport {
     es: string;
     en: string;
   };
+  /** Wind measured at report time (Open-Meteo). Absent in the seed file. */
+  wind?: SargazoWind;
 }
 
 export const sargazoReport = report as SargazoReport;
