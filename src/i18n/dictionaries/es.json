@@ -21,9 +21,10 @@
     "button": "Buscar"
   },
   "beachStatus": {
-    "sectionLabel": "ESTADO DE PLAYA",
-    "title": "Estado de playa hoy",
-    "subtitle": "Información actualizada de sargazo por zona. Dato exclusivo que ninguna OTA global tiene.",
+    "sectionLabel": "ESTADO DE PLAYAS · RIVIERA MAYA",
+    "title": "Estado de las playas hoy",
+    "subtitle": "Sargazo por zona en la Riviera Maya, actualizado a diario. Dato exclusivo que ninguna OTA global tiene.",
+    "pdcLabel": "Playa del Carmen",
     "clean": "Limpia",
     "moderate": "Moderado",
     "seaweed": "Sargazo",

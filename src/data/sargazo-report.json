@@ -65,6 +65,8 @@
       "dir_cardinal": "SE",
       "speed_kmh": 16.9,
       "gust_kmh": 36.0,
+      "temp_max_c": 32.1,
+      "temp_min_c": 26.4,
       "onshore": true
     },
     {
@@ -73,6 +75,8 @@
       "dir_cardinal": "SE",
       "speed_kmh": 18.4,
       "gust_kmh": 50.4,
+      "temp_max_c": 31.8,
+      "temp_min_c": 26.7,
       "onshore": true
     },
     {
@@ -81,6 +85,8 @@
       "dir_cardinal": "E",
       "speed_kmh": 20.6,
       "gust_kmh": 44.3,
+      "temp_max_c": 31.5,
+      "temp_min_c": 26.9,
       "onshore": true
     }
   ],
@@ -90,6 +96,7 @@
     "dir_deg": 134,
     "dir_cardinal": "SE"
   },
+  "temperatureC": 31.2,
   "hurricaneAlert": {
     "active": false
   },

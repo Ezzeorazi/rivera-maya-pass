@@ -63,10 +63,12 @@ sitio vive en un JSON versionado en el repo, y Vercel redepliega solo con cada p
 
 ## 3. Fuentes de datos
 
-- **🌬️ Viento + pronóstico — [Open-Meteo](https://open-meteo.com/)**: gratis, sin
-  API key. Da el viento de hoy y a 3 días. Clave porque el sargazo flota en el
-  Caribe y **el viento decide a qué playa llega** (E/SE/S/NE lo empuja a la
-  costa; O/NO/N lo aleja).
+- **🌬️ Viento, temperatura + pronóstico — [Open-Meteo](https://open-meteo.com/)**:
+  gratis, sin API key. Da el viento y la **temperatura** de hoy, más el
+  pronóstico a 3 días (viento + temp máx/mín). Clave porque el sargazo flota en
+  el Caribe y **el viento decide a qué playa llega** (E/SE/S/NE lo empuja a la
+  costa; O/NO/N lo aleja). La temperatura **no necesita otra API**: viene en la
+  misma llamada.
 - **🌀 Tormentas — [NOAA NHC](https://www.nhc.noaa.gov/CurrentStorms.json)**:
   gratis. Filtramos a la cuenca del Atlántico y a < 1500 km de Playa del Carmen.
 - **🧠 Estado del sargazo — Gemini con Google Search**: el modelo busca en

@@ -80,6 +80,7 @@ export default function BeachStatus({
     confidence,
     sources,
     overrideNote,
+    temperatureC,
   } = sargazoReport;
   const severity: Record<string, number> = { clean: 0, moderate: 1, seaweed: 2, unknown: 3 };
   const sortedRegion = regionZones
@@ -125,6 +126,13 @@ export default function BeachStatus({
             {beachStatus.subtitle}
           </p>
         </div>
+
+        {beachStatus.pdcLabel && (
+          <p className="font-display font-semibold text-sm text-ink mb-3 flex items-center gap-2">
+            <span aria-hidden="true">📍</span>
+            {beachStatus.pdcLabel}
+          </p>
+        )}
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
           {zones.map((zone) => {
@@ -241,6 +249,12 @@ export default function BeachStatus({
                     <span className="text-[11px] font-body text-ink-soft">
                       {day.dir_cardinal} · {day.speed_kmh != null ? Math.round(day.speed_kmh) : '–'} km/h
                     </span>
+                    {(day.temp_max_c != null || day.temp_min_c != null) && (
+                      <span className="text-[11px] font-body text-ink-soft/80">
+                        🌡️ {day.temp_max_c != null ? Math.round(day.temp_max_c) : '–'}° /{' '}
+                        {day.temp_min_c != null ? Math.round(day.temp_min_c) : '–'}°
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>
@@ -277,6 +291,11 @@ export default function BeachStatus({
             </svg>
             {updatedLabel}
           </p>
+          {typeof temperatureC === 'number' && (
+            <span className="text-[11px] font-body font-medium px-2 py-0.5 rounded-full bg-sky-100 text-sky-700">
+              🌡️ {Math.round(temperatureC)}°C
+            </span>
+          )}
           {confidenceLabel && confidence && (
             <span
               className={`text-[11px] font-body font-medium px-2 py-0.5 rounded-full ${

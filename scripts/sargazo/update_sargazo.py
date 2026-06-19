@@ -128,13 +128,13 @@ def _http_get_json(url: str, timeout: int = 20) -> dict | list | None:
 # --- Viento: hoy + pronóstico (Open-Meteo) ---------------------------------
 
 
-def fetch_weather() -> tuple[dict | None, list[dict]]:
-    """Devuelve (viento_de_hoy, pronostico_por_dia). Degrada a (None, [])."""
+def fetch_weather() -> tuple[dict | None, list[dict], float | None]:
+    """Devuelve (viento_de_hoy, pronostico_por_dia, temp_actual_C). Degrada a (None, [], None)."""
     params = {
         "latitude": LATITUDE,
         "longitude": LONGITUDE,
-        "current": "wind_speed_10m,wind_direction_10m,wind_gusts_10m",
-        "daily": "wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant",
+        "current": "temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m",
+        "daily": "temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_gusts_10m_max,wind_direction_10m_dominant",
         "wind_speed_unit": "kmh",
         "timezone": "America/Cancun",
         "forecast_days": FORECAST_DAYS + 1,
@@ -142,7 +142,7 @@ def fetch_weather() -> tuple[dict | None, list[dict]]:
     url = "https://api.open-meteo.com/v1/forecast?" + urllib.parse.urlencode(params)
     data = _http_get_json(url)
     if not data:
-        return None, []
+        return None, [], None
 
     current = data.get("current", {})
     deg = current.get("wind_direction_10m")
@@ -152,12 +152,15 @@ def fetch_weather() -> tuple[dict | None, list[dict]]:
         "dir_deg": deg,
         "dir_cardinal": degrees_to_cardinal(deg),
     }
+    temp_today = current.get("temperature_2m")
 
     daily = data.get("daily", {})
     dates = daily.get("time", []) or []
     speeds = daily.get("wind_speed_10m_max", []) or []
     gusts = daily.get("wind_gusts_10m_max", []) or []
     dirs = daily.get("wind_direction_10m_dominant", []) or []
+    tmax = daily.get("temperature_2m_max", []) or []
+    tmin = daily.get("temperature_2m_min", []) or []
 
     forecast: list[dict] = []
     # El índice 0 es hoy; tomamos los siguientes días como pronóstico.
@@ -171,10 +174,12 @@ def fetch_weather() -> tuple[dict | None, list[dict]]:
                 "dir_cardinal": card,
                 "speed_kmh": speeds[i] if i < len(speeds) else None,
                 "gust_kmh": gusts[i] if i < len(gusts) else None,
+                "temp_max_c": tmax[i] if i < len(tmax) else None,
+                "temp_min_c": tmin[i] if i < len(tmin) else None,
                 "onshore": card in ONSHORE_DIRS,
             }
         )
-    return wind_today, forecast
+    return wind_today, forecast, temp_today
 
 
 def describe_wind(wind: dict | None) -> str:
@@ -277,15 +282,22 @@ def build_prompt(
     wind: dict | None,
     forecast: list[dict],
     storms: list[dict],
+    temp_today: float | None = None,
 ) -> str:
     zones_list = ", ".join(zones)
     region_list = ", ".join(REGION_ZONES)
+    temp_line = (
+        f"- Temperatura actual: {temp_today}°C."
+        if temp_today is not None
+        else "- Temperatura: sin dato."
+    )
     return f"""Eres un reportero local experto en condiciones de playa de la
 Riviera Maya. Tu objetivo es ayudar a un visitante a decidir A DÓNDE IR HOY,
 enfocándote en la CALIDAD de la playa. Hoy es {today}.
 
 DATOS DUROS DE HOY (úsalos en tu análisis):
 - {describe_wind(wind)}
+{temp_line}
 - {describe_storms(storms)}
 {describe_forecast(forecast)}
 
@@ -477,6 +489,7 @@ CSV_FIELDS = [
     "wind_dir_deg",
     "wind_speed_kmh",
     "wind_gust_kmh",
+    "temp_c",
     "worst_status",
     "hurricane_active",
     "zones_json",
@@ -495,6 +508,7 @@ def append_history(report: dict, wind: dict | None) -> None:
         "wind_dir_deg": (wind or {}).get("dir_deg", ""),
         "wind_speed_kmh": (wind or {}).get("speed_kmh", ""),
         "wind_gust_kmh": (wind or {}).get("gust_kmh", ""),
+        "temp_c": report.get("temperatureC", ""),
         "worst_status": worst_status(report),
         "hurricane_active": report.get("hurricaneAlert", {}).get("active", False),
         "zones_json": json.dumps(report["zones"], ensure_ascii=False),
@@ -528,6 +542,7 @@ def upsert_supabase(report: dict, wind: dict | None) -> None:
         "wind_dir_deg": (wind or {}).get("dir_deg"),
         "wind_speed_kmh": (wind or {}).get("speed_kmh"),
         "wind_gust_kmh": (wind or {}).get("gust_kmh"),
+        "temp_c": report.get("temperatureC"),
         "worst_status": worst_status(report),
         "hurricane_active": alert.get("active", False),
         "confidence": report.get("confidence"),
@@ -676,15 +691,17 @@ def main() -> int:
         return 0
 
     print("Obteniendo clima (Open-Meteo)...")
-    wind, forecast = fetch_weather()
+    wind, forecast, temp_today = fetch_weather()
     print(f"  {describe_wind(wind)}")
+    if temp_today is not None:
+        print(f"  Temperatura actual: {temp_today}°C")
 
     print("Obteniendo alertas de tormenta (NOAA NHC)...")
     storms = fetch_storm_alerts()
     print(f"  {describe_storms(storms)}")
 
     client = genai.Client(api_key=api_key)
-    prompt = build_prompt(zones, today, wind, forecast, storms)
+    prompt = build_prompt(zones, today, wind, forecast, storms, temp_today)
 
     # Modelo principal + respaldo (por si el principal está saturado).
     models_to_try = [model]
@@ -718,6 +735,8 @@ def main() -> int:
         print(text, file=sys.stderr)
         return 1
 
+    if temp_today is not None:
+        report["temperatureC"] = temp_today
     sources = extract_sources(response)
     if sources:
         report["sources"] = sources

@@ -21,9 +21,10 @@
     "button": "Search"
   },
   "beachStatus": {
-    "sectionLabel": "BEACH STATUS",
+    "sectionLabel": "BEACH STATUS · RIVIERA MAYA",
     "title": "Beach status today",
-    "subtitle": "Up-to-date seaweed info by zone. Exclusive data you won't find on any global OTA.",
+    "subtitle": "Sargassum by zone across the Riviera Maya, updated daily. Exclusive data you won't find on any global OTA.",
+    "pdcLabel": "Playa del Carmen",
     "clean": "Clean",
     "moderate": "Moderate",
     "seaweed": "Seaweed",

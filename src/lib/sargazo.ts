@@ -27,6 +27,8 @@ export interface ForecastDay {
   dir_cardinal: string;
   speed_kmh: number | null;
   gust_kmh: number | null;
+  temp_max_c: number | null;
+  temp_min_c: number | null;
   /** True if the wind pushes sargassum toward the shore. */
   onshore: boolean;
 }
@@ -74,6 +76,8 @@ export interface SargazoReport {
   hurricaneAlert?: HurricaneAlert;
   /** Wind measured at report time (Open-Meteo). Absent in the seed file. */
   wind?: SargazoWind;
+  /** Current air temperature in °C (Open-Meteo). */
+  temperatureC?: number;
 }
 
 export const sargazoReport = report as SargazoReport;
