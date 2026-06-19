@@ -339,7 +339,10 @@ REGLAS IMPORTANTES (afectan la credibilidad del sitio):
    por playa.
 
 Responde ÚNICAMENTE con un objeto JSON válido (sin markdown, sin texto extra)
-con esta forma EXACTA:
+con esta forma EXACTA.
+IMPORTANTE: el JSON debe ser válido. NO uses comillas dobles (") dentro de los
+textos; si necesitás citar o enfatizar una palabra, usá comillas simples (') o
+angulares («»). Ejemplo: escribe 'excesivo' o «excesivo», nunca "excesivo".
 
 {{
   "confidence": "high|medium|low",
@@ -378,7 +381,21 @@ def extract_json(text: str) -> dict:
         end = cleaned.rfind("}")
         if start != -1 and end != -1 and end > start:
             cleaned = cleaned[start : end + 1]
-    return json.loads(cleaned)
+    try:
+        return json.loads(cleaned)
+    except json.JSONDecodeError:
+        # La IA a veces mete comillas dobles sin escapar dentro de un texto
+        # (p. ej. ...showing "excessive" accumulation...). Intentamos reparar.
+        try:
+            from json_repair import repair_json
+
+            obj = repair_json(cleaned, return_objects=True)
+            if isinstance(obj, dict) and obj:
+                print("AVISO: JSON inválido reparado con json_repair.", file=sys.stderr)
+                return obj
+        except Exception as exc:  # noqa: BLE001
+            print(f"AVISO: json_repair no pudo reparar ({exc}).", file=sys.stderr)
+        raise
 
 
 def normalize_status(value: str) -> str:
@@ -730,10 +747,13 @@ def main() -> int:
         data = extract_json(text)
         report = validate_and_build(data, zones, wind, forecast, storms)
     except (json.JSONDecodeError, ValueError) as exc:
-        print(f"ERROR al parsear la respuesta: {exc}", file=sys.stderr)
+        # No se pudo interpretar la respuesta ni reparándola. Degradamos en
+        # VERDE: mantenemos el reporte anterior en vez de romper el sitio.
+        print(f"AVISO: no se pudo interpretar la respuesta ({exc}).", file=sys.stderr)
+        print("Se mantiene el reporte anterior; no se publica hoy.", file=sys.stderr)
         print("--- Respuesta cruda ---", file=sys.stderr)
         print(text, file=sys.stderr)
-        return 1
+        return 0
 
     if temp_today is not None:
         report["temperatureC"] = temp_today

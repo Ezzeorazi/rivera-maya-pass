@@ -252,8 +252,11 @@ Así, el horario caótico deja de ser un problema: el sitio nunca queda sin dato
 
 - `src/data/sargazo-report.json` incluye una **semilla** para que el sitio
   compile antes del primer reporte real; el bot lo sobrescribe.
-- Si Gemini no devuelve un JSON válido, el script falla **sin** sobrescribir el
-  archivo: nunca se publica un reporte corrupto.
+- **JSON robusto:** la IA a veces mete comillas dobles sin escapar dentro de un
+  texto (ej. `..."excessive" accumulation...`), lo que rompería el JSON. El bot
+  (1) le pide no usar comillas dobles internas, (2) si igual viene roto lo repara
+  con `json-repair`, y (3) si ni así se puede, **mantiene el reporte anterior**
+  (sale en verde) en vez de publicar algo corrupto o romper el sitio.
 - **Resiliencia ante caídas de Gemini:** si el modelo da un error transitorio
   (503 "high demand", 429, 5xx), el bot **reintenta con espera creciente** y, si
   sigue, prueba el **modelo de respaldo**. Si aun así no responde, el workflow
