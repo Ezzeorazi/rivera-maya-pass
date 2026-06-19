@@ -1,2 +1,2 @@
-date,captured_at_utc,source,confidence,wind_dir_cardinal,wind_dir_deg,wind_speed_kmh,wind_gust_kmh,worst_status,hurricane_active,zones_json
-2026-06-19,2026-06-19T17:24:21Z,ai,high,SE,134,23.3,51.1,seaweed,False,"[{""name"": ""Zona Norte"", ""status"": ""moderate""}, {""name"": ""Mamitas"", ""status"": ""moderate""}, {""name"": ""Centro"", ""status"": ""moderate""}, {""name"": ""Playacar"", ""status"": ""seaweed""}, {""name"": ""Xcalacoco"", ""status"": ""unknown""}]"
+date,captured_at_utc,source,confidence,wind_dir_cardinal,wind_dir_deg,wind_speed_kmh,wind_gust_kmh,temp_c,worst_status,hurricane_active,zones_json
+2026-06-19,2026-06-19T18:08:47Z,ai,high,SE,134,22.8,50.8,31.0,seaweed,False,"[{""name"": ""Zona Norte"", ""status"": ""seaweed""}, {""name"": ""Mamitas"", ""status"": ""seaweed""}, {""name"": ""Centro"", ""status"": ""seaweed""}, {""name"": ""Playacar"", ""status"": ""seaweed""}, {""name"": ""Xcalacoco"", ""status"": ""seaweed""}]"
