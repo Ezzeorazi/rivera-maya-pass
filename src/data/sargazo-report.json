@@ -1,7 +1,7 @@
 {
   "updatedAt": "2026-06-19T06:30:29Z",
   "source": "ai",
-  "confidence": "high",
+  "confidence": "medium",
   "zones": [
     {
       "name": "Zona Norte",
@@ -23,6 +23,13 @@
       "name": "Xcalacoco",
       "status": "seaweed"
     }
+  ],
+  "regionZones": [
+    { "name": "Holbox", "status": "clean" },
+    { "name": "Isla Mujeres", "status": "clean" },
+    { "name": "Puerto Morelos", "status": "moderate" },
+    { "name": "Cancún", "status": "moderate" },
+    { "name": "Tulum", "status": "seaweed" }
   ],
   "summary": {
     "es": "Hoy, 19 de junio de 2026, las playas de Playa del Carmen enfrentan un arribo de sargazo intenso y atípico, con vientos del sureste que lo empujan constantemente hacia la costa. Las autoridades locales han reportado una recolección significativa de más de 17 mil toneladas en lo que va del año, y se espera que los próximos meses sean aún más intensos.",

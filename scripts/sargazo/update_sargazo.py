@@ -43,6 +43,11 @@ from google.genai import types
 
 DEFAULT_ZONES = ["Zona Norte", "Mamitas", "Centro", "Playacar", "Xcalacoco"]
 
+# Puntos de referencia regionales para responder "¿dónde SÍ está limpio hoy?"
+# cuando Playa del Carmen está afectada. Suelen ser zonas protegidas (norte /
+# arrecife) que escapan al cinturón de sargazo.
+REGION_ZONES = ["Holbox", "Isla Mujeres", "Puerto Morelos", "Cancún", "Tulum"]
+
 # "unknown" = no hay datos confiables de esa zona; preferimos ser honestos
 # antes que adivinar (evita el "pintar todo igual").
 VALID_STATUSES = {"clean", "moderate", "seaweed", "unknown"}
@@ -272,6 +277,7 @@ def build_prompt(
     storms: list[dict],
 ) -> str:
     zones_list = ", ".join(zones)
+    region_list = ", ".join(REGION_ZONES)
     return f"""Eres un reportero local experto en condiciones de playa de la
 Riviera Maya. Tu objetivo es ayudar a un visitante a decidir A DÓNDE IR HOY,
 enfocándote en la CALIDAD de la playa. Hoy es {today}.
@@ -295,6 +301,12 @@ Estados válidos:
 - "unknown" (SIN DATO): úsalo cuando NO tengas información específica y
   confiable de esa zona. Es preferible "unknown" antes que adivinar.
 
+Además, clasifica el estado del sargazo HOY en estos puntos de referencia de la
+región (mismo set de estados), para poder decirle al visitante DÓNDE SÍ está
+limpio si Playa del Carmen está afectada: {region_list}
+Estas zonas (Holbox, Isla Mujeres, Puerto Morelos, partes de Cancún) suelen
+estar más limpias por su orientación norte o protección de arrecife.
+
 REGLAS IMPORTANTES (afectan la credibilidad del sitio):
 1. NO marques todas las zonas con el mismo estado salvo que la evidencia lo
    respalde de verdad. Las condiciones suelen VARIAR por zona; algunas (p. ej.
@@ -303,9 +315,14 @@ REGLAS IMPORTANTES (afectan la credibilidad del sitio):
 2. Si solo tienes una tendencia general (sin detalle por playa), marca como
    "unknown" las zonas de las que no tengas dato concreto, en vez de asumir el
    peor caso para todas.
-3. Reporta tu nivel de confianza global en "confidence": "high" si hay reportes
-   recientes y específicos por zona; "medium" si es parcial; "low" si te basas
-   sobre todo en tendencia general y viento.
+3. Reporta tu nivel de confianza global en "confidence":
+   - "high" SOLO si encontraste un dato PLAYA POR PLAYA reciente (p. ej. el
+     mapa-semáforo de la Red de Monitoreo del Sargazo de QR, o un reporte
+     detallado por zona de hoy/ayer).
+   - "medium" si tienes el panorama general reciente pero NO el detalle por zona.
+   - "low" si te basas sobre todo en la tendencia general y el viento.
+   Ojo: tener noticias del panorama general NO es "high". "high" exige detalle
+   por playa.
 
 Responde ÚNICAMENTE con un objeto JSON válido (sin markdown, sin texto extra)
 con esta forma EXACTA:
@@ -314,6 +331,9 @@ con esta forma EXACTA:
   "confidence": "high|medium|low",
   "zones": [
     {{ "name": "<zona>", "status": "clean|moderate|seaweed|unknown" }}
+  ],
+  "region": [
+    {{ "name": "<punto de referencia>", "status": "clean|moderate|seaweed|unknown" }}
   ],
   "summary": {{
     "es": "<2-3 frases sobre el estado del sargazo hoy; menciona viento o tormenta si es relevante>",
@@ -330,6 +350,7 @@ con esta forma EXACTA:
 }}
 
 Incluye en "zones" exactamente estas zonas y en este orden: {zones_list}.
+Incluye en "region" exactamente estos puntos y en este orden: {region_list}.
 """
 
 
@@ -371,6 +392,25 @@ def normalize_confidence(value: str) -> str:
     return "medium"
 
 
+def _match_zones(raw_list, names: list[str]) -> list[dict]:
+    """Mapea la lista de la IA a los nombres esperados, en orden. Sin dato -> unknown."""
+    raw = {
+        str(z.get("name", "")).strip(): normalize_status(str(z.get("status", "")))
+        for z in raw_list
+        if isinstance(z, dict)
+    }
+    out = []
+    for name in names:
+        status = raw.get(name)
+        if status is None:
+            for k, v in raw.items():
+                if k.lower() == name.lower():
+                    status = v
+                    break
+        out.append({"name": name, "status": status or "unknown"})
+    return out
+
+
 def _bilingual(data: dict, key: str, fallback_es: str = "", fallback_en: str = "") -> dict | None:
     obj = data.get(key) or {}
     es = str(obj.get("es", "")).strip() or fallback_es
@@ -387,21 +427,8 @@ def validate_and_build(
     forecast: list[dict],
     storms: list[dict],
 ) -> dict:
-    raw_zones = {
-        str(z.get("name", "")).strip(): normalize_status(str(z.get("status", "")))
-        for z in data.get("zones", [])
-        if isinstance(z, dict)
-    }
-    out_zones = []
-    for name in zones:
-        status = raw_zones.get(name)
-        if status is None:
-            for k, v in raw_zones.items():
-                if k.lower() == name.lower():
-                    status = v
-                    break
-        # Sin dato de la IA -> "unknown" (honesto), no "moderate" inventado.
-        out_zones.append({"name": name, "status": status or "unknown"})
+    out_zones = _match_zones(data.get("zones", []), zones)
+    region_zones = _match_zones(data.get("region", []), REGION_ZONES)
 
     summary = _bilingual(data, "summary")
     if not summary:
@@ -412,6 +439,7 @@ def validate_and_build(
         "source": "ai",
         "confidence": normalize_confidence(str(data.get("confidence", ""))),
         "zones": out_zones,
+        "regionZones": region_zones,
         "summary": summary,
     }
     rec = _bilingual(data, "recommendation")
@@ -503,6 +531,7 @@ def upsert_supabase(report: dict, wind: dict | None) -> None:
         "confidence": report.get("confidence"),
         "overridden": report["source"] == "ai+manual",
         "zones": report["zones"],
+        "region": report.get("regionZones", []),
         "sources": report.get("sources", []),
         "summary_es": report["summary"]["es"],
         "summary_en": report["summary"]["en"],

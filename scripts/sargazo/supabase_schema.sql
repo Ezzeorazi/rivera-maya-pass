@@ -13,7 +13,8 @@ create table if not exists public.sargazo_history (
   hurricane_active  boolean,                     -- tormenta/huracán relevante activo
   confidence        text,                        -- high | medium | low
   overridden        boolean,                     -- true si hubo corrección manual
-  zones             jsonb,                       -- estado por zona
+  zones             jsonb,                       -- estado por zona (Playa del Carmen)
+  region            jsonb,                       -- estado en puntos de referencia regionales
   sources           jsonb,                       -- fuentes usadas (grounding)
   summary_es        text,
   summary_en        text,
@@ -29,6 +30,7 @@ alter table public.sargazo_history add column if not exists hurricane_active  bo
 alter table public.sargazo_history add column if not exists confidence        text;
 alter table public.sargazo_history add column if not exists overridden        boolean;
 alter table public.sargazo_history add column if not exists sources           jsonb;
+alter table public.sargazo_history add column if not exists region            jsonb;
 alter table public.sargazo_history add column if not exists recommendation_es text;
 alter table public.sargazo_history add column if not exists recommendation_en text;
 alter table public.sargazo_history add column if not exists forecast_es       text;

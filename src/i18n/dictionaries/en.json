@@ -35,7 +35,9 @@
     "unknownLabel": "No data",
     "confidenceHigh": "High",
     "confidenceMedium": "Medium",
-    "confidenceLow": "Low"
+    "confidenceLow": "Low",
+    "regionTitle": "Where's it clean today?",
+    "regionSubtitle": "If Playa del Carmen has sargassum, these nearby areas are usually your best bet."
   },
   "properties": {
     "sectionLabel": "PROPERTIES",

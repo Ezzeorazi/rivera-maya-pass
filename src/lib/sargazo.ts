@@ -57,6 +57,8 @@ export interface SargazoReport {
   /** How sure the report is: high / medium / low. */
   confidence?: Confidence;
   zones: SargazoZone[];
+  /** Regional reference points (Holbox, Isla Mujeres, etc.) to find clean spots. */
+  regionZones?: SargazoZone[];
   summary: Bilingual;
   /** Sources Gemini used (grounding citations). */
   sources?: SargazoSource[];

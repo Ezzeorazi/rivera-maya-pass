@@ -35,7 +35,9 @@
     "unknownLabel": "Sin dato",
     "confidenceHigh": "Alta",
     "confidenceMedium": "Media",
-    "confidenceLow": "Baja"
+    "confidenceLow": "Baja",
+    "regionTitle": "¿Dónde está limpio hoy?",
+    "regionSubtitle": "Si Playa del Carmen está con sargazo, estas zonas de la región suelen ser tu mejor opción."
   },
   "properties": {
     "sectionLabel": "PROPIEDADES",

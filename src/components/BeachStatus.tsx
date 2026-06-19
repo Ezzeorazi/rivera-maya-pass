@@ -70,6 +70,7 @@ export default function BeachStatus({
   const beachStatus = dict.beachStatus as Record<string, string>;
   const {
     zones,
+    regionZones,
     summary,
     updatedAt,
     recommendation,
@@ -80,6 +81,10 @@ export default function BeachStatus({
     sources,
     overrideNote,
   } = sargazoReport;
+  const severity: Record<string, number> = { clean: 0, moderate: 1, seaweed: 2, unknown: 3 };
+  const sortedRegion = regionZones
+    ? [...regionZones].sort((a, b) => severity[a.status] - severity[b.status])
+    : [];
   const isEn = lang === 'en';
   const summaryText = summary[lang as keyof typeof summary] ?? summary.es;
   const overrideText = overrideNote?.[lang as keyof typeof overrideNote];
@@ -170,8 +175,41 @@ export default function BeachStatus({
           </div>
         )}
 
+        {sortedRegion.length > 0 && (
+          <div className="mx-auto max-w-2xl mt-8">
+            <p className="font-display font-semibold text-sm text-ink mb-1 flex items-center gap-2">
+              <span aria-hidden="true">🧭</span>
+              {beachStatus.regionTitle}
+            </p>
+            <p className="text-ink-soft/80 font-body text-xs mb-3">
+              {beachStatus.regionSubtitle}
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+              {sortedRegion.map((zone) => {
+                const config = statusConfig[zone.status];
+                return (
+                  <div
+                    key={zone.name}
+                    className="bg-shell rounded-xl border border-line p-3 flex flex-col items-center gap-2"
+                  >
+                    <span className={`block w-2.5 h-2.5 rounded-full ${config.color}`} />
+                    <span className="font-display font-semibold text-xs text-ink text-center">
+                      {zone.name}
+                    </span>
+                    <span
+                      className={`text-[11px] font-body font-medium px-2 py-0.5 rounded-full ${config.chip}`}
+                    >
+                      {config.label[lang] ?? config.label.es}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {(forecastText || (forecastDays && forecastDays.length > 0)) && (
-          <div className="mx-auto max-w-2xl mt-6">
+          <div className="mx-auto max-w-2xl mt-8">
             <p className="font-display font-semibold text-sm text-ink mb-3 flex items-center gap-2">
               <span aria-hidden="true">📅</span>
               {isEn ? 'Next days' : 'Próximos días'}

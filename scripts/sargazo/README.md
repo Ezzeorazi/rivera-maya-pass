@@ -150,6 +150,14 @@ El bot puede equivocarse. Estas defensas reducen el riesgo:
 - **Fuentes:** se guardan y muestran las páginas que Gemini consultó.
 - **Disclaimer** visible en la web.
 
+### ¿Dónde está limpio hoy? (zonas regionales)
+
+Además de las zonas de Playa del Carmen, el bot clasifica el sargazo en puntos
+de referencia de la región (`REGION_ZONES`: Holbox, Isla Mujeres, Puerto Morelos,
+Cancún, Tulum). Así, cuando PDC está afectada, la web puede decirle al visitante
+**a dónde SÍ ir** — esas zonas suelen escapar al cinturón de sargazo por su
+orientación norte o protección de arrecife.
+
 ### `overrides.json` — tu interruptor manual
 
 Editá `scripts/sargazo/overrides.json` y hacé push (o editalo desde GitHub web):
