@@ -43,8 +43,12 @@ from google.genai import types
 
 DEFAULT_ZONES = ["Zona Norte", "Mamitas", "Centro", "Playacar", "Xcalacoco"]
 
-VALID_STATUSES = {"clean", "moderate", "seaweed"}
+# "unknown" = no hay datos confiables de esa zona; preferimos ser honestos
+# antes que adivinar (evita el "pintar todo igual").
+VALID_STATUSES = {"clean", "moderate", "seaweed", "unknown"}
 STATUS_SEVERITY = {"clean": 0, "moderate": 1, "seaweed": 2}
+
+OVERRIDES_PATH = Path(__file__).resolve().parent / "overrides.json"
 
 # Coordenadas de Playa del Carmen.
 LATITUDE = 20.6296
@@ -286,16 +290,30 @@ Monitoreo del Sargazo de QR, noticias locales). Cruza esa info con los datos de
 arriba.
 
 Clasifica el estado de CADA zona de Playa del Carmen: {zones_list}
-Estados válidos: "clean" (limpia), "moderate" (moderado), "seaweed" (abundante).
-Si no hay dato de una zona, estima de forma conservadora con base en la
-tendencia general y la dirección del viento.
+Estados válidos:
+- "clean" (limpia), "moderate" (moderado), "seaweed" (abundante)
+- "unknown" (SIN DATO): úsalo cuando NO tengas información específica y
+  confiable de esa zona. Es preferible "unknown" antes que adivinar.
+
+REGLAS IMPORTANTES (afectan la credibilidad del sitio):
+1. NO marques todas las zonas con el mismo estado salvo que la evidencia lo
+   respalde de verdad. Las condiciones suelen VARIAR por zona; algunas (p. ej.
+   Mamitas o la zona norte) pueden diferir del centro. Refleja esa variación
+   cuando haya base para ello.
+2. Si solo tienes una tendencia general (sin detalle por playa), marca como
+   "unknown" las zonas de las que no tengas dato concreto, en vez de asumir el
+   peor caso para todas.
+3. Reporta tu nivel de confianza global en "confidence": "high" si hay reportes
+   recientes y específicos por zona; "medium" si es parcial; "low" si te basas
+   sobre todo en tendencia general y viento.
 
 Responde ÚNICAMENTE con un objeto JSON válido (sin markdown, sin texto extra)
 con esta forma EXACTA:
 
 {{
+  "confidence": "high|medium|low",
   "zones": [
-    {{ "name": "<zona>", "status": "clean|moderate|seaweed" }}
+    {{ "name": "<zona>", "status": "clean|moderate|seaweed|unknown" }}
   ],
   "summary": {{
     "es": "<2-3 frases sobre el estado del sargazo hoy; menciona viento o tormenta si es relevante>",
@@ -338,7 +356,19 @@ def normalize_status(value: str) -> str:
         return "moderate"
     if v in {"sargazo", "high", "red", "heavy", "abundante"}:
         return "seaweed"
-    return "moderate"
+    if v in {"sin dato", "sin datos", "n/a", "na", "desconocido", "no data", "gray", "grey"}:
+        return "unknown"
+    # Si no se reconoce, preferimos "sin dato" antes que inventar un estado.
+    return "unknown"
+
+
+def normalize_confidence(value: str) -> str:
+    v = (value or "").strip().lower()
+    if v in {"high", "alta", "alto"}:
+        return "high"
+    if v in {"low", "baja", "bajo"}:
+        return "low"
+    return "medium"
 
 
 def _bilingual(data: dict, key: str, fallback_es: str = "", fallback_en: str = "") -> dict | None:
@@ -370,7 +400,8 @@ def validate_and_build(
                 if k.lower() == name.lower():
                     status = v
                     break
-        out_zones.append({"name": name, "status": status or "moderate"})
+        # Sin dato de la IA -> "unknown" (honesto), no "moderate" inventado.
+        out_zones.append({"name": name, "status": status or "unknown"})
 
     summary = _bilingual(data, "summary")
     if not summary:
@@ -379,6 +410,7 @@ def validate_and_build(
     report = {
         "updatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "source": "ai",
+        "confidence": normalize_confidence(str(data.get("confidence", ""))),
         "zones": out_zones,
         "summary": summary,
     }
@@ -400,17 +432,17 @@ def validate_and_build(
 
 
 def worst_status(report: dict) -> str:
-    return max(
-        (z["status"] for z in report["zones"]),
-        key=lambda s: STATUS_SEVERITY.get(s, 0),
-        default="clean",
-    )
+    known = [z["status"] for z in report["zones"] if z["status"] in STATUS_SEVERITY]
+    if not known:
+        return "unknown"
+    return max(known, key=lambda s: STATUS_SEVERITY[s])
 
 
 CSV_FIELDS = [
     "date",
     "captured_at_utc",
     "source",
+    "confidence",
     "wind_dir_cardinal",
     "wind_dir_deg",
     "wind_speed_kmh",
@@ -428,6 +460,7 @@ def append_history(report: dict, wind: dict | None) -> None:
         "date": today,
         "captured_at_utc": report["updatedAt"],
         "source": report["source"],
+        "confidence": report.get("confidence", ""),
         "wind_dir_cardinal": (wind or {}).get("dir_cardinal", ""),
         "wind_dir_deg": (wind or {}).get("dir_deg", ""),
         "wind_speed_kmh": (wind or {}).get("speed_kmh", ""),
@@ -467,7 +500,10 @@ def upsert_supabase(report: dict, wind: dict | None) -> None:
         "wind_gust_kmh": (wind or {}).get("gust_kmh"),
         "worst_status": worst_status(report),
         "hurricane_active": alert.get("active", False),
+        "confidence": report.get("confidence"),
+        "overridden": report["source"] == "ai+manual",
         "zones": report["zones"],
+        "sources": report.get("sources", []),
         "summary_es": report["summary"]["es"],
         "summary_en": report["summary"]["en"],
         "recommendation_es": report.get("recommendation", {}).get("es"),
@@ -496,6 +532,64 @@ def upsert_supabase(report: dict, wind: dict | None) -> None:
         print(f"AVISO: fallo upsert Supabase: {exc}", file=sys.stderr)
 
 
+def extract_sources(response) -> list[dict]:
+    """Saca las fuentes que Gemini usó (grounding). [] si no hay/falla."""
+    sources: list[dict] = []
+    try:
+        candidate = response.candidates[0]
+        meta = getattr(candidate, "grounding_metadata", None)
+        chunks = getattr(meta, "grounding_chunks", None) or []
+        seen = set()
+        for ch in chunks:
+            web = getattr(ch, "web", None)
+            if not web:
+                continue
+            uri = getattr(web, "uri", None)
+            title = getattr(web, "title", None)
+            if not uri or uri in seen:
+                continue
+            seen.add(uri)
+            sources.append({"title": title or uri, "url": uri})
+            if len(sources) >= 5:
+                break
+    except Exception as exc:  # noqa: BLE001
+        print(f"AVISO: no se pudieron extraer fuentes ({exc}).", file=sys.stderr)
+    return sources
+
+
+def load_overrides() -> dict:
+    """Lee overrides.json si existe. Permite forzar zonas o pausar la publicación."""
+    if not OVERRIDES_PATH.exists():
+        return {}
+    try:
+        return json.loads(OVERRIDES_PATH.read_text(encoding="utf-8"))
+    except Exception as exc:  # noqa: BLE001
+        print(f"AVISO: overrides.json inválido ({exc}); se ignora.", file=sys.stderr)
+        return {}
+
+
+def apply_overrides(report: dict, overrides: dict) -> None:
+    """Aplica correcciones manuales por zona sobre el reporte ya generado."""
+    forced = overrides.get("zones") or {}
+    if not isinstance(forced, dict) or not forced:
+        return
+    forced_lower = {k.lower(): v for k, v in forced.items()}
+    changed = False
+    for zone in report["zones"]:
+        key = zone["name"].lower()
+        if key in forced_lower:
+            new_status = normalize_status(str(forced_lower[key]))
+            if new_status != zone["status"]:
+                zone["status"] = new_status
+                changed = True
+    if changed:
+        report["source"] = "ai+manual"
+        note = overrides.get("note")
+        if isinstance(note, dict) and note.get("es"):
+            report["overrideNote"] = {"es": note.get("es", ""), "en": note.get("en", note.get("es", ""))}
+        print("Override manual aplicado a una o más zonas.")
+
+
 def main() -> int:
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
@@ -505,6 +599,11 @@ def main() -> int:
     model = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
     zones = get_zones()
     today = local_date()
+
+    overrides = load_overrides()
+    if overrides.get("paused"):
+        print("PAUSADO por overrides.json: no se publica reporte hoy. Se mantiene el anterior.")
+        return 0
 
     print("Obteniendo clima (Open-Meteo)...")
     wind, forecast = fetch_weather()
@@ -540,6 +639,12 @@ def main() -> int:
         print("--- Respuesta cruda ---", file=sys.stderr)
         print(text, file=sys.stderr)
         return 1
+
+    sources = extract_sources(response)
+    if sources:
+        report["sources"] = sources
+        print(f"Fuentes capturadas: {len(sources)}")
+    apply_overrides(report, overrides)
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(

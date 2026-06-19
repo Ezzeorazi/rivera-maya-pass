@@ -28,7 +28,14 @@
     "moderate": "Moderado",
     "seaweed": "Sargazo",
     "updatedAt": "Actualizado hoy · condiciones en tiempo real",
-    "badgeClean": "Playa limpia hoy"
+    "badgeClean": "Playa limpia hoy",
+    "disclaimer": "Estimación basada en reportes locales y viento; las condiciones pueden cambiar durante el día — verifica siempre en el lugar antes de ir.",
+    "sourcesLabel": "Fuentes",
+    "confidenceLabel": "Confianza",
+    "unknownLabel": "Sin dato",
+    "confidenceHigh": "Alta",
+    "confidenceMedium": "Media",
+    "confidenceLow": "Baja"
   },
   "properties": {
     "sectionLabel": "PROPIEDADES",

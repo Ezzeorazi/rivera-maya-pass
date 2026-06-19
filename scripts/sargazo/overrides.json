@@ -1,0 +1,14 @@
+{
+  "_doc": "Correcciones manuales del bot de sargazo. Editá este archivo y hacé push (o editalo desde GitHub web) para que el próximo build lo tome.",
+  "_uso": {
+    "paused": "true = el bot NO publica reporte hoy (se mantiene el anterior). Útil si la IA se equivocó feo y querés frenar.",
+    "zones": "Forzá el estado real de una zona: 'clean' | 'moderate' | 'seaweed' | 'unknown'. Ej: { \"Mamitas\": \"clean\" }. Las zonas que no listes quedan como las puso la IA.",
+    "note": "Texto opcional que se muestra en la web cuando corregís algo."
+  },
+  "paused": false,
+  "zones": {},
+  "note": {
+    "es": "",
+    "en": ""
+  }
+}

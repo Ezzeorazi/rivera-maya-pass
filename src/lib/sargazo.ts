@@ -1,6 +1,8 @@
 import report from "@/data/sargazo-report.json";
 
-export type BeachStatusType = "clean" | "moderate" | "seaweed";
+export type BeachStatusType = "clean" | "moderate" | "seaweed" | "unknown";
+
+export type Confidence = "high" | "medium" | "low";
 
 export interface SargazoZone {
   name: string;
@@ -42,13 +44,24 @@ export interface HurricaneAlert {
   storms?: HurricaneStorm[];
 }
 
+export interface SargazoSource {
+  title: string;
+  url: string;
+}
+
 export interface SargazoReport {
   /** ISO 8601 timestamp of when the report was generated. */
   updatedAt: string;
-  /** Where the data came from: "ai" (Gemini) or "seed" (manual fallback). */
+  /** Where the data came from: "ai", "ai+manual" (overridden) or "seed". */
   source: string;
+  /** How sure the report is: high / medium / low. */
+  confidence?: Confidence;
   zones: SargazoZone[];
   summary: Bilingual;
+  /** Sources Gemini used (grounding citations). */
+  sources?: SargazoSource[];
+  /** Note shown when a human manually corrected the report. */
+  overrideNote?: Bilingual;
   /** Practical advice: cleanest zone today or an alternative plan. */
   recommendation?: Bilingual;
   /** Outlook for the next 2-3 days based on the wind forecast. */

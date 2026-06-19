@@ -1,6 +1,7 @@
 {
   "updatedAt": "2026-06-19T05:53:26Z",
   "source": "ai",
+  "confidence": "medium",
   "zones": [
     {
       "name": "Zona Norte",
@@ -69,5 +70,15 @@
   },
   "hurricaneAlert": {
     "active": false
-  }
+  },
+  "sources": [
+    {
+      "title": "Red de Monitoreo del Sargazo de Quintana Roo",
+      "url": "https://www.facebook.com/RedMonitoreoSargazoQR"
+    },
+    {
+      "title": "Reportes locales de sargazo — Playa del Carmen",
+      "url": "https://sargassummonitoring.com/"
+    }
+  ]
 }

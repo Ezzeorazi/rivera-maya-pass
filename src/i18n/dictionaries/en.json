@@ -28,7 +28,14 @@
     "moderate": "Moderate",
     "seaweed": "Seaweed",
     "updatedAt": "Updated today · real-time conditions",
-    "badgeClean": "Clean beach today"
+    "badgeClean": "Clean beach today",
+    "disclaimer": "Estimate based on local reports and wind; conditions can change during the day — always check locally before heading out.",
+    "sourcesLabel": "Sources",
+    "confidenceLabel": "Confidence",
+    "unknownLabel": "No data",
+    "confidenceHigh": "High",
+    "confidenceMedium": "Medium",
+    "confidenceLow": "Low"
   },
   "properties": {
     "sectionLabel": "PROPERTIES",

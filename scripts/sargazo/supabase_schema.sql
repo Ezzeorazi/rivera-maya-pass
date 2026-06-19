@@ -9,9 +9,12 @@ create table if not exists public.sargazo_history (
   wind_dir_deg      double precision,
   wind_speed_kmh    double precision,
   wind_gust_kmh     double precision,
-  worst_status      text,                        -- peor zona del día: clean|moderate|seaweed
+  worst_status      text,                        -- peor zona del día: clean|moderate|seaweed|unknown
   hurricane_active  boolean,                     -- tormenta/huracán relevante activo
+  confidence        text,                        -- high | medium | low
+  overridden        boolean,                     -- true si hubo corrección manual
   zones             jsonb,                       -- estado por zona
+  sources           jsonb,                       -- fuentes usadas (grounding)
   summary_es        text,
   summary_en        text,
   recommendation_es text,                        -- recomendación práctica (playa/alternativa)
@@ -23,6 +26,9 @@ create table if not exists public.sargazo_history (
 -- Si la tabla ya existía (versión previa), estas columnas la actualizan.
 -- Es seguro re-ejecutar todo el archivo: nada se borra.
 alter table public.sargazo_history add column if not exists hurricane_active  boolean;
+alter table public.sargazo_history add column if not exists confidence        text;
+alter table public.sargazo_history add column if not exists overridden        boolean;
+alter table public.sargazo_history add column if not exists sources           jsonb;
 alter table public.sargazo_history add column if not exists recommendation_es text;
 alter table public.sargazo_history add column if not exists recommendation_en text;
 alter table public.sargazo_history add column if not exists forecast_es       text;

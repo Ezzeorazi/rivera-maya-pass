@@ -22,6 +22,18 @@ const statusConfig: Record<
     label: { es: 'Sargazo', en: 'Seaweed' },
     chip: 'bg-red-100 text-red-700',
   },
+  unknown: {
+    color: 'bg-gray-400',
+    pulse: 'bg-gray-300',
+    label: { es: 'Sin dato', en: 'No data' },
+    chip: 'bg-gray-100 text-gray-600',
+  },
+};
+
+const confidenceChip: Record<string, string> = {
+  high: 'bg-green-100 text-green-700',
+  medium: 'bg-yellow-100 text-yellow-700',
+  low: 'bg-orange-100 text-orange-700',
 };
 
 function formatUpdatedAt(iso: string, lang: string): string {
@@ -56,10 +68,26 @@ export default function BeachStatus({
   lang: string;
 }) {
   const beachStatus = dict.beachStatus as Record<string, string>;
-  const { zones, summary, updatedAt, recommendation, forecast, forecastDays, hurricaneAlert } =
-    sargazoReport;
+  const {
+    zones,
+    summary,
+    updatedAt,
+    recommendation,
+    forecast,
+    forecastDays,
+    hurricaneAlert,
+    confidence,
+    sources,
+    overrideNote,
+  } = sargazoReport;
   const isEn = lang === 'en';
   const summaryText = summary[lang as keyof typeof summary] ?? summary.es;
+  const overrideText = overrideNote?.[lang as keyof typeof overrideNote];
+  const confidenceLabel = confidence
+    ? beachStatus[
+        'confidence' + confidence.charAt(0).toUpperCase() + confidence.slice(1)
+      ]
+    : undefined;
   const recommendationText = recommendation?.[lang as keyof typeof recommendation];
   const forecastText = forecast?.[lang as keyof typeof forecast];
   const alertText = hurricaneAlert?.active
@@ -187,23 +215,65 @@ export default function BeachStatus({
           </div>
         )}
 
-        <p className="text-center text-xs text-ink-soft/60 font-body mt-6 flex items-center justify-center gap-1">
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <polyline points="12 6 12 12 16 14" />
-          </svg>
-          {updatedLabel}
-        </p>
+        {overrideText && (
+          <p className="mx-auto max-w-2xl text-center text-xs text-ink-soft/70 font-body italic mt-6">
+            ✎ {overrideText}
+          </p>
+        )}
+
+        <div className="text-center mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+          <p className="text-xs text-ink-soft/60 font-body flex items-center gap-1">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            {updatedLabel}
+          </p>
+          {confidenceLabel && confidence && (
+            <span
+              className={`text-[11px] font-body font-medium px-2 py-0.5 rounded-full ${
+                confidenceChip[confidence] ?? confidenceChip.medium
+              }`}
+            >
+              {beachStatus.confidenceLabel}: {confidenceLabel}
+            </span>
+          )}
+        </div>
+
+        {sources && sources.length > 0 && (
+          <p className="text-center text-[11px] text-ink-soft/50 font-body mt-3">
+            {beachStatus.sourcesLabel}:{' '}
+            {sources.map((s, i) => (
+              <span key={s.url}>
+                {i > 0 && ' · '}
+                <a
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-sea"
+                >
+                  {s.title}
+                </a>
+              </span>
+            ))}
+          </p>
+        )}
+
+        {beachStatus.disclaimer && (
+          <p className="mx-auto max-w-2xl text-center text-[11px] text-ink-soft/50 font-body mt-3">
+            {beachStatus.disclaimer}
+          </p>
+        )}
       </div>
     </section>
   );

@@ -138,6 +138,35 @@ python scripts/sargazo/train_model.py
   + pronóstico) que ya hace el bot. La predicción a varios días de verdad llegará
   con datos satelitales (AFAI/Copernicus) en una fase posterior.
 
+## Confiabilidad y correcciones manuales (anti-riesgo de marca)
+
+El bot puede equivocarse. Estas defensas reducen el riesgo:
+
+- **Honestidad por zona:** si la IA no tiene dato concreto de una playa, la marca
+  como `unknown` ("Sin dato") en vez de inventar. El prompt le prohíbe pintar
+  todas las zonas iguales sin evidencia.
+- **Nivel de confianza:** cada reporte trae `confidence` (high/medium/low), que
+  se muestra en la web.
+- **Fuentes:** se guardan y muestran las páginas que Gemini consultó.
+- **Disclaimer** visible en la web.
+
+### `overrides.json` — tu interruptor manual
+
+Editá `scripts/sargazo/overrides.json` y hacé push (o editalo desde GitHub web):
+
+```jsonc
+{
+  "paused": false,                 // true = NO publica hoy (mantiene el anterior)
+  "zones": { "Mamitas": "clean" }, // fuerza el estado real de una zona
+  "note": { "es": "Corregido a mano", "en": "Manually corrected" }
+}
+```
+
+- Si la IA se equivoca feo, poné `"paused": true` y se congela el último reporte.
+- Para corregir una sola playa, agregала en `zones` con su estado real
+  (`clean` | `moderate` | `seaweed` | `unknown`). Las demás quedan como la IA.
+- Cuando hay corrección, el `source` pasa a `ai+manual` y se muestra tu nota.
+
 ## Notas
 
 - El archivo `src/data/sargazo-report.json` incluido es una **semilla** para que
