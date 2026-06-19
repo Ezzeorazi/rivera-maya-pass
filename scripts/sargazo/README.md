@@ -143,6 +143,7 @@ python scripts/sargazo/update_sargazo.py
 | ---------------- | ------------------ | ----------- |
 | `GEMINI_API_KEY` | —                  | **Obligatoria.** API key de Google AI Studio |
 | `GEMINI_MODEL`   | `gemini-2.5-flash` | Modelo de Gemini |
+| `GEMINI_FALLBACK_MODEL` | `gemini-2.0-flash` | Modelo de respaldo si el principal está saturado |
 | `SARGAZO_ZONES`  | 5 zonas de PDC     | Zonas separadas por coma |
 | `SUPABASE_URL`   | —                  | (Opcional) URL del proyecto Supabase |
 | `SUPABASE_KEY`   | —                  | (Opcional) service_role key |
@@ -251,5 +252,11 @@ Así, el horario caótico deja de ser un problema: el sitio nunca queda sin dato
   compile antes del primer reporte real; el bot lo sobrescribe.
 - Si Gemini no devuelve un JSON válido, el script falla **sin** sobrescribir el
   archivo: nunca se publica un reporte corrupto.
+- **Resiliencia ante caídas de Gemini:** si el modelo da un error transitorio
+  (503 "high demand", 429, 5xx), el bot **reintenta con espera creciente** y, si
+  sigue, prueba el **modelo de respaldo**. Si aun así no responde, el workflow
+  sale en **verde** sin tocar nada: la web mantiene el reporte del día anterior y
+  al día siguiente se reintenta. Así un hipo temporal de Google no rompe el sitio
+  ni deja el historial en rojo.
 - La fecha del dataset usa **zona horaria de Quintana Roo** (no la del runner UTC),
   así el `date` del CSV/Supabase siempre coincide con la fecha local real.

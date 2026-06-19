@@ -29,6 +29,7 @@ import math
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -37,6 +38,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from google import genai
+from google.genai import errors as genai_errors
 from google.genai import types
 
 # --- Configuración ---------------------------------------------------------
@@ -561,6 +563,45 @@ def upsert_supabase(report: dict, wind: dict | None) -> None:
         print(f"AVISO: fallo upsert Supabase: {exc}", file=sys.stderr)
 
 
+# Códigos HTTP transitorios: vale la pena reintentar.
+TRANSIENT_CODES = {429, 500, 502, 503, 504}
+
+
+def generate_with_retry(client, models: list[str], prompt: str, attempts: int = 3):
+    """Llama a Gemini con reintentos (backoff) y modelo de respaldo.
+
+    Reintenta ante errores transitorios (503 'high demand', 429, 5xx). Si un
+    modelo se agota, prueba el siguiente. Lanza la última excepción si todo falla.
+    """
+    config = types.GenerateContentConfig(
+        tools=[types.Tool(google_search=types.GoogleSearch())],
+        temperature=0.3,
+    )
+    last_exc: Exception | None = None
+    for model in models:
+        delay = 8
+        for attempt in range(1, attempts + 1):
+            try:
+                print(f"Consultando {model} (intento {attempt}/{attempts})...")
+                return client.models.generate_content(
+                    model=model, contents=prompt, config=config
+                )
+            except genai_errors.APIError as exc:
+                last_exc = exc
+                code = getattr(exc, "code", None)
+                if code in TRANSIENT_CODES and attempt < attempts:
+                    print(f"  Gemini {code} transitorio; reintento en {delay}s...", file=sys.stderr)
+                    time.sleep(delay)
+                    delay *= 2
+                    continue
+                # No transitorio (p. ej. 400/401/403) o se agotaron intentos.
+                print(f"  Falló {model} ({code}); probando respaldo si hay...", file=sys.stderr)
+                break
+    if last_exc:
+        raise last_exc
+    raise RuntimeError("No se pudo generar contenido.")
+
+
 def extract_sources(response) -> list[dict]:
     """Saca las fuentes que Gemini usó (grounding). [] si no hay/falla."""
     sources: list[dict] = []
@@ -645,15 +686,23 @@ def main() -> int:
     client = genai.Client(api_key=api_key)
     prompt = build_prompt(zones, today, wind, forecast, storms)
 
-    print(f"Consultando {model} con Google Search grounding...")
-    response = client.models.generate_content(
-        model=model,
-        contents=prompt,
-        config=types.GenerateContentConfig(
-            tools=[types.Tool(google_search=types.GoogleSearch())],
-            temperature=0.3,
-        ),
-    )
+    # Modelo principal + respaldo (por si el principal está saturado).
+    models_to_try = [model]
+    fallback = os.environ.get("GEMINI_FALLBACK_MODEL", "gemini-2.0-flash")
+    if fallback and fallback != model:
+        models_to_try.append(fallback)
+
+    try:
+        response = generate_with_retry(client, models_to_try, prompt)
+    except genai_errors.APIError as exc:
+        # Caída transitoria de Gemini: salimos en VERDE sin tocar nada.
+        # La web mantiene el reporte anterior; mañana se reintenta.
+        print(
+            f"AVISO: Gemini no disponible tras reintentos ({getattr(exc, 'code', '')}). "
+            "Se mantiene el reporte anterior; no se publica hoy.",
+            file=sys.stderr,
+        )
+        return 0
 
     text = response.text or ""
     if not text.strip():
