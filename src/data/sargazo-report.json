@@ -1,19 +1,19 @@
 {
-  "updatedAt": "2026-06-19T06:51:43Z",
+  "updatedAt": "2026-06-19T17:24:21Z",
   "source": "ai",
-  "confidence": "medium",
+  "confidence": "high",
   "zones": [
     {
       "name": "Zona Norte",
-      "status": "seaweed"
+      "status": "moderate"
     },
     {
       "name": "Mamitas",
-      "status": "seaweed"
+      "status": "moderate"
     },
     {
       "name": "Centro",
-      "status": "seaweed"
+      "status": "moderate"
     },
     {
       "name": "Playacar",
@@ -21,13 +21,13 @@
     },
     {
       "name": "Xcalacoco",
-      "status": "seaweed"
+      "status": "unknown"
     }
   ],
   "regionZones": [
     {
       "name": "Holbox",
-      "status": "unknown"
+      "status": "clean"
     },
     {
       "name": "Isla Mujeres",
@@ -47,47 +47,47 @@
     }
   ],
   "summary": {
-    "es": "Hoy, 19 de junio de 2026, las playas de Playa del Carmen experimentan un arribo intenso y atípico de sargazo, con reportes de lodo y malos olores en varias zonas. Los vientos del sureste (SE) a 17.2 km/h con ráfagas de 33.1 km/h soplan desde el mar hacia la costa, favoreciendo la llegada de esta macroalga.",
-    "en": "Today, June 19, 2026, the beaches of Playa del Carmen are experiencing an intense and atypical arrival of sargassum, with reports of mud and foul odors in several areas. Southeast (SE) winds at 17.2 km/h with gusts of 33.1 km/h are blowing from the sea towards the coast, favoring the arrival of this macroalgae."
+    "es": "Hoy, 19 de junio de 2026, la Riviera Maya enfrenta una temporada de sargazo intensa, con un arribo masivo en muchas de sus playas. Los vientos del sureste (SE) a 23.3 km/h, con ráfagas de hasta 51.1 km/h, soplan desde el mar hacia la costa, favoreciendo la llegada de esta macroalga. Las autoridades de Playa del Carmen han reportado la recolección de más de 17 mil toneladas de sargazo en lo que va del año, calificando la situación actual como atípica y de intenso recale.",
+    "en": "Today, June 19, 2026, the Riviera Maya is experiencing an intense sargassum season, with massive arrivals on many of its beaches. Southeast (SE) winds at 23.3 km/h, with gusts up to 51.1 km/h, are blowing from the sea towards the coast, favoring the arrival of this macroalgae. Authorities in Playa del Carmen have reported collecting over 17,000 tons of sargassum so far this year, describing the current situation as atypical with intense beaching."
   },
   "recommendation": {
-    "es": "Debido a la abundante presencia de sargazo en Playa del Carmen, se recomienda visitar Isla Mujeres, donde las playas se reportan limpias o con sargazo mínimo. Alternativamente, considera un día de alberca o un club de playa en Playa del Carmen.",
-    "en": "Due to the abundant presence of sargassum in Playa del Carmen, it is recommended to visit Isla Mujeres, where beaches are reported clean or with minimal sargassum. Alternatively, consider a pool day or a beach club in Playa del Carmen."
+    "es": "Dado el intenso recale en Playa del Carmen, donde zonas como Playacar están con sargazo abundante, y otras como Zona Norte, Mamitas y Centro con niveles moderados gracias a los esfuerzos de limpieza, se recomienda considerar opciones con menor afectación. Holbox e Isla Mujeres ofrecen playas limpias hoy, siendo excelentes alternativas para disfrutar del mar. En Puerto Morelos, Playa Centro también se reporta limpia.",
+    "en": "Given the intense sargassum arrival in Playa del Carmen, where areas like Playacar have abundant sargassum, and others like Zona Norte, Mamitas, and Centro have moderate levels due to cleaning efforts, it is recommended to consider options with less impact. Holbox and Isla Mujeres offer clean beaches today, making them excellent alternatives to enjoy the sea. In Puerto Morelos, Playa Centro is also reported clean."
   },
   "forecast": {
-    "es": "El pronóstico de viento para los próximos días (20 al 22 de junio) indica vientos constantes del sureste (SE) y este (E), lo que sugiere que la situación del sargazo en las playas de la Riviera Maya, especialmente en Playa del Carmen, se mantendrá o podría empeorar.",
-    "en": "The wind forecast for the next few days (June 20-22) indicates consistent southeast (SE) and east (E) winds, suggesting that the sargassum situation on the Riviera Maya beaches, especially in Playa del Carmen, will remain the same or could worsen."
+    "es": "El pronóstico de viento para los próximos días (20-22 de junio) indica vientos constantes del sureste (SE) que continuarán empujando el sargazo hacia la costa. Por lo tanto, se espera que la situación de arribo de sargazo se mantenga similar o incluso empeore en las playas expuestas.",
+    "en": "The wind forecast for the next few days (June 20-22) indicates consistent southeast (SE) winds that will continue to push sargassum towards the coast. Therefore, the sargassum arrival situation is expected to remain similar or even worsen on exposed beaches."
   },
   "forecastDays": [
     {
       "date": "2026-06-20",
-      "dir_deg": 114,
+      "dir_deg": 117,
       "dir_cardinal": "SE",
-      "speed_kmh": 17.8,
-      "gust_kmh": 39.2,
+      "speed_kmh": 16.9,
+      "gust_kmh": 36.0,
       "onshore": true
     },
     {
       "date": "2026-06-21",
       "dir_deg": 117,
       "dir_cardinal": "SE",
-      "speed_kmh": 25.0,
-      "gust_kmh": 52.6,
+      "speed_kmh": 18.4,
+      "gust_kmh": 50.4,
       "onshore": true
     },
     {
       "date": "2026-06-22",
-      "dir_deg": 103,
+      "dir_deg": 101,
       "dir_cardinal": "E",
-      "speed_kmh": 19.6,
-      "gust_kmh": 41.8,
+      "speed_kmh": 20.6,
+      "gust_kmh": 44.3,
       "onshore": true
     }
   ],
   "wind": {
-    "speed_kmh": 17.2,
-    "gust_kmh": 33.1,
-    "dir_deg": 127,
+    "speed_kmh": 23.3,
+    "gust_kmh": 51.1,
+    "dir_deg": 134,
     "dir_cardinal": "SE"
   },
   "hurricaneAlert": {
@@ -96,23 +96,23 @@
   "sources": [
     {
       "title": "noticaribe.com.mx",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHzNkg4Kfd9wT1ONKZlqedxnyNtxMZBObKDUF5M1k3DVQVr10ch5TwIweCwr8bqUIwX-NEE006mW670F6iVX5rbNCRB9ZDyJLH7dqyi1OS4ingC9YhOPaYaHIW3Ov1jlb_cmnMjFFmUXv8RXMgMn2pJs-DOnhM55VF5h8FYKwHqGfTagh6nv4uavGoRqK5C_mIsMYO6d4KqNAc2_BMgreJkA9ZySxTn5XT09BdwYk="
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEIBO4lw2-WlweTfLB7DUWEgU1MfKsWBJGptoKNhf24dhR0zcVCEArM-LTpetbiQRlrIr6RrcHVuEeJ3Ys62BGgobe9apze2R6TsVBmFRL3ll4OytwuOZ93FbbawGl0mGkH3J4XX4TuqsLbTTyqyITnOeh8v-43qpU58xJMYIfW5kgUUGwodfDGZX1dvtDH0ysUaJn-yoKx5MXjkBYt4Edr0D4tQ64ovCM_x0hcxlQ="
     },
     {
-      "title": "poresto.com",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH6dxH9y2kgFwkRFzNK7RCwVmt4ypl29zSfwraHE0LQAkEYDYli9AISKXTC41RHaRX0Kgji0a8QKOw8G6y77XyTBcQFJEG9FXDnpGdlTZxMBgaqdTT7xI1XC9b0qc_E7KH5lqa3Za1rtJmkbAsHYh_sGbLRV8HO2wBa6diacxbkAOkic94be3C0fCA2gTKa2c1QGt5zovSq6Ia7xg-qHravLn7JAVmZ-JWkMorrSTY-JZKfgGLZdr2UOiK_PuU0mZef3cw="
-    },
-    {
-      "title": "sargazo.info",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFalumnO0Ve8gZhnSH9dtZR7yBSYYU9kGyJma9PE5hs7_k1OV_tddRlsws0UheXFAERQsNR90u4TPbHIF5ugzKFfC46K351MckH52sheyjY"
+      "title": "excelsior.com.mx",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGPyhDcVYe1P4UL7ft1EpD-YWtN0qd0el3fL0on2U9jFjn0s6AT1jszESqxaMmOAl57hS8ZYU7CG3aIrxTcJY91cGsXqPR8L2Bbc42-iVUAA4xkjdzOa_Vh--WbvHFfVc-N4lFSaEkteDw12IIBs_Mo1EQHi1ruA82DsQl5z_6NwM0YkiXub6fobr4Jh2NxQTo="
     },
     {
       "title": "sargazo.info",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGDoTniqwecIdR-b4H1UGsQQB65YIqctf6D92Y-wSAXKJ8aQw091Nh5TN-Iy2MsAvuUrmiha7I55M3PV7xe7VBZXDezu1ZUMpel8u9wxBmSmlvKbwAtGg3XjOKLRg=="
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjV_sG0xrYwG4aUoqQ-x2C34wpqSXpqNk1_f-14xVhcifcjZLL-ZFNaYL2WDtGOipUAcMWrBok6hQKH-Eg9Mi1_mZvPWm2fSUwEVeFmQm1U4V5q6qY18_yxhkNIA=="
     },
     {
-      "title": "chetoba.com.ar",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGW-pv0fJrU5T5T0x4I7fhENl7UQblzhOPj1WNsX9bUS2AbLYzcHVCiNW7CXHT1I6HcX2IK1XsSjaBrNLMRJc81is2ohFpLHs22q23QVb9EyzuSq4vPGJoVa--w4pSg4gEiI_6GAXgWKXxMlTHLC0OLVUaQ4A=="
+      "title": "sargazo.info",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHdKQHCTeel5N0qcEJ7hBPTlcjUScs2bJA-n78I48ev7dBpsiP4DQrv3JcYlEsTu9PSGmy3TwV7Oo9zkc3A305LYXQ3LfcN7INr_xlcEHJYwB-lN5EHRxsELXpWVTXU2qg="
+    },
+    {
+      "title": "sargazo.info",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEm-xChA1pq17__cWM1LxKLcMInVbCzXT79EHcXDBimRg5lD2zrTpocxatL_KX2DNYW4Y8sYL8JfPRvnZVcSdxe1lpwNJOR-03wibmFnUg1"
     }
   ]
 }
