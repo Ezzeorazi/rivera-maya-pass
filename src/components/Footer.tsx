@@ -96,9 +96,21 @@ export default function Footer({
       </div>
 
       <div className="border-t border-ink-soft/20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 space-y-1.5">
           <p className="text-center text-lagoon/50 text-xs font-body">
             © {new Date().getFullYear()} RivieraMayaPass. {footer.rights}
+          </p>
+          <p className="text-center text-lagoon/50 text-xs font-body">
+            Desarrollado por{' '}
+            <a
+              href="https://ezequiel-orazi.online"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-lagoon/80 hover:text-lagoon underline underline-offset-2 transition-colors"
+            >
+              Ezequiel Orazi
+            </a>{' '}
+            — derechos reservados
           </p>
         </div>
       </div>
