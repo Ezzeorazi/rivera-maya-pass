@@ -1,0 +1,4 @@
+# Dependencias para fetch_historico.py (utilidad de Fase 2).
+# El CSV se genera solo con la stdlib; pandas/openpyxl son para el Excel.
+pandas>=2.0
+openpyxl>=3.1

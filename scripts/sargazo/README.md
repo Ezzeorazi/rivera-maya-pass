@@ -217,6 +217,27 @@ por viento. La Fase 2 agrega una **predicción aprendida** a 48-72h.
   **satelitales** (AFAI/Copernicus), que ven las manchas en el Atlántico días
   antes de llegar a la costa.
 
+### Histórico de clima (base de features) — `fetch_historico.py`
+
+Utilidad **separada del bot diario** que baja años de viento + temperatura
+(Open-Meteo / ERA5, gratis) para las 10 zonas, con las mismas features
+(onshore/offshore, estacionalidad seno/coseno).
+
+> **Por qué está separado:** el histórico te da las *preguntas* (clima,
+> estacionalidad) con años de datos, pero **no las etiquetas** ("playa X estuvo
+> con sargazo el día Y") — ese dato histórico no existe estructurado. Las
+> etiquetas las acumula el bot a diario (Supabase) + tu verificación con el
+> semáforo oficial. Los dos se **unen al entrenar** (join por fecha+zona), no se
+> mezclan en la misma tabla.
+>
+> Sirve para: arrancar con features listas, analizar estacionalidad y hacer
+> contenido. NO reemplaza la recolección diaria de etiquetas.
+
+Cómo correrlo: pestaña **Actions → "Histórico de clima (Fase 2)" → Run workflow**.
+Deja un **artifact descargable** (CSV + Excel); no toca el repo. La columna
+`sargazo_estado` queda vacía a propósito (es la etiqueta a llenar con dato
+verificado).
+
 ### Visión sobre el mapa oficial (Red de Monitoreo de QR)
 
 El **Mapa Semáforo del Sargazo** de la SEMA/Red de Monitoreo de QR es la fuente
