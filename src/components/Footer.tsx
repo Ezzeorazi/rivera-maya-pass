@@ -96,12 +96,20 @@ export default function Footer({
       </div>
 
       <div className="border-t border-ink-soft/20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 space-y-1.5">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 space-y-2">
+          <div className="flex justify-center">
+            <Link
+              href={`/${lang}/terminos`}
+              className="text-lagoon/60 hover:text-lagoon text-xs font-body underline underline-offset-2 transition-colors"
+            >
+              {lang === 'en' ? 'Terms & Conditions' : 'Términos y Condiciones'}
+            </Link>
+          </div>
           <p className="text-center text-lagoon/50 text-xs font-body">
             © {new Date().getFullYear()} RivieraMayaPass. {footer.rights}
           </p>
           <p className="text-center text-lagoon/50 text-xs font-body">
-            Desarrollado por{' '}
+            {lang === 'en' ? 'Developed by' : 'Desarrollado por'}{' '}
             <a
               href="https://ezequiel-orazi.online"
               target="_blank"
@@ -109,8 +117,7 @@ export default function Footer({
               className="font-medium text-lagoon/80 hover:text-lagoon underline underline-offset-2 transition-colors"
             >
               Ezequiel Orazi
-            </a>{' '}
-            — derechos reservados
+            </a>
           </p>
         </div>
       </div>

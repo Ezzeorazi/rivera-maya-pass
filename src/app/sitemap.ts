@@ -41,6 +41,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
+  // Términos y Condiciones
+  for (const locale of locales) {
+    routes.push({
+      url: `${baseUrl}/${locale}/terminos`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    });
+  }
+
   // Blog post pages
   for (const locale of locales) {
     for (const post of blogPosts) {
