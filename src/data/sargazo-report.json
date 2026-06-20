@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-19T18:08:47Z",
+  "updatedAt": "2026-06-20T15:31:10Z",
   "source": "ai",
   "confidence": "high",
   "zones": [
@@ -17,7 +17,7 @@
     },
     {
       "name": "Playacar",
-      "status": "seaweed"
+      "status": "moderate"
     },
     {
       "name": "Xcalacoco",
@@ -47,79 +47,79 @@
     }
   ],
   "summary": {
-    "es": "Hoy, 19 de junio de 2026, la Riviera Maya enfrenta un arribo significativo de sargazo, con el viento soplando desde el sureste (SE) a 22.8 km/h y ráfagas de hasta 50.8 km/h, empujando la macroalga hacia la costa. Monitoreos recientes indican que 66 de 140 playas en Quintana Roo presentan acumulación 'excesiva' y 30 'abundante'. Playa del Carmen ha registrado un 'intenso recale' con más de 17 mil toneladas recolectadas en lo que va del año.",
-    "en": "Today, June 19, 2026, the Riviera Maya is experiencing a significant arrival of sargassum, with winds blowing from the southeast (SE) at 22.8 km/h and gusts up to 50.8 km/h, pushing the seaweed towards the coast. Recent monitoring indicates that 66 out of 140 beaches in Quintana Roo show 'excessive' accumulation and 30 'abundant'. Playa del Carmen has reported an 'intense influx' with over 17,000 tons collected so far this year."
+    "es": "Hoy, 20 de junio de 2026, la Riviera Maya experimenta una temporada de sargazo intensa, con vientos del sureste que favorecen el arribo de la macroalga a la costa. La presencia de sargazo es 'atípica' y 'fuerte' en muchas playas, y se ha emitido una alerta por posibles gases tóxicos en zonas de acumulación.",
+    "en": "Today, June 20, 2026, the Riviera Maya is experiencing an intense sargassum season, with southeast winds favoring the arrival of the macroalgae to the coast. Sargassum presence is 'atypical' and 'strong' on many beaches, and an alert has been issued for possible toxic gases in accumulation areas."
   },
   "recommendation": {
-    "es": "Dado el alto arribo de sargazo en Playa del Carmen y Tulum, se recomienda visitar Holbox o Isla Mujeres, que reportan condiciones de playa 'limpias' o con sargazo 'mínimo'. En Cancún, las playas de la zona hotelera norte suelen estar más limpias. Considera un día de alberca o un club de playa si prefieres quedarte en Playa del Carmen.",
-    "en": "Given the high sargassum arrival in Playa del Carmen and Tulum, it is recommended to visit Holbox or Isla Mujeres, which report 'clean' or 'minimal' sargassum conditions. In Cancún, the northern hotel zone beaches tend to be cleaner. Consider a pool day or a beach club if you prefer to stay in Playa del Carmen."
+    "es": "Para disfrutar de playas limpias hoy, te recomendamos encarecidamente visitar Holbox o Isla Mujeres, que reportan condiciones óptimas. En Playa del Carmen, Playacar podría ofrecer una experiencia moderada, pero la mayoría de las playas están afectadas.",
+    "en": "To enjoy clean beaches today, we strongly recommend visiting Holbox or Isla Mujeres, which report optimal conditions. In Playa del Carmen, Playacar might offer a moderate experience, but most beaches are affected."
   },
   "forecast": {
-    "es": "El pronóstico de viento para los próximos días (20-22 de junio) indica vientos del SE/E, lo que sugiere que la tendencia de arribo de sargazo a la costa se mantendrá o incluso podría empeorar en las playas orientadas al este.",
-    "en": "The wind forecast for the next few days (June 20-22) indicates SE/E winds, suggesting that the sargassum arrival trend on the coast will continue or could even worsen on east-facing beaches."
+    "es": "El pronóstico de viento para los próximos días (SE y E, onshore) indica que la tendencia de arribo de sargazo se mantendrá o incluso podría empeorar en las zonas afectadas.",
+    "en": "The wind forecast for the next few days (SE and E, onshore) indicates that the sargassum arrival trend will continue or could even worsen in affected areas."
   },
   "forecastDays": [
     {
-      "date": "2026-06-20",
-      "dir_deg": 117,
-      "dir_cardinal": "SE",
-      "speed_kmh": 16.9,
-      "gust_kmh": 36.0,
-      "temp_max_c": 31.5,
-      "temp_min_c": 27.2,
-      "onshore": true
-    },
-    {
       "date": "2026-06-21",
-      "dir_deg": 117,
+      "dir_deg": 114,
       "dir_cardinal": "SE",
-      "speed_kmh": 18.4,
-      "gust_kmh": 50.4,
-      "temp_max_c": 30.8,
-      "temp_min_c": 26.0,
+      "speed_kmh": 19.6,
+      "gust_kmh": 66.2,
+      "temp_max_c": 30.3,
+      "temp_min_c": 23.0,
       "onshore": true
     },
     {
       "date": "2026-06-22",
-      "dir_deg": 101,
+      "dir_deg": 98,
       "dir_cardinal": "E",
-      "speed_kmh": 20.6,
-      "gust_kmh": 44.3,
-      "temp_max_c": 31.3,
-      "temp_min_c": 27.4,
+      "speed_kmh": 18.5,
+      "gust_kmh": 40.7,
+      "temp_max_c": 31.1,
+      "temp_min_c": 26.1,
+      "onshore": true
+    },
+    {
+      "date": "2026-06-23",
+      "dir_deg": 79,
+      "dir_cardinal": "E",
+      "speed_kmh": 20.2,
+      "gust_kmh": 45.0,
+      "temp_max_c": 30.8,
+      "temp_min_c": 26.6,
       "onshore": true
     }
   ],
   "wind": {
-    "speed_kmh": 22.8,
-    "gust_kmh": 50.8,
-    "dir_deg": 134,
+    "speed_kmh": 14.5,
+    "gust_kmh": 34.9,
+    "dir_deg": 131,
     "dir_cardinal": "SE"
   },
   "hurricaneAlert": {
     "active": false
   },
-  "temperatureC": 31.0,
+  "temperatureC": 30.5,
   "sources": [
     {
-      "title": "excelsior.com.mx",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUaVPnAn72dz-CCXB-Yu2Btn_W2RELn2zHmQ9Pa-Ktn-j8ecYdmQmo8zaROSRCvDqwvt6aJNqrDW2dVjtbu5HEb_KDcCTwoCJIGGJW9wcn5-luFtBud4xgjPwfjfb3O3rv6iqJCGltvp5wZdvHQiN3U9dbzloZYe7N0ThlMVcbbrkmSoGN0WRpld8krZYkQA8="
+      "title": "noticaribe.com.mx",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFBzYABWHKJ1G5vFm324Irse4YesZpaf7DLfo7V4LQ6sW3fuQxNAadwj5V-l8w8YObPv7F7CkpisqBKTxZ6XVSPKqTAFx62pYGIuSsRSFiuLmpapLIFEZKoAN51eIRFtC27BK5g852dzzWW6PbFm8eM4FFobOKA-rrMk27ZiZWc6xkqVvSStsHRpaHadgEoqwMnzz6yOqgl2pW18fFyaah9s6MLlyLxxdEO2bCWKlxE"
     },
     {
-      "title": "noticaribe.com.mx",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjjyjsiB4iV6cf2wQr9NAhohqQtXB-xMesV8Zz-nD4R_thar_jPjbKX_q8RiypabRcN3QEj6wbKXxsGxfIZnEaaSKyUbldlX_MTZBxhFPxhtjIvZ8nWnwuRMqYAPIdQFRmCnpFIOibJjdA6X_8TFCFoqDlwIzG76W5ysPvhL2C2Dbfzp3WyM6Y8uB4CCPrsFJyQirGap54wTJoT18iw6ZcdwrFXR-1uVMbovQR8E0="
+      "title": "tiempo.com.mx",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGemZQbIM1kd0GGpbBLk4_gsSyDVZUgFZGPy7B7vO8zW-mYkai1MpgmWZRGm1EI3V4Pau34XbRPsRnNL_rdMWXyaIENCn5TirEigC3cwqAmYc0flzicJNTK9ESylGsA7hw-gYLAr7Vtocdjs8AH-2Lm1xbqmFhNj1az8hI7yAtRgXlnoCFtMy3Gd-7RRsFwTeMhafo0RUAVxaLQC5HjI-Us"
+    },
+    {
+      "title": "canal12quintanaroo.mx",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDH4B5DCEwC3vyqYz0W0hdtVKU_Gc87B9jJ8X26ijXYf59UOGWfjZbxVk4V-f6E2NeB-kLOwcCqyYRG1e4fQ23q9WLZE2TfQDLiTENqRTeXAvRWl1NFsrf-FU8u-o7h98y0ooy7_942dTQJwhRV4SoakG2W2J1iu2SymwzH4K4mXwt0ill_R-wHzTgeBwIxiCZfn8Ru1efNUEHtMliM9YofwQLj4fIVLvuSByHiFgcJu-fbi0trw=="
     },
     {
       "title": "sargazo.today",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGviglS5Q0eEIzTKOYLeADgllQBmpda6nxLLZ5bbLwqqhOaNW1y6Sv9BsLdbpx9Z6Pt7XEBb6Xx7h9cb5L88QxmmA5nqaTcwBcMv9qCcDLRiqnPTFmv2g=="
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFEX_LdLNxw3U74tQYrk2LJsv15o3G4vqV4ekOdYWuuf6MF5RugK6mofrzE-v7AfWXy5DJ92ptdOJwE1wo5G6mRccHeZxRHvWV3pcHuTXGY8m_3mXV32uxLleLNVRFLxj1r2Xu7DJ7QWLYV"
     },
     {
-      "title": "sargazo.info",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHMonPgOg8IAcWT3rimn6fqYdTa7M1tzBI-zfF0aPwRCH-lnRviQia1rZDFw5r-f0s-UDJ-0Gs1GHlTc7qsybNSU3fgbdR61FrzSvplKVxe"
-    },
-    {
-      "title": "youtube.com",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqGiNnzywRTUK8ZBwBFYVtGkRitKvi_GrUPxtgrBGA-uKg3VLYgxMjjrhAcMOuq1kXXKNcwP-2awGZZCZxb7YBa-oVDFygcD-hQbTSJXxrmhmr7MWu5eOhKvWVKRD5KHsG9xXj"
+      "title": "aztecaquintanaroo.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEwYWLVXofMDTIoUlxigvIUUjI3gqI1gkXnVMCIs6L483QEeBxfM8ncU4IB4I4YpYzq0bvgcdWap5mINq6iBsZkANgG4gB5PD3OEMXrzcgyT2sJVoz5gtq4w1ikds1Pk3BjgkFWoQLK14LR1Ht2iKuJ1iqlC9jBB-AlWVw8JV6gF3dDgTYkKAR__vKtsiJT_DPho0JJhmsc3OTpcii0GnckjpecrtyKeTvYR_T6NKVU125ngA=="
     }
   ]
 }
