@@ -28,6 +28,43 @@ function worstOf(zones: { status: string }[]): string {
 }
 
 /**
+ * Da de alta un día histórico a mano (backfill), según el semáforo oficial.
+ * Sirve para cargar meses anteriores y construir etiquetas verificadas para el
+ * modelo. Usa upsert: si la fecha ya existe, la actualiza (igual que verificar).
+ */
+export async function addSargazoDay(formData: FormData) {
+  if (!(await isAuthenticated())) redirect('/admin/login');
+
+  const supabase = getSupabaseAdmin();
+  if (!supabase) redirect('/admin/sargazo?error=nodb');
+
+  const date = String(formData.get('date') || '').trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) redirect('/admin/sargazo?error=fecha%20invalida');
+
+  const zones = collect(formData, 'zone__');
+  const region = collect(formData, 'region__');
+  const confidence = String(formData.get('confidence') || 'high');
+
+  const { error } = await supabase.from('sargazo_history').upsert(
+    {
+      date,
+      zones,
+      region,
+      worst_status: worstOf(zones),
+      confidence,
+      source: 'official-map',
+      overridden: true,
+      captured_at: new Date().toISOString(),
+    },
+    { onConflict: 'date' },
+  );
+
+  revalidatePath('/admin/sargazo');
+  if (error) redirect(`/admin/sargazo?error=${encodeURIComponent(error.message)}`);
+  redirect('/admin/sargazo?ok=added');
+}
+
+/**
  * Corrige/verifica el reporte de un día con el dato real (p. ej. el semáforo
  * oficial de la Red de Monitoreo). Marca la fila como verificada para mejorar
  * la calidad del dataset.

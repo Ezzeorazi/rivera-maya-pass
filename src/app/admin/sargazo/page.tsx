@@ -9,7 +9,7 @@ import {
   type SargazoHistoryRow,
 } from '@/lib/get-sargazo-history';
 import AdminHeader from '../AdminHeader';
-import { updateSargazoDay } from './actions';
+import { updateSargazoDay, addSargazoDay } from './actions';
 
 export const metadata: Metadata = {
   title: 'Admin · Bot de sargazo',
@@ -48,7 +48,11 @@ export default async function AdminSargazoPage({
         {/* Banners */}
         {ok && (
           <p className="rounded-xl bg-lagoon-bg text-sea-deep text-sm px-4 py-3">
-            {ok === 'verified' ? 'Día verificado con el dato real. ✅' : 'Listo.'}
+            {ok === 'verified'
+              ? 'Día verificado con el dato real. ✅'
+              : ok === 'added'
+                ? 'Día histórico agregado. ✅'
+                : 'Listo.'}
           </p>
         )}
         {error && (
@@ -67,6 +71,9 @@ export default async function AdminSargazoPage({
         {editing && (
           <EditForm row={editing} />
         )}
+
+        {/* Alta manual de días históricos (backfill del semáforo oficial) */}
+        {configured && !editing && <AddForm today={todayInCancun()} />}
 
         <section className="bg-shell rounded-2xl border border-line p-5 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
@@ -263,6 +270,69 @@ function Detail({ label, children }: { label: string; children: React.ReactNode 
   );
 }
 
+/* ---------- Alta manual de un día histórico (backfill) ---------- */
+
+function AddForm({ today }: { today: string }) {
+  const pdc = DEFAULT_PDC.map((name) => ({ name, status: 'unknown' }));
+  const region = DEFAULT_REGION.map((name) => ({ name, status: 'unknown' }));
+
+  return (
+    <details className="bg-shell rounded-2xl border border-line p-5 sm:p-6 group">
+      <summary className="cursor-pointer select-none flex items-center justify-between gap-2">
+        <span className="font-display text-lg font-semibold text-ink">
+          ➕ Agregar día histórico
+        </span>
+        <span className="text-xs text-ink-soft group-open:hidden">
+          cargar el semáforo de fechas pasadas
+        </span>
+      </summary>
+
+      <p className="text-xs text-ink-soft/80 mt-3 mb-4">
+        Cargá días anteriores según el <strong>semáforo oficial</strong> de la Red
+        de Monitoreo (hasta donde tengas el dato). Cada día queda{' '}
+        <strong>verificado</strong> y suma como etiqueta real para el modelo. Si la
+        fecha ya existe, se actualiza.
+      </p>
+
+      <form action={addSargazoDay} className="space-y-5">
+        <div>
+          <label className="block text-xs font-medium text-ink mb-1">Fecha</label>
+          <input
+            type="date"
+            name="date"
+            required
+            max={today}
+            className="rounded-lg border border-line bg-sand/50 px-3 py-2 text-sm"
+          />
+        </div>
+
+        <ZoneEditor title="Playa del Carmen" prefix="zone__" zones={pdc} />
+        <ZoneEditor title="Región" prefix="region__" zones={region} />
+
+        <div>
+          <label className="block text-xs font-medium text-ink mb-1">Confianza</label>
+          <select
+            name="confidence"
+            defaultValue="high"
+            className="rounded-lg border border-line bg-sand/50 px-3 py-2 text-sm"
+          >
+            <option value="high">high</option>
+            <option value="medium">medium</option>
+            <option value="low">low</option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="bg-sea text-white font-body font-bold rounded-xl px-6 py-3 hover:bg-sea-deep transition-colors"
+        >
+          Agregar día verificado
+        </button>
+      </form>
+    </details>
+  );
+}
+
 /* ---------- Formulario de edición / verificación ---------- */
 
 function EditForm({ row }: { row: SargazoHistoryRow }) {
@@ -396,6 +466,16 @@ function formatDateLong(date: string): string {
     year: 'numeric',
     timeZone: 'UTC',
   }).format(d);
+}
+
+/** Fecha de hoy (YYYY-MM-DD) en hora de Quintana Roo, para el max del date input. */
+function todayInCancun(): string {
+  return new Intl.DateTimeFormat('en-CA', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    timeZone: 'America/Cancun',
+  }).format(new Date());
 }
 
 function formatTime(iso: string): string {
