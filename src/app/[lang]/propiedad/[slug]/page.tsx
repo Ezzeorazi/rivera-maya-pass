@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { properties } from "@/data/properties";
+import { getProperties, getPropertyBySlug } from "@/lib/get-properties";
 import { formatPrice, getLocalizedField } from "@/lib/utils";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
+// ISR + slugs nuevos: las propiedades cargadas en /admin se renderizan sin redeploy.
+export const revalidate = 60;
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
+  const properties = await getProperties();
   const params: { lang: string; slug: string }[] = [];
   for (const lang of ["es", "en"]) {
     for (const property of properties) {
@@ -23,7 +29,7 @@ export async function generateMetadata({
   params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> {
   const { lang, slug } = await params;
-  const property = properties.find((p) => p.slug === slug);
+  const property = await getPropertyBySlug(slug);
   if (!property) return {};
 
   const description = getLocalizedField(property, "description", lang as Locale);
@@ -53,7 +59,7 @@ export default async function PropertyPage({
   params: Promise<{ lang: string; slug: string }>;
 }) {
   const { lang, slug } = await params;
-  const property = properties.find((p) => p.slug === slug);
+  const property = await getPropertyBySlug(slug);
 
   if (!property) {
     notFound();
@@ -81,21 +87,37 @@ export default async function PropertyPage({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-10 rounded-2xl overflow-hidden">
           {/* Main image */}
           <div
-            className={`bg-gradient-to-br ${gradients[0]} h-64 md:h-96 rounded-2xl md:rounded-r-none relative`}
+            className={`bg-gradient-to-br ${gradients[0]} h-64 md:h-96 rounded-2xl md:rounded-r-none relative overflow-hidden`}
           >
+            <Image
+              src={property.gallery[0] ?? property.image}
+              alt={property.name}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+              className="object-cover"
+            />
             {property.beachStatus === "clean" && (
-              <span className="absolute top-4 right-4 bg-coral text-white text-xs font-bold px-3 py-1.5 rounded-full">
+              <span className="absolute top-4 right-4 z-10 bg-coral text-white text-xs font-bold px-3 py-1.5 rounded-full">
                 {dict.beachStatus.badgeClean}
               </span>
             )}
           </div>
           {/* Thumbnails */}
           <div className="grid grid-cols-2 gap-3">
-            {[1, 2, 3, 4].map((i) => (
+            {property.gallery.slice(1, 5).map((src, i) => (
               <div
-                key={i}
-                className={`bg-gradient-to-br ${gradients[i % gradients.length]} h-28 md:h-[calc(50%-6px)] rounded-xl`}
-              />
+                key={src + i}
+                className={`bg-gradient-to-br ${gradients[(i + 1) % gradients.length]} h-28 md:h-[calc(50%-6px)] rounded-xl relative overflow-hidden`}
+              >
+                <Image
+                  src={src}
+                  alt={`${property.name} — ${i + 2}`}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  className="object-cover"
+                />
+              </div>
             ))}
           </div>
         </div>

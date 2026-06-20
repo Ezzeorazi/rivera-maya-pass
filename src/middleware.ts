@@ -18,6 +18,6 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Excluir _next, api, y cualquier archivo con extensión (assets estáticos)
-  matcher: ['/((?!_next|api|.*\\..*).*)'],
+  // Excluir _next, api, admin, y cualquier archivo con extensión (assets estáticos)
+  matcher: ['/((?!_next|api|admin|.*\\..*).*)'],
 };

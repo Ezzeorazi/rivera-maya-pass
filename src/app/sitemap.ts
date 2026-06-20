@@ -1,10 +1,11 @@
 import type { MetadataRoute } from "next";
-import { properties } from "@/data/properties";
+import { getProperties } from "@/lib/get-properties";
 import { blogPosts } from "@/data/blog-posts";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://rivieramayapass.com";
   const locales = ["es", "en"];
+  const properties = await getProperties();
 
   const routes: MetadataRoute.Sitemap = [];
 

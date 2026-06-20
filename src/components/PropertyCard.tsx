@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Property } from '@/data/properties';
 import type { Locale } from '@/i18n/config';
 import { formatPrice, getLocalizedField } from '@/lib/utils';
@@ -21,8 +22,16 @@ export default function PropertyCard({ property, lang, dict }: PropertyCardProps
     >
       {/* Image Area */}
       <div className="relative h-52 overflow-hidden">
+        {/* Gradiente de fondo: se ve mientras carga la foto */}
         <div
-          className={`absolute inset-0 bg-gradient-to-br ${property.gradient} transition-transform duration-500 group-hover:scale-105`}
+          className={`absolute inset-0 bg-gradient-to-br ${property.gradient}`}
+        />
+        <Image
+          src={property.image}
+          alt={property.name}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/30 to-transparent" />
 

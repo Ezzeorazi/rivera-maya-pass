@@ -1,12 +1,15 @@
 import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { properties } from "@/data/properties";
+import { getProperties } from "@/lib/get-properties";
 import { reviews } from "@/data/reviews";
 import Hero from "@/components/Hero";
 import BeachStatus from "@/components/BeachStatus";
 import PropertyGrid from "@/components/PropertyGrid";
 import ReviewSection from "@/components/ReviewSection";
 import BlogSection from "@/components/BlogSection";
+
+// ISR: las propiedades nuevas cargadas en /admin aparecen sin redeploy.
+export const revalidate = 60;
 
 export default async function HomePage({
   params,
@@ -15,6 +18,7 @@ export default async function HomePage({
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang as Locale);
+  const properties = await getProperties();
 
   return (
     <>
