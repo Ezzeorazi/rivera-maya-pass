@@ -13,18 +13,33 @@ export interface SargazoHistoryZone {
   status: string;
 }
 
+export interface SargazoHistorySource {
+  title: string;
+  url: string;
+}
+
 export interface SargazoHistoryRow {
   date: string;
   captured_at: string;
   source: string | null;
   confidence: string | null;
+  overridden: boolean | null;
   wind_dir_cardinal: string | null;
+  wind_dir_deg: number | null;
   wind_speed_kmh: number | null;
+  wind_gust_kmh: number | null;
   temp_c: number | null;
   worst_status: string | null;
   hurricane_active: boolean | null;
   zones: SargazoHistoryZone[] | null;
   region: SargazoHistoryZone[] | null;
+  sources: SargazoHistorySource[] | null;
+  summary_es: string | null;
+  summary_en: string | null;
+  recommendation_es: string | null;
+  recommendation_en: string | null;
+  forecast_es: string | null;
+  forecast_en: string | null;
 }
 
 export interface SargazoHistoryResult {
@@ -33,19 +48,41 @@ export interface SargazoHistoryResult {
   error: boolean;
   /** Mensaje de error de Postgres, para diagnóstico en el panel. */
   message?: string;
+  /** true si hay más días después de los devueltos (para paginar). */
+  hasMore: boolean;
 }
 
-export async function getSargazoHistory(limit = 30): Promise<SargazoHistoryResult> {
+/** Página de historial (de a `limit` días). `offset` salta días para paginar. */
+export async function getSargazoHistory(
+  limit = 10,
+  offset = 0,
+): Promise<SargazoHistoryResult> {
   const supabase = getSupabaseAdmin();
-  if (!supabase) return { rows: [], error: false };
+  if (!supabase) return { rows: [], error: false, hasMore: false };
 
-  // `select('*')` para no romper si falta alguna columna nueva (temp_c, region…).
+  // Pedimos uno extra para saber si hay página siguiente, sin un count aparte.
   const { data, error } = await supabase
     .from('sargazo_history')
     .select('*')
     .order('date', { ascending: false })
-    .limit(limit);
+    .range(offset, offset + limit);
 
-  if (error) return { rows: [], error: true, message: error.message };
-  return { rows: (data ?? []) as SargazoHistoryRow[], error: false };
+  if (error) return { rows: [], error: true, message: error.message, hasMore: false };
+
+  const all = (data ?? []) as SargazoHistoryRow[];
+  const hasMore = all.length > limit;
+  return { rows: all.slice(0, limit), error: false, hasMore };
+}
+
+/** Una fila puntual por fecha (para el formulario de edición/verificación). */
+export async function getSargazoDay(date: string): Promise<SargazoHistoryRow | null> {
+  const supabase = getSupabaseAdmin();
+  if (!supabase) return null;
+  const { data, error } = await supabase
+    .from('sargazo_history')
+    .select('*')
+    .eq('date', date)
+    .maybeSingle();
+  if (error || !data) return null;
+  return data as SargazoHistoryRow;
 }
