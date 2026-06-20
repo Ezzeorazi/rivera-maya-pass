@@ -48,3 +48,6 @@ __pycache__/
 scripts/sargazo/historico_clima.csv
 scripts/sargazo/historico_clima.xlsx
 scripts/sargazo/afai_historico.csv
+# modelo entrenado y reporte (se descargan como artifact, no van al repo)
+scripts/sargazo/sargazo_afai_model.joblib
+scripts/sargazo/reporte_modelo.md

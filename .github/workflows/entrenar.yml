@@ -1,0 +1,66 @@
+name: Entrenar modelo (Fase 2)
+
+# Manual: arma el PRIMER modelo real de sargazo de punta a punta.
+#   1. Baja el histórico de clima (features).
+#   2. Baja el histórico de AFAI satelital (etiqueta regional).
+#   3. Los une y entrena un modelo que anticipa el AFAI a futuro.
+# Deja el modelo entrenado + un reporte legible como artifact descargable.
+# No es el bot diario; no toca el sitio en producción.
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: "Fecha inicio (YYYY-MM-DD, AFAI desde 2016-06-18)"
+        required: false
+        default: "2021-01-01"
+      end_date:
+        description: "Fecha fin (YYYY-MM-DD; vacío = hoy)"
+        required: false
+        default: ""
+      horizon:
+        description: "Días a anticipar (objetivo: AFAI dentro de N días)"
+        required: false
+        default: "7"
+
+jobs:
+  entrenar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: |
+          pip install -r scripts/sargazo/requirements-historico.txt
+          pip install -r scripts/sargazo/requirements-ml.txt
+
+      - name: Bajar histórico de clima (features)
+        env:
+          HIST_START: ${{ inputs.start_date }}
+          HIST_END: ${{ inputs.end_date }}
+        run: python scripts/sargazo/fetch_historico.py
+
+      - name: Bajar AFAI satelital (etiqueta)
+        env:
+          AFAI_START: ${{ inputs.start_date }}
+          AFAI_END: ${{ inputs.end_date }}
+        run: python scripts/sargazo/fetch_afai.py
+
+      - name: Entrenar modelo y generar reporte
+        env:
+          HORIZON_DIAS: ${{ inputs.horizon }}
+        run: python scripts/sargazo/train_afai_model.py
+
+      - name: Subir modelo + reporte (descargable)
+        uses: actions/upload-artifact@v4
+        with:
+          name: modelo-sargazo-fase2
+          path: |
+            scripts/sargazo/sargazo_afai_model.joblib
+            scripts/sargazo/reporte_modelo.md
+            scripts/sargazo/historico_clima.csv
+            scripts/sargazo/afai_historico.csv
+          retention-days: 30
