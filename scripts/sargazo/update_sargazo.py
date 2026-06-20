@@ -246,17 +246,39 @@ def fetch_storm_alerts() -> list[dict]:
     return relevant
 
 
+# Códigos de clasificación del NHC -> nombre legible (es/en).
+STORM_LABELS = {
+    "HU": {"es": "Huracán", "en": "Hurricane"},
+    "TS": {"es": "Tormenta tropical", "en": "Tropical Storm"},
+    "TD": {"es": "Depresión tropical", "en": "Tropical Depression"},
+    "STS": {"es": "Tormenta subtropical", "en": "Subtropical Storm"},
+    "STD": {"es": "Depresión subtropical", "en": "Subtropical Depression"},
+    "PTC": {"es": "Ciclón tropical potencial", "en": "Potential Tropical Cyclone"},
+    "EX": {"es": "Sistema extratropical", "en": "Extratropical System"},
+    "LO": {"es": "Sistema de baja presión", "en": "Low Pressure System"},
+}
+
+
+def storm_label(classification: str, lang: str) -> str:
+    code = (classification or "").strip().upper()
+    entry = STORM_LABELS.get(code)
+    if entry:
+        return entry[lang]
+    # Código desconocido: devolvemos algo genérico antes que la sigla cruda.
+    return "Sistema tropical" if lang == "es" else "Tropical system"
+
+
 def build_hurricane_alert(storms: list[dict]) -> dict:
     if not storms:
         return {"active": False}
     main = storms[0]
     es = (
-        f"⚠️ {main['classification']} {main['name']} activa en el Caribe "
+        f"⚠️ {storm_label(main['classification'], 'es')} {main['name']} en el Caribe "
         f"(~{main['distance_km']} km). Posible oleaje fuerte y cambios rápidos en "
         f"las playas; revisa avisos locales antes de ir."
     )
     en = (
-        f"⚠️ {main['classification']} {main['name']} active in the Caribbean "
+        f"⚠️ {storm_label(main['classification'], 'en')} {main['name']} in the Caribbean "
         f"(~{main['distance_km']} km). Possible heavy surf and fast-changing beach "
         f"conditions; check local advisories before going."
     )

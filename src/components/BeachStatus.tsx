@@ -1,4 +1,4 @@
-import { sargazoReport, type BeachStatusType } from "@/lib/sargazo";
+import { sargazoReport, type BeachStatusType, type HurricaneAlert } from "@/lib/sargazo";
 
 const statusConfig: Record<
   BeachStatusType,
@@ -63,9 +63,12 @@ function formatDay(dateStr: string, lang: string): string {
 export default function BeachStatus({
   dict,
   lang,
+  overrideAlert,
 }: {
   dict: Record<string, unknown>;
   lang: string;
+  /** Solo para vista previa en /admin: fuerza un banner de alerta sin publicarlo. */
+  overrideAlert?: HurricaneAlert;
 }) {
   const beachStatus = dict.beachStatus as Record<string, string>;
   const {
@@ -96,8 +99,9 @@ export default function BeachStatus({
     : undefined;
   const recommendationText = recommendation?.[lang as keyof typeof recommendation];
   const forecastText = forecast?.[lang as keyof typeof forecast];
-  const alertText = hurricaneAlert?.active
-    ? hurricaneAlert.headline?.[lang as keyof NonNullable<typeof hurricaneAlert.headline>]
+  const effectiveAlert = overrideAlert ?? hurricaneAlert;
+  const alertText = effectiveAlert?.active
+    ? effectiveAlert.headline?.[lang as keyof NonNullable<typeof effectiveAlert.headline>]
     : undefined;
   const updatedLabel =
     (isEn ? 'Updated' : 'Actualizado') + ' · ' + formatUpdatedAt(updatedAt, lang);

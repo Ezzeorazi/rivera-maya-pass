@@ -73,12 +73,20 @@ export default async function AdminSargazoPage({
             <h2 className="font-display text-xl font-semibold text-ink">
               🌊 Bot de sargazo
             </h2>
-            <Link
-              href="/admin/sargazo/doc"
-              className="text-sm bg-sea/10 text-sea hover:bg-sea/20 rounded-lg px-3 py-1.5 transition-colors"
-            >
-              📄 Documentación
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link
+                href="/admin/sargazo/preview"
+                className="text-sm bg-coral/10 text-coral hover:bg-coral/20 rounded-lg px-3 py-1.5 transition-colors"
+              >
+                👁️ Vista previa de alerta
+              </Link>
+              <Link
+                href="/admin/sargazo/doc"
+                className="text-sm bg-sea/10 text-sea hover:bg-sea/20 rounded-lg px-3 py-1.5 transition-colors"
+              >
+                📄 Documentación
+              </Link>
+            </div>
           </div>
           <p className="text-xs text-ink-soft/70 mb-4">
             Una fila por día. Cuando tengas el dato real (semáforo oficial), usá
