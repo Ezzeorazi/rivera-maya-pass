@@ -41,14 +41,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  // Términos y Condiciones
+  // Términos y Condiciones + Aviso de Privacidad
   for (const locale of locales) {
-    routes.push({
-      url: `${baseUrl}/${locale}/terminos`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    });
+    routes.push(
+      {
+        url: `${baseUrl}/${locale}/terminos`,
+        lastModified: new Date(),
+        changeFrequency: "yearly",
+        priority: 0.3,
+      },
+      {
+        url: `${baseUrl}/${locale}/privacidad`,
+        lastModified: new Date(),
+        changeFrequency: "yearly",
+        priority: 0.3,
+      }
+    );
   }
 
   // Blog post pages

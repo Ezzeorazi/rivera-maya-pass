@@ -97,12 +97,18 @@ export default function Footer({
 
       <div className="border-t border-ink-soft/20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 space-y-2">
-          <div className="flex justify-center">
+          <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-1">
             <Link
               href={`/${lang}/terminos`}
               className="text-lagoon/60 hover:text-lagoon text-xs font-body underline underline-offset-2 transition-colors"
             >
               {lang === 'en' ? 'Terms & Conditions' : 'Términos y Condiciones'}
+            </Link>
+            <Link
+              href={`/${lang}/privacidad`}
+              className="text-lagoon/60 hover:text-lagoon text-xs font-body underline underline-offset-2 transition-colors"
+            >
+              {lang === 'en' ? 'Privacy Notice' : 'Aviso de Privacidad'}
             </Link>
           </div>
           <p className="text-center text-lagoon/50 text-xs font-body">
