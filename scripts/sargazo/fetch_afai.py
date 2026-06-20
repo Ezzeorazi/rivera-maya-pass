@@ -34,6 +34,7 @@ import io
 import os
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import date
@@ -65,13 +66,25 @@ OFFSHORE = {
 
 
 def _get_with_retry(url, attempts=4):
-    """GET con reintentos ante hipos de red (timeouts SSL, URLError, 5xx)."""
+    """GET con reintentos ante hipos de red (timeouts SSL, URLError, 5xx).
+
+    Los errores 4xx (salvo 429) son permanentes —la petición está mal— así que
+    NO se reintentan: fallan rápido para que el problema real sea evidente.
+    """
     delay = 6
     for i in range(1, attempts + 1):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "rivieramayapass-afai"})
             with urllib.request.urlopen(req, timeout=120) as resp:
                 return resp.read().decode("utf-8")
+        except urllib.error.HTTPError as exc:
+            if exc.code != 429 and 400 <= exc.code < 500:
+                raise  # error de cliente: no reintentar
+            if i == attempts:
+                raise
+            print(f"  reintento {i}/{attempts} (HTTP {exc.code})...", file=sys.stderr)
+            time.sleep(delay)
+            delay *= 2
         except Exception as exc:  # noqa: BLE001
             if i == attempts:
                 raise
