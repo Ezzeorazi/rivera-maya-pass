@@ -97,11 +97,6 @@ export default async function PropertyPage({
               priority
               className="object-cover"
             />
-            {property.beachStatus === "clean" && (
-              <span className="absolute top-4 right-4 z-10 bg-coral text-white text-xs font-bold px-3 py-1.5 rounded-full">
-                {dict.beachStatus.badgeClean}
-              </span>
-            )}
           </div>
           {/* Thumbnails */}
           <div className="grid grid-cols-2 gap-3">
@@ -230,24 +225,6 @@ export default async function PropertyPage({
                   {dict.properties.perDay}
                 </p>
               </div>
-
-              {property.beachStatus === "clean" && (
-                <div className="flex items-center gap-2 bg-lagoon-bg rounded-xl px-4 py-3 mb-6">
-                  <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse-soft" />
-                  <span className="text-sm font-medium text-sea-deep">
-                    {dict.beachStatus.badgeClean}
-                  </span>
-                </div>
-              )}
-
-              {property.beachStatus === "moderate" && (
-                <div className="flex items-center gap-2 bg-sun-bg rounded-xl px-4 py-3 mb-6">
-                  <span className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-                  <span className="text-sm font-medium text-ink">
-                    {dict.beachStatus.moderate}
-                  </span>
-                </div>
-              )}
 
               <WhatsAppButton
                 phone={property.whatsappNumber}

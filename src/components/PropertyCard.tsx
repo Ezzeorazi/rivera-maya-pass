@@ -12,7 +12,6 @@ interface PropertyCardProps {
 
 export default function PropertyCard({ property, lang, dict }: PropertyCardProps) {
   const properties = dict.properties as Record<string, string>;
-  const beachStatus = dict.beachStatus as Record<string, string>;
   const zone = getLocalizedField(property, 'zone', lang);
 
   return (
@@ -52,15 +51,6 @@ export default function PropertyCard({ property, lang, dict }: PropertyCardProps
           </span>
         </div>
 
-        {/* Badge: Beach status (top-right) */}
-        {property.beachStatus === 'clean' && (
-          <div className="absolute top-3 right-3">
-            <span className="inline-flex items-center gap-1 px-2.5 py-1 bg-coral text-white rounded-full text-xs font-semibold font-body">
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-              {beachStatus.badgeClean}
-            </span>
-          </div>
-        )}
       </div>
 
       {/* Body */}
