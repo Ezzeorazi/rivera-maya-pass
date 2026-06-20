@@ -64,13 +64,27 @@ OFFSHORE = {
 }
 
 
+def _get_with_retry(url, attempts=4):
+    """GET con reintentos ante hipos de red (timeouts SSL, URLError, 5xx)."""
+    delay = 6
+    for i in range(1, attempts + 1):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "rivieramayapass-afai"})
+            with urllib.request.urlopen(req, timeout=120) as resp:
+                return resp.read().decode("utf-8")
+        except Exception as exc:  # noqa: BLE001
+            if i == attempts:
+                raise
+            print(f"  reintento {i}/{attempts} ({exc})...", file=sys.stderr)
+            time.sleep(delay)
+            delay *= 2
+
+
 def fetch_point(lat: float, lon: float) -> list[tuple[str, str]]:
     """Serie temporal de AFAI en el punto más cercano. Devuelve [(fecha, valor)]."""
     query = f"AFAI[({START_DATE}T12:00:00Z):({END_DATE}T12:00:00Z)][({lat}):({lat})][({lon}):({lon})]"
     url = f"{ERDDAP}?{urllib.parse.quote(query, safe='()[]:.,-')}"
-    req = urllib.request.Request(url, headers={"User-Agent": "rivieramayapass-afai"})
-    with urllib.request.urlopen(req, timeout=180) as resp:
-        text = resp.read().decode("utf-8")
+    text = _get_with_retry(url)
 
     reader = csv.reader(io.StringIO(text))
     rows = list(reader)

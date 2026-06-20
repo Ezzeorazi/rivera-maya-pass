@@ -32,6 +32,7 @@ from __future__ import annotations
 
 import math
 import os
+import sys
 import time
 import urllib.parse
 import urllib.request
@@ -80,6 +81,22 @@ def cardinal(grados):
     return DIRS_8[int((float(grados) % 360) / 45 + 0.5) % 8]
 
 
+def _get_with_retry(url, attempts=4):
+    """GET con reintentos ante hipos de red (timeouts SSL, URLError, 5xx)."""
+    delay = 6
+    for i in range(1, attempts + 1):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "rivieramayapass-historico"})
+            with urllib.request.urlopen(req, timeout=90) as resp:
+                return resp.read().decode("utf-8")
+        except Exception as exc:  # noqa: BLE001
+            if i == attempts:
+                raise
+            print(f"  reintento {i}/{attempts} ({exc})...", file=sys.stderr)
+            time.sleep(delay)
+            delay *= 2
+
+
 def fetch_zone(name, lat, lon):
     params = {
         "latitude": lat,
@@ -99,16 +116,20 @@ def fetch_zone(name, lat, lon):
         "wind_speed_unit": "kmh",
     }
     url = "https://archive-api.open-meteo.com/v1/archive?" + urllib.parse.urlencode(params)
-    with urllib.request.urlopen(url, timeout=120) as resp:
-        data = json.loads(resp.read().decode("utf-8"))
-    return data["daily"]
+    return json.loads(_get_with_retry(url))["daily"]
 
 
 def main() -> int:
     rows = []
+    fallidas = []
     for name, (lat, lon) in ZONES.items():
-        print(f"Bajando {name}...")
-        daily = fetch_zone(name, lat, lon)
+        print(f"Bajando {name}...", flush=True)
+        try:
+            daily = fetch_zone(name, lat, lon)
+        except Exception as exc:  # noqa: BLE001
+            print(f"  AVISO: falló {name} ({exc}); se omite.", file=sys.stderr)
+            fallidas.append(name)
+            continue
         dates = daily.get("time", [])
         for i, fecha in enumerate(dates):
             deg = daily["wind_direction_10m_dominant"][i]
@@ -135,6 +156,12 @@ def main() -> int:
                 }
             )
         time.sleep(1)  # cortesía con el servidor gratuito
+
+    if not rows:
+        print("ERROR: ninguna zona se pudo bajar.", file=sys.stderr)
+        return 1
+    if fallidas:
+        print(f"AVISO: zonas omitidas por error de red: {', '.join(fallidas)}", file=sys.stderr)
 
     fields = list(rows[0].keys())
     with CSV_OUT.open("w", encoding="utf-8", newline="") as fh:
