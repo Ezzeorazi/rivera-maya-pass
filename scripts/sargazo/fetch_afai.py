@@ -1,0 +1,131 @@
+"""
+fetch_afai.py — RivieraMayaPass (Fase 2.5, utilidad — NO es el bot diario)
+==========================================================================
+Baja el histórico del índice satelital de sargazo **AFAI** (Alternative Floating
+Algae Index) de NOAA CoastWatch / USF, para puntos mar adentro frente a cada
+zona. Es la señal de "cuánto sargazo viene flotando" — la mejor ETIQUETA
+regional aproximada para el modelo de ML.
+
+Fuente: NOAA CoastWatch Caribbean & Gulf node — ERDDAP.
+  Dataset: noaa_aoml_atlantic_oceanwatch_AFAI_7D (USF AFAI, 7 días acumulados)
+  Histórico desde 2016-06-18. Gratis, sin API key.
+  https://cwcgom.aoml.noaa.gov/erddap/griddap/noaa_aoml_atlantic_oceanwatch_AFAI_7D.html
+
+Qué produce:
+  afai_historico.csv — una fila por (fecha, zona) con el valor AFAI mar adentro.
+  Se mantiene SEPARADO del dataset del bot; se une al entrenar (join fecha+zona).
+
+¿Por qué AFAI sirve de etiqueta? Mide la reflectancia de la clorofila del
+sargazo flotando: AFAI alto = mucho sargazo en el agua. A diferencia del estado
+playa-por-playa (que no existe histórico), esta señal regional SÍ tiene años de
+historia y anticipa el arribo (el satélite ve la mancha antes de que toque tierra).
+
+Cómo correrlo:
+  python scripts/sargazo/fetch_afai.py
+  (o desde GitHub Actions: workflow "AFAI satelital (Fase 2.5)")
+
+Variables de entorno opcionales: AFAI_START, AFAI_END (YYYY-MM-DD).
+"""
+
+from __future__ import annotations
+
+import csv
+import io
+import os
+import sys
+import time
+import urllib.parse
+import urllib.request
+from datetime import date
+from pathlib import Path
+
+ERDDAP = "https://cwcgom.aoml.noaa.gov/erddap/griddap/noaa_aoml_atlantic_oceanwatch_AFAI_7D.csv"
+
+# `or` cubre el caso de variable presente pero vacía (default del workflow).
+START_DATE = os.environ.get("AFAI_START") or "2021-01-01"
+END_DATE = os.environ.get("AFAI_END") or date.today().isoformat()
+
+OUT = Path(__file__).resolve().parent / "afai_historico.csv"
+
+# Para cada zona, un punto MAR ADENTRO (corrido al este, hacia el Caribe abierto,
+# donde flota el sargazo) — así el AFAI mide el agua, no la tierra.
+# (lat, lon) ya desplazados a aguas abiertas.
+OFFSHORE = {
+    "Zona Norte": (20.6450, -86.9300),
+    "Mamitas": (20.6320, -86.9300),
+    "Centro": (20.6296, -86.9300),
+    "Playacar": (20.6180, -86.9400),
+    "Xcalacoco": (20.6800, -86.9100),
+    "Holbox": (21.5500, -87.2000),
+    "Isla Mujeres": (21.2310, -86.6500),
+    "Puerto Morelos": (20.8480, -86.7500),
+    "Cancún": (21.1610, -86.7400),
+    "Tulum": (20.2110, -87.3500),
+}
+
+
+def fetch_point(lat: float, lon: float) -> list[tuple[str, str]]:
+    """Serie temporal de AFAI en el punto más cercano. Devuelve [(fecha, valor)]."""
+    query = f"AFAI[({START_DATE}T12:00:00Z):({END_DATE}T12:00:00Z)][({lat}):({lat})][({lon}):({lon})]"
+    url = f"{ERDDAP}?{urllib.parse.quote(query, safe='()[]:.,-')}"
+    req = urllib.request.Request(url, headers={"User-Agent": "rivieramayapass-afai"})
+    with urllib.request.urlopen(req, timeout=180) as resp:
+        text = resp.read().decode("utf-8")
+
+    reader = csv.reader(io.StringIO(text))
+    rows = list(reader)
+    # ERDDAP CSV: fila 0 = nombres, fila 1 = unidades, luego datos.
+    header = rows[0]
+    try:
+        t_idx = header.index("time")
+        a_idx = header.index("AFAI")
+    except ValueError:
+        return []
+    out = []
+    for r in rows[2:]:
+        if len(r) <= max(t_idx, a_idx):
+            continue
+        fecha = r[t_idx][:10]  # YYYY-MM-DD
+        out.append((fecha, r[a_idx]))
+    return out
+
+
+def main() -> int:
+    all_rows = []
+    for name, (lat, lon) in OFFSHORE.items():
+        print(f"Bajando AFAI de {name} ({lat}, {lon})...")
+        try:
+            series = fetch_point(lat, lon)
+        except Exception as exc:  # noqa: BLE001
+            print(f"  AVISO: falló {name} ({exc}).", file=sys.stderr)
+            series = []
+        valid = sum(1 for _, v in series if v not in ("", "NaN"))
+        print(f"  {len(series)} fechas ({valid} con dato).")
+        for fecha, valor in series:
+            all_rows.append(
+                {
+                    "fecha": fecha,
+                    "zona": name,
+                    "afai_7d": "" if valor in ("", "NaN") else valor,
+                }
+            )
+        time.sleep(1)  # cortesía con el servidor
+
+    if not all_rows:
+        print("ERROR: no se obtuvo ningún dato de AFAI.", file=sys.stderr)
+        return 1
+
+    all_rows.sort(key=lambda r: (r["zona"], r["fecha"]))
+    with OUT.open("w", encoding="utf-8", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=["fecha", "zona", "afai_7d"])
+        writer.writeheader()
+        writer.writerows(all_rows)
+
+    print(f"\nListo: {OUT} ({len(all_rows):,} filas)")
+    print("Es una ETIQUETA regional aproximada (AFAI alto = más sargazo).")
+    print("Se une al histórico de clima y al dataset del bot por (fecha, zona).")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -1,0 +1,38 @@
+name: AFAI satelital (Fase 2.5)
+
+# Manual: baja el indice satelital de sargazo (AFAI, NOAA/USF) historico por zona.
+# No es el bot diario. El resultado queda como artifact descargable.
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: "Fecha inicio (YYYY-MM-DD, AFAI desde 2016-06-18)"
+        required: false
+        default: "2021-01-01"
+      end_date:
+        description: "Fecha fin (YYYY-MM-DD; vacío = hoy)"
+        required: false
+        default: ""
+
+jobs:
+  afai:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Bajar AFAI satelital
+        env:
+          AFAI_START: ${{ inputs.start_date }}
+          AFAI_END: ${{ inputs.end_date }}
+        run: python scripts/sargazo/fetch_afai.py
+
+      - name: Subir resultado (descargable)
+        uses: actions/upload-artifact@v4
+        with:
+          name: afai-historico-sargazo
+          path: scripts/sargazo/afai_historico.csv
+          retention-days: 30

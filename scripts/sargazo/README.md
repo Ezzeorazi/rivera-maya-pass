@@ -238,6 +238,23 @@ Deja un **artifact descargable** (CSV + Excel); no toca el repo. La columna
 `sargazo_estado` queda vacía a propósito (es la etiqueta a llenar con dato
 verificado).
 
+### AFAI satelital — `fetch_afai.py` (Fase 2.5)
+
+Baja el **índice satelital de sargazo AFAI** (NOAA CoastWatch / USF) histórico
+por zona, desde **2016**. Es la mejor **etiqueta regional aproximada**: mide
+cuánto sargazo flota en el agua (el satélite ve la mancha antes de que toque la
+costa).
+
+- Fuente: ERDDAP de NOAA CoastWatch Caribbean & Gulf node, dataset
+  `noaa_aoml_atlantic_oceanwatch_AFAI_7D` (gratis, sin API key).
+- Muestrea un punto **mar adentro** frente a cada zona (donde flota el sargazo).
+- Correr: **Actions → "AFAI satelital (Fase 2.5)" → Run workflow** → artifact
+  `afai_historico.csv`.
+
+A diferencia del estado playa-por-playa (que no existe histórico), el AFAI sí
+tiene años de historia. Se une al histórico de clima y al dataset del bot por
+(fecha, zona) para entrenar el modelo. AFAI alto = más sargazo.
+
 ### Visión sobre el mapa oficial (Red de Monitoreo de QR)
 
 El **Mapa Semáforo del Sargazo** de la SEMA/Red de Monitoreo de QR es la fuente

@@ -47,3 +47,4 @@ __pycache__/
 # datos generados del histórico (se descargan como artifact, no van al repo)
 scripts/sargazo/historico_clima.csv
 scripts/sargazo/historico_clima.xlsx
+scripts/sargazo/afai_historico.csv
