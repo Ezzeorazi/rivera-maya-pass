@@ -85,12 +85,16 @@ export default async function AdminPage({
           </div>
 
           {sargazo.error ? (
-            <p className="text-sm text-coral">
-              No se pudo leer la tabla{' '}
-              <code className="font-mono">sargazo_history</code>. Verificá que
-              exista en Supabase (corré el SQL) y que las variables de entorno
-              estén cargadas.
-            </p>
+            <div className="text-sm text-coral space-y-1">
+              <p>
+                No se pudo leer la tabla{' '}
+                <code className="font-mono">sargazo_history</code>. Verificá que
+                exista en Supabase (corré el SQL).
+              </p>
+              {sargazo.message && (
+                <p className="font-mono text-xs text-coral/80">{sargazo.message}</p>
+              )}
+            </div>
           ) : sargazo.rows.length === 0 ? (
             <p className="text-sm text-ink-soft">
               Todavía no hay registros. El bot agrega <strong>una fila por día</strong>{' '}

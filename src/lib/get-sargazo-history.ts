@@ -27,25 +27,25 @@ export interface SargazoHistoryRow {
   region: SargazoHistoryZone[] | null;
 }
 
-const COLUMNS =
-  'date,captured_at,source,confidence,wind_dir_cardinal,wind_speed_kmh,temp_c,worst_status,hurricane_active,zones,region';
-
 export interface SargazoHistoryResult {
   rows: SargazoHistoryRow[];
   /** true si la tabla no existe / Supabase no responde (para distinguir de "vacía"). */
   error: boolean;
+  /** Mensaje de error de Postgres, para diagnóstico en el panel. */
+  message?: string;
 }
 
 export async function getSargazoHistory(limit = 30): Promise<SargazoHistoryResult> {
   const supabase = getSupabaseAdmin();
   if (!supabase) return { rows: [], error: false };
 
+  // `select('*')` para no romper si falta alguna columna nueva (temp_c, region…).
   const { data, error } = await supabase
     .from('sargazo_history')
-    .select(COLUMNS)
+    .select('*')
     .order('date', { ascending: false })
     .limit(limit);
 
-  if (error) return { rows: [], error: true };
+  if (error) return { rows: [], error: true, message: error.message };
   return { rows: (data ?? []) as SargazoHistoryRow[], error: false };
 }
