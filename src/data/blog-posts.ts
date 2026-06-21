@@ -12,6 +12,107 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "sargazo-riviera-maya-hoy-estado-playas-pronostico",
+    title:
+      "Sargazo en la Riviera Maya hoy: estado de las playas y pronóstico a 3 días",
+    excerpt:
+      "¿Vas a la playa y no sabés si vas a encontrar sargazo? Te mostramos el estado de las playas de la Riviera Maya actualizado a diario, dónde están las zonas limpias hoy y, además, cómo viene la tendencia para los próximos días. Planificá sin sorpresas.",
+    coverImage:
+      "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80",
+    publishedAt: "2026-06-20",
+    readTime: 6,
+    keywords: [
+      "sargazo riviera maya hoy",
+      "sargazo playa del carmen hoy",
+      "pronóstico de sargazo riviera maya",
+      "playas sin sargazo riviera maya",
+      "estado de playas playa del carmen",
+      "dónde no hay sargazo hoy",
+    ],
+    category: "Sargazo & Soluciones",
+    content: `## Sargazo hoy en la Riviera Maya: dejá de adivinar
+
+Planear un día de playa en la Riviera Maya tiene una incógnita que ninguna otra región del Caribe tiene tan marcada: **¿voy a encontrar sargazo?** Una mañana la orilla está cristalina y a la siguiente aparece la franja marrón. El problema es que la mayoría de los turistas se enteran cuando ya están parados en la arena, con el día medio perdido.
+
+Por eso creamos algo que casi ningún sitio de viajes te da: el **estado de las playas actualizado todos los días**, zona por zona, más una **tendencia de cómo viene la cosa para los próximos días**. Así salís de casa sabiendo a qué atenerte.
+
+---
+
+## ¿Cómo saber si hay sargazo hoy?
+
+En RivieraMayaPass publicamos a diario el estado del sargazo en las principales zonas de **Playa del Carmen** —Zona Norte, Mamitas, Centro, Playacar y Xcalacoco— con un semáforo simple:
+
+- 🟢 **Limpia:** orilla despejada, agua cristalina.
+- 🟡 **Moderado:** algo de alga, pero disfrutable (sobre todo temprano).
+- 🔴 **Con sargazo:** acumulación notable en la orilla.
+
+> **Lo importante:** no todas las zonas se afectan igual el mismo día. Muchas veces una playa está con sargazo y otra, a pocos kilómetros, está limpia. Por eso mostramos cada zona por separado, en vez de un único dato genérico para toda la ciudad.
+
+---
+
+## Lo nuevo: un vistazo a los próximos días
+
+Saber cómo está **hoy** es útil. Pero si llegás mañana o pasado, lo que querés es **anticiparte**. Por eso ahora, además del estado de hoy, mostramos una **estimación para los próximos 3 días**.
+
+Detrás de eso hay un trabajo diario de monitoreo de las condiciones del mar y del clima de la región, que nos permite estimar si la tendencia va a **mejorar, mantenerse o empeorar**. No es una bola de cristal —el mar es impredecible— y siempre lo mostramos como lo que es: **una estimación orientativa** para ayudarte a planificar, no una garantía.
+
+Es la diferencia entre llegar a ciegas y llegar con un plan.
+
+---
+
+## ¿Dónde están las playas limpias hoy?
+
+Cuando Playa del Carmen está afectada, la buena noticia es que la Riviera Maya es grande y **siempre hay alternativas**. Algunas zonas, por su orientación al norte o por estar protegidas por arrecife, suelen escapar al sargazo:
+
+| Zona | Por qué suele estar más limpia |
+|---|---|
+| **Isla Mujeres** | Playas al norte/poniente, protegidas; de las más confiables. |
+| **Holbox** | Isla al norte, fuera del corredor principal del alga. |
+| **Puerto Morelos** | Barrera de arrecife + barreras de contención activas. |
+| **Cancún (zonas norte)** | Algunas playas con mejor orientación que el centro. |
+
+Por eso, junto al estado de Playa del Carmen, también te mostramos **dónde sí está limpio hoy** en la región, para que muevas el plan en vez de cancelarlo.
+
+---
+
+## Cómo usar esta info para planificar tu día
+
+1. **Antes de salir**, mirá el estado de playa por zona en nuestra home.
+2. Si tu zona está 🔴, fijate la sección **"¿dónde está limpio hoy?"** y movete ahí.
+3. Mirá la **tendencia de los próximos días**: si viene mejorando, quizás convenga esperar un día.
+4. Si todo el litoral está complicado, la jugada ganadora es un **day pass** en una alberca o beach club: un día de resort sin depender del estado del mar.
+
+> Mientras la mitad de los turistas pierden la mañana descubriendo el sargazo en persona, vos podés llegar directo a una playa limpia o a una alberca infinity con vista al Caribe.
+
+---
+
+## ¿Cuándo es la temporada de sargazo en la Riviera Maya?
+
+La mayor concentración suele darse entre **marzo y octubre**, con los picos en **mayo, junio y julio**. En temporada baja (noviembre a febrero) las playas suelen estar mucho más despejadas. Pero "temporada" no significa "todos los días igual": dentro de la temporada alta hay días y zonas limpias, y justamente para eso sirve consultar el estado diario.
+
+---
+
+## Preguntas frecuentes
+
+**¿Se puede predecir el sargazo?**
+Con certeza total, no: depende del mar, las corrientes y el viento, que cambian. Lo que sí se puede es estimar una **tendencia** a pocos días a partir del seguimiento diario de las condiciones. Por eso lo mostramos como una orientación, no como una promesa.
+
+**¿Cada cuánto se actualiza el estado?**
+Todos los días. El estado de hoy y la tendencia de los próximos días se renuevan a diario.
+
+**¿El sargazo es peligroso?**
+En el agua no es tóxico. Al descomponerse en la orilla genera un olor a sulfuro que puede molestar, sobre todo a personas con problemas respiratorios. Si el olor es fuerte, mejor cambiar de plan.
+
+**¿Qué hago si todas las playas tienen sargazo?**
+Un day pass en una propiedad con alberca limpia. Tenés el Caribe igual, pero sin depender de la orilla. Te ayudamos a encontrar el mejor según el día.
+
+---
+
+## No pierdas un día por el sargazo
+
+La Riviera Maya tiene playas increíbles **todos los días del año** —solo hay que saber a cuál ir. Consultá el estado actualizado, mirá la tendencia y, si hace falta, asegurate el día con un day pass. Escribinos y te ayudamos a armar el plan perfecto según cómo esté el mar hoy.`,
+  },
+  {
     slug: "sargazo-playa-del-carmen-alberca-beach-club-day-pass",
     title:
       "¿Playa con sargazo en tu hotel? Albercas y beach clubs con día de pase en Playa del Carmen",

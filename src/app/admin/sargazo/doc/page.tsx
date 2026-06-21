@@ -102,11 +102,12 @@ Script en Python (cerebro)
           según el viento).
         </P>
         <P>
-          <B>Fase 2 (en marcha):</B> <B>modelo de Machine Learning</B> que predice
-          el arribo de sargazo a varios días. Ya se está alimentando con tres
-          fuentes de datos —el semáforo verificado cargado a mano, el clima
-          histórico y el índice satelital AFAI— y se entrena de forma automática
-          (ver §6 y §7). Falta validar que prediga bien y conectarlo a la web (§8).
+          <B>Fase 2 (EN PRODUCCIÓN ✅):</B> <B>modelo de Machine Learning</B> que
+          predice el estado de las playas a 3 días, <B>ya conectado a la web</B>.
+          Se entrena con tres fuentes (semáforo verificado + clima + satélite,
+          ver §6 y §7) y el bot diario muestra la predicción en la sección
+          «Próximos días». Acierta ~80% (vs ~53% de adivinar) y respeta la
+          realidad: si hoy hay sargazo, no salta a «limpio» de un día al otro.
         </P>
         <P>
           <B>Fase 3 (más adelante):</B> ampliar el dato satelital{' '}
@@ -141,17 +142,25 @@ AFAI satelital ──────────┘     clima → sargazo          
 (lo que ya tenés)              (se entrena solo)         (el paso final)`}
         </Pre>
         <P>
-          Este entrenamiento corre en la nube (GitHub Actions) cuando lo pedís, y
-          deja un <B>reporte legible</B> con qué tan bien predice. <B>Todavía no
-          toca la web</B>: es un laboratorio. Primero comprobamos que el modelo le
-          gana al sentido común; recién entonces se conecta a la página (§8).
+          El entrenamiento corre en la nube (GitHub Actions) cuando lo pedís y deja
+          un <B>reporte legible</B> con qué tan bien predice. La pista más fuerte
+          resultó ser <B>el estado de ayer</B> (el sargazo es inercial: lo de hoy
+          es el mejor indicio de mañana); por eso el modelo lo usa y no «salta» de
+          rojo a verde. Hoy el modo de <B>2 niveles</B> (limpio / con sargazo) rinde
+          mejor (~80% de acierto) y es el que está publicado.
         </P>
         <P>
-          <B>Un límite honesto del momento:</B> los días cargados son casi todos de{' '}
+          <B>Un límite honesto:</B> los días cargados son casi todos de{' '}
           <B>temporada alta</B> (abril-junio), así que hoy el modelo entiende bien
-          esta época («hay sargazo») pero no la temporada baja. Se corrige cargando,
-          con el tiempo, días <B>limpios</B> de otros meses: cuanta más variedad,
-          mejor distingue.
+          esta época («hay sargazo») pero todavía conoce poco la temporada baja. Se
+          corrige cargando, con el tiempo, días <B>limpios</B> de otros meses y
+          reentrenando: cuanta más variedad, mejor distingue.
+        </P>
+        <P>
+          <B>Cómo se mantiene:</B> el bot diario predice solo cada día. Cuando
+          cargás varios días nuevos del semáforo, conviene <B>reentrenar</B>
+          (workflow «Entrenar con datos verificados», 2 clases) para refrescar el
+          modelo con esos datos.
         </P>
 
         <H>7. ¿Qué es el Machine Learning? (en cristiano)</H>
@@ -193,12 +202,11 @@ AFAI satelital ──────────┘     clima → sargazo          
           este panel). Cuantos más días verificados, mejor aprende el modelo.
         </P>
 
-        <H>8. Cómo se va a ver en la web (la interfaz)</H>
+        <H>8. Cómo se ve en la web (la interfaz) ✅ EN VIVO</H>
         <P>
-          Hoy el sitio muestra el estado de <B>HOY</B> (lo que ve el bot y lo que
-          verificás a mano). Lo que falta es el <B>mañana</B>: la predicción. Cuando
-          el modelo esté validado, se agrega una franja nueva de{' '}
-          <B>«próximos días»</B> debajo del estado actual, así:
+          El sitio muestra el estado de <B>HOY</B> (lo que ve el bot y lo que
+          verificás a mano) y, debajo, la franja <B>«próximos días»</B> con la{' '}
+          <B>predicción del modelo</B> — ya está publicada. Se ve así:
         </P>
         <Pre>
 {`┌─────────────────────────────────────────────┐
@@ -219,15 +227,16 @@ AFAI satelital ──────────┘     clima → sargazo          
 └─────────────────────────────────────────────┘`}
         </Pre>
         <P>
-          La parte de <B>«HOY»</B> ya existe y funciona. Lo <B>nuevo</B> sería solo
-          la franja <B>«próximos días»</B>: una predicción por día (y por zona), su{' '}
-          <B>nivel de confianza</B> y una explicación corta del por qué. Siempre con
-          el aviso de que es una <B>estimación automática</B>, para cuidar la marca.
+          Cada día del pronóstico muestra el <B>nivel estimado</B> (verde/amarillo/
+          rojo) con su <B>color</B>, siempre acompañado del aviso{' '}
+          <B>«estimación automática (~80% de acierto), puede variar»</B> para cuidar
+          la marca y no prometer lo que no se puede garantizar.
         </P>
         <P>
-          <B>Importante:</B> esa franja se publica <B>solo si el modelo demuestra</B>{' '}
-          que predice mejor que una regla simple. Si todavía no, se sigue juntando
-          dato y no se muestra nada incierto al visitante.
+          <B>Auditoría prevista (~1 mes):</B> se compara lo que el modelo predijo
+          contra lo que realmente pasó, para decidir si se le da más protagonismo o
+          se sigue afinando. Si en algún momento el modelo fallara o no hubiera
+          modelo, la franja simplemente no aparece y el resto del reporte sale igual.
         </P>
 
         <H>9. Tecnología utilizada</H>
