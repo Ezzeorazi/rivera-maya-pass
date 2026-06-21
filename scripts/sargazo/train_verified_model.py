@@ -169,18 +169,28 @@ def main() -> int:
             f"{df['zona'].nunique()} zonas"
         )
 
-    feature_cols = [
-        c
-        for c in [
-            "estacion_sin", "estacion_cos", "mes", "onshore",
-            "viento_kmh", "rafagas_kmh", "temp_max_c", "afai_7d", "afai_lag7",
-        ]
-        if c in df.columns
+    # Selección ROBUSTA de features: una columna sin datos (p. ej. el AFAI si no
+    # tuvo cobertura en el rango) NO debe borrar todo el dataset. Descartamos las
+    # columnas con <50% de datos e imputamos el resto con la mediana.
+    candidate = [
+        "estacion_sin", "estacion_cos", "mes", "onshore",
+        "viento_kmh", "rafagas_kmh", "temp_max_c", "afai_7d", "afai_lag7",
     ]
-    # AFAI puede tener huecos (nubes): imputamos con la mediana para no perder filas.
-    for c in ("afai_7d", "afai_lag7"):
-        if c in df.columns:
-            df[c] = df[c].fillna(df[c].median())
+    feature_cols = []
+    dropped = []
+    for c in candidate:
+        if c not in df.columns:
+            continue
+        col = pd.to_numeric(df[c], errors="coerce")
+        if col.notna().mean() < 0.5:  # casi vacía: no sirve como feature
+            dropped.append(c)
+            continue
+        df[c] = col.fillna(col.median())  # rellena huecos sueltos
+        feature_cols.append(c)
+
+    if dropped:
+        report.append(f"- Features descartadas por falta de datos: {', '.join(dropped)}")
+        print(f"Features descartadas (sin datos): {', '.join(dropped)}")
 
     df = df.dropna(subset=feature_cols)
     df["y"] = df["estado"].map(STATUS_ORDER)
