@@ -14,6 +14,14 @@ on:
         description: "Fecha fin (YYYY-MM-DD; vacío = reciente)"
         required: false
         default: ""
+      clases:
+        description: "Clases a predecir"
+        required: false
+        type: choice
+        default: "2"
+        options:
+          - "2"
+          - "3"
 
 jobs:
   entrenar-verificado:
@@ -46,6 +54,7 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          CLASES: ${{ inputs.clases }}
         run: python scripts/sargazo/train_verified_model.py
 
       - name: Subir modelo + reporte (descargable)

@@ -50,6 +50,10 @@ SUPABASE_TABLE = os.environ.get("SUPABASE_TABLE", "sargazo_history")
 STATUS_ORDER = {"clean": 0, "moderate": 1, "seaweed": 2}
 STATUS_LABEL = {0: "limpio", 1: "moderado", 2: "sargazo"}
 
+# Cuántas clases predecir: 3 = limpio/moderado/sargazo · 2 = limpio / con sargazo
+# (fusiona moderado+sargazo). 2 suele dar más exactitud y es más accionable.
+CLASES = 2 if os.environ.get("CLASES", "3").strip() == "2" else 3
+
 # Mínimo de observaciones (fecha×zona) etiquetadas para intentar entrenar.
 MIN_ROWS = 80
 
@@ -160,7 +164,9 @@ def main() -> int:
     labels_df["fecha"] = pd.to_datetime(labels_df["fecha"])
     df = labels_df.merge(clima, on=["fecha", "zona"], how="inner")
 
+    modo = "2 clases (limpio / con sargazo)" if CLASES == 2 else "3 clases (limpio / moderado / sargazo)"
     report = ["# Reporte del modelo con dato verificado (Fase 2)", ""]
+    report.append(f"- Modalidad: **{modo}**")
     report.append(f"- Etiquetas verificadas cargadas: **{len(labels_df)}**")
     report.append(f"- Tras unir con clima{'+AFAI' if has_afai else ''}: **{len(df)}** observaciones")
     if len(df):
@@ -193,7 +199,17 @@ def main() -> int:
         print(f"Features descartadas (sin datos): {', '.join(dropped)}")
 
     df = df.dropna(subset=feature_cols)
-    df["y"] = df["estado"].map(STATUS_ORDER)
+
+    # Objetivo según la modalidad. En 2 clases se fusiona moderado+sargazo en
+    # "con sargazo" (lo contrario de "limpio"): más fácil y más accionable.
+    if CLASES == 2:
+        df["y"] = (df["estado"] != "clean").astype(int)
+        df["clase"] = df["y"].map({0: "limpio", 1: "con sargazo"})
+        label_names = {0: "limpio", 1: "con sargazo"}
+    else:
+        df["y"] = df["estado"].map(STATUS_ORDER)
+        df["clase"] = df["estado"].map({"clean": "limpio", "moderate": "moderado", "seaweed": "sargazo"})
+        label_names = STATUS_LABEL
 
     if len(df) < MIN_ROWS:
         msg = (
@@ -206,10 +222,10 @@ def main() -> int:
         return 0
 
     # Distribución de clases (clave para entender el desbalance de temporada).
-    dist = df["estado"].value_counts()
+    dist = df["clase"].value_counts()
     report += ["", "## Distribución de tus etiquetas", ""]
-    for estado, n in dist.items():
-        report.append(f"- {estado}: {n} ({n / len(df):.0%})")
+    for clase, n in dist.items():
+        report.append(f"- {clase}: {n} ({n / len(df):.0%})")
     n_classes = df["y"].nunique()
     if n_classes < 2:
         report += [
@@ -256,7 +272,7 @@ def main() -> int:
         "### Detalle por clase",
         "```",
         classification_report(
-            y, pred, target_names=[STATUS_LABEL[i] for i in sorted(df["y"].unique())],
+            y, pred, target_names=[label_names[i] for i in sorted(df["y"].unique())],
             zero_division=0,
         ),
         "```",
@@ -275,7 +291,12 @@ def main() -> int:
         report.append(f"- `{name}` — {imp:.1%}")
 
     joblib.dump(
-        {"model": final, "features": feature_cols, "status_order": STATUS_ORDER},
+        {
+            "model": final,
+            "features": feature_cols,
+            "clases": CLASES,
+            "labels": label_names,
+        },
         MODEL_PATH,
     )
     print(f"\nModelo guardado en {MODEL_PATH}")
