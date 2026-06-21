@@ -102,20 +102,59 @@ Script en Python (cerebro)
           según el viento).
         </P>
         <P>
-          <B>Fase 2 (~2-3 meses):</B> <B>modelo de Machine Learning</B> que predice
-          el arribo de sargazo a 48-72 horas. Necesita datos: por eso hoy se
-          acumula el histórico. Cuando haya ~60-90 días, se entrena el modelo (ver
-          §6).
+          <B>Fase 2 (en marcha):</B> <B>modelo de Machine Learning</B> que predice
+          el arribo de sargazo a varios días. Ya se está alimentando con tres
+          fuentes de datos —el semáforo verificado cargado a mano, el clima
+          histórico y el índice satelital AFAI— y se entrena de forma automática
+          (ver §6 y §7). Falta validar que prediga bien y conectarlo a la web (§8).
         </P>
         <P>
-          <B>Fase 3 (más adelante):</B> incorporar <B>datos satelitales</B>{' '}
-          (índice AFAI / Copernicus) que detectan las manchas de sargazo flotando
-          en el Atlántico <B>días antes</B> de llegar a la costa, y leer con visión
-          el <B>mapa-semáforo oficial</B> para tener el dato verificado playa por
-          playa. Esto es lo que da una predicción realmente precisa a varios días.
+          <B>Fase 3 (más adelante):</B> ampliar el dato satelital{' '}
+          (AFAI / Copernicus) que detecta las manchas de sargazo flotando en el
+          Atlántico <B>días antes</B> de llegar a la costa, y leer con visión el{' '}
+          <B>mapa-semáforo oficial</B> para automatizar el dato verificado playa
+          por playa. Esto es lo que da una predicción realmente precisa a varios
+          días.
         </P>
 
-        <H>6. ¿Qué es el Machine Learning? (en cristiano)</H>
+        <H>6. Cómo se entrena el modelo (las 3 fuentes de datos)</H>
+        <P>
+          El modelo aprende a relacionar las <B>condiciones</B> de cada día con el{' '}
+          <B>estado real</B> de las playas. Para eso se unen, por fecha y por zona,
+          tres fuentes de datos que se mantienen separadas y recién se cruzan al
+          entrenar:
+        </P>
+        <UL
+          items={[
+            'Tu semáforo verificado (la "respuesta correcta"): los días que cargás a mano en este panel según el mapa oficial. Es el dato de oro: el estado real playa por playa.',
+            'Clima histórico (las "preguntas"): viento, ráfagas, temperatura y época del año, de años atrás, sin costo. Open-Meteo.',
+            'AFAI satelital (señal de apoyo): un índice que mide cuánto sargazo flota mar adentro frente a cada zona. Sirve para anticipar el arribo, aunque a veces no hay dato por las nubes.',
+          ]}
+        />
+        <Pre>
+{`DATOS                          CEREBRO (modelo)          INTERFAZ (web)
+─────                          ────────────────          ──────────────
+tu semáforo verificado ─┐
+clima (viento/temp/época)─┼─►  aprende el patrón   ─►   "próximos días:
+AFAI satelital ──────────┘     clima → sargazo           playa X probable
+                                                          con sargazo"
+(lo que ya tenés)              (se entrena solo)         (el paso final)`}
+        </Pre>
+        <P>
+          Este entrenamiento corre en la nube (GitHub Actions) cuando lo pedís, y
+          deja un <B>reporte legible</B> con qué tan bien predice. <B>Todavía no
+          toca la web</B>: es un laboratorio. Primero comprobamos que el modelo le
+          gana al sentido común; recién entonces se conecta a la página (§8).
+        </P>
+        <P>
+          <B>Un límite honesto del momento:</B> los días cargados son casi todos de{' '}
+          <B>temporada alta</B> (abril-junio), así que hoy el modelo entiende bien
+          esta época («hay sargazo») pero no la temporada baja. Se corrige cargando,
+          con el tiempo, días <B>limpios</B> de otros meses: cuanta más variedad,
+          mejor distingue.
+        </P>
+
+        <H>7. ¿Qué es el Machine Learning? (en cristiano)</H>
         <P>
           <B>Machine Learning (ML)</B> o «aprendizaje automático» es enseñarle a
           una computadora a <B>reconocer patrones a partir de ejemplos</B>, en vez
@@ -154,7 +193,44 @@ Script en Python (cerebro)
           este panel). Cuantos más días verificados, mejor aprende el modelo.
         </P>
 
-        <H>7. Tecnología utilizada</H>
+        <H>8. Cómo se va a ver en la web (la interfaz)</H>
+        <P>
+          Hoy el sitio muestra el estado de <B>HOY</B> (lo que ve el bot y lo que
+          verificás a mano). Lo que falta es el <B>mañana</B>: la predicción. Cuando
+          el modelo esté validado, se agrega una franja nueva de{' '}
+          <B>«próximos días»</B> debajo del estado actual, así:
+        </P>
+        <Pre>
+{`┌─────────────────────────────────────────────┐
+│  🌊 Estado del sargazo — Riviera Maya        │
+│  Playa del Carmen · hoy                      │
+│                                              │
+│  HOY (dato real / verificado)                │
+│   🟢 Mamitas   🟡 Centro   🔴 Playacar  ...  │
+│                                              │
+│  ─────────────────────────────────────────  │
+│  📈 PRÓXIMOS DÍAS (predicción)        ◄── NUEVO
+│   Vie 🔴 · Sáb 🔴 · Dom 🟡 · Lun 🟢          │
+│   "El viento rota al norte el finde →        │
+│    mejora hacia el domingo."                 │
+│   Confianza: media · basado en clima+semáforo│
+│                                              │
+│  ⚠️ Estimación automática, puede variar.     │
+└─────────────────────────────────────────────┘`}
+        </Pre>
+        <P>
+          La parte de <B>«HOY»</B> ya existe y funciona. Lo <B>nuevo</B> sería solo
+          la franja <B>«próximos días»</B>: una predicción por día (y por zona), su{' '}
+          <B>nivel de confianza</B> y una explicación corta del por qué. Siempre con
+          el aviso de que es una <B>estimación automática</B>, para cuidar la marca.
+        </P>
+        <P>
+          <B>Importante:</B> esa franja se publica <B>solo si el modelo demuestra</B>{' '}
+          que predice mejor que una regla simple. Si todavía no, se sigue juntando
+          dato y no se muestra nada incierto al visitante.
+        </P>
+
+        <H>9. Tecnología utilizada</H>
         <UL
           items={[
             'Automatización: GitHub Actions (cron diario).',
@@ -168,7 +244,7 @@ Script en Python (cerebro)
           ]}
         />
 
-        <H>8. Bibliografía y fuentes</H>
+        <H>10. Bibliografía y fuentes</H>
         <UL
           items={[
             'Red de Monitoreo del Sargazo de Quintana Roo (SEMA) — mapa-semáforo diario por playa.',
