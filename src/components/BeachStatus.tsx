@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { sargazoReport, type BeachStatusType, type HurricaneAlert } from "@/lib/sargazo";
 
 const statusConfig: Record<
@@ -97,6 +98,11 @@ export default function BeachStatus({
     ? [...regionZones].sort((a, b) => severity[a.status] - severity[b.status])
     : [];
   const isEn = lang === 'en';
+  const tours = dict.tours as Record<string, string> | undefined;
+  // Mostramos las alternativas de tours cuando Playa del Carmen tiene sargazo
+  // en al menos 2 de sus zonas: es el momento donde el visitante busca un plan B.
+  const pdcSeaweedCount = zones.filter((z) => z.status === 'seaweed').length;
+  const showToursCta = Boolean(tours) && pdcSeaweedCount >= 2;
   const summaryText = summary[lang as keyof typeof summary] ?? summary.es;
   const overrideText = overrideNote?.[lang as keyof typeof overrideNote];
   const confidenceLabel = confidence
@@ -191,6 +197,42 @@ export default function BeachStatus({
                 {recommendationText}
               </p>
             </div>
+          </div>
+        )}
+
+        {showToursCta && tours && (
+          <div className="mx-auto max-w-2xl mt-6 rounded-2xl border border-coral/30 bg-coral/5 px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="flex items-start gap-3 flex-1">
+              <span aria-hidden="true" className="text-xl leading-none">🌴</span>
+              <div>
+                <p className="font-display font-semibold text-sm text-ink mb-0.5">
+                  {tours.sargazoCtaTitle}
+                </p>
+                <p className="text-ink-soft font-body text-sm leading-relaxed">
+                  {tours.sargazoCtaText}
+                </p>
+              </div>
+            </div>
+            <Link
+              href={`/${lang}#tours`}
+              className="shrink-0 inline-flex items-center justify-center gap-2 bg-coral text-white font-body font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-coral/90 transition-colors shadow-sm"
+            >
+              {tours.sargazoCtaButton}
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         )}
 

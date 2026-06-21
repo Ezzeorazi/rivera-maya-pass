@@ -7,6 +7,7 @@
     "home": "Inicio",
     "properties": "Propiedades",
     "beachStatus": "Estado de Playa",
+    "tours": "Experiencias",
     "contact": "Contacto"
   },
   "hero": {
@@ -72,6 +73,24 @@
     "bookViaWhatsapp": "Reservar por WhatsApp",
     "priceFrom": "Desde",
     "perPerson": "por persona"
+  },
+  "tours": {
+    "sectionLabel": "EXPERIENCIAS",
+    "title": "Planes que no dependen de la playa",
+    "subtitle": "¿Sargazo en Playa del Carmen? Cenotes, ruinas mayas, islas y parques que siguen perfectos sin importar cómo esté el mar.",
+    "seeAll": "Ver todas las experiencias",
+    "from": "Desde",
+    "book": "Reservar",
+    "hours": "hs",
+    "beachFreeBadge": "Sin playa",
+    "metaTitle": "Tours y experiencias en la Riviera Maya | RivieraMayaPass",
+    "metaDescription": "Cenotes, Chichén Itzá, Xcaret, Isla Mujeres y más. Las mejores alternativas al sargazo en Playa del Carmen, reservables online.",
+    "pageTitle": "Experiencias en la Riviera Maya",
+    "pageSubtitle": "Cuando la playa tiene sargazo, estos planes siguen siendo un día perfecto. Selección curada de tours reservables al instante.",
+    "sargazoCtaTitle": "¿Playa con sargazo hoy?",
+    "sargazoCtaText": "Estos planes no dependen del mar — cenotes, ruinas e islas que siempre valen la pena.",
+    "sargazoCtaButton": "Ver alternativas al sargazo",
+    "affiliateDisclosure": "RivieraMayaPass participa en el programa de afiliados de Viator. Si reservás a través de estos enlaces podemos recibir una comisión, sin costo adicional para vos."
   },
   "blog": {
     "sectionLabel": "BLOG",

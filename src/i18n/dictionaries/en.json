@@ -7,6 +7,7 @@
     "home": "Home",
     "properties": "Properties",
     "beachStatus": "Beach Status",
+    "tours": "Experiences",
     "contact": "Contact"
   },
   "hero": {
@@ -72,6 +73,24 @@
     "bookViaWhatsapp": "Book via WhatsApp",
     "priceFrom": "From",
     "perPerson": "per person"
+  },
+  "tours": {
+    "sectionLabel": "EXPERIENCES",
+    "title": "Plans that don't depend on the beach",
+    "subtitle": "Sargassum in Playa del Carmen? Cenotes, Mayan ruins, islands and parks that stay perfect no matter how the sea looks.",
+    "seeAll": "See all experiences",
+    "from": "From",
+    "book": "Book",
+    "hours": "h",
+    "beachFreeBadge": "Beach-free",
+    "metaTitle": "Tours & experiences in the Riviera Maya | RivieraMayaPass",
+    "metaDescription": "Cenotes, Chichén Itzá, Xcaret, Isla Mujeres and more. The best alternatives to sargassum in Playa del Carmen, bookable online.",
+    "pageTitle": "Experiences in the Riviera Maya",
+    "pageSubtitle": "When the beach has sargassum, these plans are still a perfect day. Curated selection of instantly bookable tours.",
+    "sargazoCtaTitle": "Sargassum on the beach today?",
+    "sargazoCtaText": "These plans don't depend on the sea — cenotes, ruins and islands that are always worth it.",
+    "sargazoCtaButton": "See sargassum alternatives",
+    "affiliateDisclosure": "RivieraMayaPass participates in the Viator affiliate program. If you book through these links we may earn a commission, at no extra cost to you."
   },
   "blog": {
     "sectionLabel": "BLOG",

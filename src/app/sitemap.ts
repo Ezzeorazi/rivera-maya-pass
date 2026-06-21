@@ -41,6 +41,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
+  // Tours / experiences page
+  for (const locale of locales) {
+    routes.push({
+      url: `${baseUrl}/${locale}/tours`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    });
+  }
+
   // Términos y Condiciones + Aviso de Privacidad
   for (const locale of locales) {
     routes.push(

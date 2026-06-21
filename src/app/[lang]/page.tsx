@@ -6,6 +6,7 @@ import Hero from "@/components/Hero";
 import BeachStatus from "@/components/BeachStatus";
 import PropertyGrid from "@/components/PropertyGrid";
 import ReviewSection from "@/components/ReviewSection";
+import TourSection from "@/components/TourSection";
 import BlogSection from "@/components/BlogSection";
 
 // ISR: las propiedades nuevas cargadas en /admin aparecen sin redeploy.
@@ -41,8 +42,20 @@ export default async function HomePage({
         </div>
       </section>
 
+      {/* Tours / Experiences (alternativa al sargazo) */}
+      <section id="tours" className="py-16 lg:py-24 bg-lagoon-bg/30">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <TourSection
+            lang={lang as Locale}
+            dict={dict}
+            limit={6}
+            campaign="home"
+          />
+        </div>
+      </section>
+
       {/* Reviews */}
-      <section className="py-16 lg:py-24 bg-lagoon-bg/30">
+      <section className="py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <ReviewSection
             reviews={reviews}
