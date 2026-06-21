@@ -23,6 +23,10 @@ on:
           - "2"
           - "3"
 
+# Necesario para commitear el modelo entrenado al repo (lo usa el bot diario).
+permissions:
+  contents: write
+
 jobs:
   entrenar-verificado:
     runs-on: ubuntu-latest
@@ -65,3 +69,17 @@ jobs:
             scripts/sargazo/sargazo_verificado_model.joblib
             scripts/sargazo/reporte_modelo_verificado.md
           retention-days: 30
+
+      # Versiona el modelo en el repo para que el bot diario lo use en producción.
+      # (Solo el .joblib; los CSV y el reporte quedan como artifact / gitignore.)
+      - name: Commitear el modelo al repo
+        run: |
+          git config user.name "sargazo-bot"
+          git config user.email "bot@rivieramayapass.com"
+          git add -f scripts/sargazo/sargazo_verificado_model.joblib
+          if git diff --staged --quiet; then
+            echo "El modelo no cambió; no se commitea."
+          else
+            git commit -m "chore: actualiza modelo de prediccion de sargazo $(date -u +%Y-%m-%d)"
+            git push
+          fi

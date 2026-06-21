@@ -51,6 +51,31 @@ export interface SargazoSource {
   url: string;
 }
 
+/** Predicción de un día (estimada por el modelo a partir del pronóstico). */
+export interface PredictionDay {
+  date: string;
+  /** Nivel estimado (reusa los colores del estado). */
+  level: BeachStatusType;
+  /** Score 0..1 de "cuánto sargazo" (P de con sargazo). */
+  score: number;
+  confidence: Confidence;
+}
+
+/** Bloque de predicción de próximos días + metadatos del modelo (transparencia). */
+export interface SargazoPrediction {
+  model: string;
+  /** Exactitud del modelo en validación (0..1). */
+  accuracy?: number | null;
+  /** Línea base con la que se compara (0..1). */
+  baseline?: number | null;
+  /** Rango de fechas con el que se entrenó. */
+  trainedFrom?: string | null;
+  trainedTo?: string | null;
+  /** Cantidad de observaciones de entrenamiento. */
+  nObs?: number | null;
+  days: PredictionDay[];
+}
+
 export interface SargazoReport {
   /** ISO 8601 timestamp of when the report was generated. */
   updatedAt: string;
@@ -78,6 +103,8 @@ export interface SargazoReport {
   wind?: SargazoWind;
   /** Current air temperature in °C (Open-Meteo). */
   temperatureC?: number;
+  /** Predicción de próximos días con el modelo de ML (Fase 2). */
+  prediction?: SargazoPrediction;
 }
 
 export const sargazoReport = report as SargazoReport;

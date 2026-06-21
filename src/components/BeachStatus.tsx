@@ -84,7 +84,14 @@ export default function BeachStatus({
     sources,
     overrideNote,
     temperatureC,
+    prediction,
   } = sargazoReport;
+  const predictionDays = prediction?.days ?? [];
+  const predictionByDate: Record<string, (typeof predictionDays)[number]> = {};
+  for (const p of predictionDays) predictionByDate[p.date] = p;
+  const hasPrediction = predictionDays.length > 0;
+  const accuracyPct =
+    prediction?.accuracy != null ? Math.round(prediction.accuracy * 100) : null;
   const severity: Record<string, number> = { clean: 0, moderate: 1, seaweed: 2, unknown: 3 };
   const sortedRegion = regionZones
     ? [...regionZones].sort((a, b) => severity[a.status] - severity[b.status])
@@ -223,12 +230,20 @@ export default function BeachStatus({
         {(forecastText || (forecastDays && forecastDays.length > 0)) && (
           <div className="mx-auto max-w-2xl mt-8">
             <p className="font-display font-semibold text-sm text-ink mb-3 flex items-center gap-2">
-              <span aria-hidden="true">📅</span>
+              <span aria-hidden="true">{hasPrediction ? '📈' : '📅'}</span>
               {isEn ? 'Next days' : 'Próximos días'}
+              {hasPrediction && (
+                <span className="text-[11px] font-body font-normal text-ink-soft/70">
+                  · {isEn ? 'estimate' : 'estimación'}
+                </span>
+              )}
             </p>
             {forecastDays && forecastDays.length > 0 && (
               <div className="grid grid-cols-3 gap-3 mb-3">
-                {forecastDays.map((day) => (
+                {forecastDays.map((day) => {
+                  const pred = predictionByDate[day.date];
+                  const predConfig = pred ? statusConfig[pred.level] : null;
+                  return (
                   <div
                     key={day.date}
                     className="bg-shell rounded-xl border border-line p-3 flex flex-col items-center gap-1.5"
@@ -236,20 +251,31 @@ export default function BeachStatus({
                     <span className="font-display font-semibold text-xs text-ink capitalize">
                       {formatDay(day.date, lang)}
                     </span>
-                    <span
-                      className={`block w-2.5 h-2.5 rounded-full ${
-                        day.onshore ? 'bg-yellow-500' : 'bg-green-500'
-                      }`}
-                      title={
-                        day.onshore
-                          ? isEn
-                            ? 'Onshore wind (pushes sargassum in)'
-                            : 'Viento onshore (empuja sargazo)'
-                          : isEn
-                            ? 'Offshore wind (pushes it away)'
-                            : 'Viento offshore (lo aleja)'
-                      }
-                    />
+                    {predConfig ? (
+                      <>
+                        <span className={`block w-3 h-3 rounded-full ${predConfig.color}`} />
+                        <span
+                          className={`text-[11px] font-body font-medium px-2 py-0.5 rounded-full ${predConfig.chip}`}
+                        >
+                          {predConfig.label[lang] ?? predConfig.label.es}
+                        </span>
+                      </>
+                    ) : (
+                      <span
+                        className={`block w-2.5 h-2.5 rounded-full ${
+                          day.onshore ? 'bg-yellow-500' : 'bg-green-500'
+                        }`}
+                        title={
+                          day.onshore
+                            ? isEn
+                              ? 'Onshore wind (pushes sargassum in)'
+                              : 'Viento onshore (empuja sargazo)'
+                            : isEn
+                              ? 'Offshore wind (pushes it away)'
+                              : 'Viento offshore (lo aleja)'
+                        }
+                      />
+                    )}
                     <span className="text-[11px] font-body text-ink-soft">
                       {day.dir_cardinal} · {day.speed_kmh != null ? Math.round(day.speed_kmh) : '–'} km/h
                     </span>
@@ -260,12 +286,24 @@ export default function BeachStatus({
                       </span>
                     )}
                   </div>
-                ))}
+                  );
+                })}
               </div>
             )}
             {forecastText && (
               <p className="text-ink-soft font-body text-sm leading-relaxed text-center">
                 {forecastText}
+              </p>
+            )}
+            {hasPrediction && (
+              <p className="text-[11px] text-ink-soft/60 font-body text-center mt-2 italic">
+                {isEn
+                  ? `Automatic estimate from weather + verified beach reports${
+                      accuracyPct != null ? ` (~${accuracyPct}% accuracy)` : ''
+                    }. Indicative only, may vary.`
+                  : `Estimación automática (clima + semáforo verificado${
+                      accuracyPct != null ? `, ~${accuracyPct}% de acierto` : ''
+                    }). Es orientativa y puede variar.`}
               </p>
             )}
           </div>

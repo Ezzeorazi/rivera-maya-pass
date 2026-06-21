@@ -296,6 +296,12 @@ def main() -> int:
             "features": feature_cols,
             "clases": CLASES,
             "labels": label_names,
+            # Metadatos para mostrar en la web (transparencia) y para el bot.
+            "accuracy": round(float(acc), 3),
+            "baseline": round(float(base), 3),
+            "n_obs": int(len(df)),
+            "date_min": str(df["fecha"].min().date()),
+            "date_max": str(df["fecha"].max().date()),
         },
         MODEL_PATH,
     )

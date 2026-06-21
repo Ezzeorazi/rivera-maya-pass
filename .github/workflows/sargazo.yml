@@ -29,7 +29,10 @@ jobs:
           python-version: "3.12"
 
       - name: Instalar dependencias
-        run: pip install -r scripts/sargazo/requirements.txt
+        run: |
+          pip install -r scripts/sargazo/requirements.txt
+          # Para la predicción de los próximos días (paso opcional, degrada solo).
+          pip install -r scripts/sargazo/requirements-ml.txt
 
       - name: Generar reporte de sargazo
         env:
@@ -39,6 +42,11 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
           # Opcional: GEMINI_MODEL, SARGAZO_ZONES, SUPABASE_TABLE
         run: python scripts/sargazo/update_sargazo.py
+
+      # Predicción de los próximos días con el modelo entrenado. Si falla o no hay
+      # modelo, sale en verde y deja el reporte intacto (no es crítico).
+      - name: Predecir próximos días (modelo)
+        run: python scripts/sargazo/predict_forecast.py
 
       - name: Commit y push si hubo cambios
         run: |

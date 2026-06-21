@@ -48,8 +48,10 @@ __pycache__/
 scripts/sargazo/historico_clima.csv
 scripts/sargazo/historico_clima.xlsx
 scripts/sargazo/afai_historico.csv
-# modelo entrenado y reporte (se descargan como artifact, no van al repo)
-scripts/sargazo/sargazo_afai_model.joblib
+# reportes de entrenamiento (se descargan como artifact, no van al repo)
 scripts/sargazo/reporte_modelo.md
-scripts/sargazo/sargazo_verificado_model.joblib
 scripts/sargazo/reporte_modelo_verificado.md
+# modelo del AFAI: experimental, queda como artifact
+scripts/sargazo/sargazo_afai_model.joblib
+# NOTA: sargazo_verificado_model.joblib SÍ se versiona: el bot diario lo usa
+# en producción para predecir los próximos días.
