@@ -37,7 +37,7 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 ERDDAP = "https://cwcgom.aoml.noaa.gov/erddap/griddap/noaa_aoml_atlantic_oceanwatch_AFAI_7D.csv"
@@ -93,15 +93,22 @@ def _get_with_retry(url, attempts=4):
             delay *= 2
 
 
-def fetch_point(lat: float, lon: float) -> list[tuple[str, str]]:
-    """Serie temporal de AFAI en el punto más cercano. Devuelve [(fecha, valor)]."""
-    query = f"AFAI[({START_DATE}T12:00:00Z):({END_DATE}T12:00:00Z)][({lat}):({lat})][({lon}):({lon})]"
-    url = f"{ERDDAP}?{urllib.parse.quote(query, safe='()[]:.,-')}"
-    text = _get_with_retry(url)
+def _date_chunks(start_iso: str, end_iso: str, days: int = 120):
+    """Parte [start, end] en ventanas de `days` días (inclusive)."""
+    start = date.fromisoformat(start_iso)
+    end = date.fromisoformat(end_iso)
+    cur = start
+    while cur <= end:
+        chunk_end = min(cur + timedelta(days=days - 1), end)
+        yield cur.isoformat(), chunk_end.isoformat()
+        cur = chunk_end + timedelta(days=1)
 
+
+def _parse_csv(text: str) -> list[tuple[str, str]]:
     reader = csv.reader(io.StringIO(text))
     rows = list(reader)
-    # ERDDAP CSV: fila 0 = nombres, fila 1 = unidades, luego datos.
+    if len(rows) < 3:  # 0=nombres, 1=unidades, luego datos
+        return []
     header = rows[0]
     try:
         t_idx = header.index("time")
@@ -112,8 +119,26 @@ def fetch_point(lat: float, lon: float) -> list[tuple[str, str]]:
     for r in rows[2:]:
         if len(r) <= max(t_idx, a_idx):
             continue
-        fecha = r[t_idx][:10]  # YYYY-MM-DD
-        out.append((fecha, r[a_idx]))
+        out.append((r[t_idx][:10], r[a_idx]))  # (YYYY-MM-DD, valor)
+    return out
+
+
+def fetch_point(lat: float, lon: float) -> list[tuple[str, str]]:
+    """Serie temporal de AFAI en el punto más cercano. Devuelve [(fecha, valor)].
+
+    El servidor de NOAA se cae con rangos largos en una sola petición, así que
+    se pide por ventanas de ~4 meses y se concatena. Si una ventana falla, se
+    omite y se sigue con las demás (no se pierde todo el histórico por un hueco).
+    """
+    out: list[tuple[str, str]] = []
+    for s, e in _date_chunks(START_DATE, END_DATE):
+        query = f"AFAI[({s}T12:00:00Z):({e}T12:00:00Z)][({lat}):({lat})][({lon}):({lon})]"
+        url = f"{ERDDAP}?{urllib.parse.quote(query, safe='()[]:.,-')}"
+        try:
+            out.extend(_parse_csv(_get_with_retry(url)))
+        except Exception as exc:  # noqa: BLE001
+            print(f"    ventana {s}..{e} omitida ({exc})", file=sys.stderr)
+        time.sleep(0.5)  # cortesía con el servidor
     return out
 
 
