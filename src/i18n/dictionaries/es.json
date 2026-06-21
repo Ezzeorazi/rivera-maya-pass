@@ -66,7 +66,26 @@
     "aboutText": "Somos el especialista local del day pass en la Riviera Maya. Conectamos viajeros con las mejores albercas, beach clubs y playas limpias.",
     "links": "Enlaces",
     "contact": "Contacto",
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "partnerEyebrow": "PARA PRESTADORES",
+    "partnerTitle": "¿Tenés un tour o day pass?",
+    "partnerText": "Sumá tu servicio a RivieraMayaPass y llegá a viajeros que buscan planes en la Riviera Maya.",
+    "partnerButton": "Anunciá tu servicio",
+    "formName": "Nombre",
+    "formNamePlaceholder": "Tu nombre o el de tu negocio",
+    "formService": "Tipo de servicio",
+    "formServiceTour": "Tour / Excursión",
+    "formServiceDaypass": "Day pass / Beach club",
+    "formServiceOther": "Otro",
+    "formPhone": "Teléfono / WhatsApp",
+    "formPhonePlaceholder": "Ej: +52 984 123 4567",
+    "formMessage": "Mensaje",
+    "formMessagePlaceholder": "Contanos sobre tu servicio",
+    "formSubmit": "Enviar por WhatsApp"
+  },
+  "whatsappBubble": {
+    "label": "Escríbenos por WhatsApp",
+    "message": "Hola, quiero información sobre RivieraMayaPass"
   },
   "property": {
     "backToAll": "← Todas las propiedades",

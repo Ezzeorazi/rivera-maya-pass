@@ -66,7 +66,26 @@
     "aboutText": "We are the local day pass specialist in the Riviera Maya. We connect travelers with the best pools, beach clubs and clean beaches.",
     "links": "Links",
     "contact": "Contact",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "partnerEyebrow": "FOR PROVIDERS",
+    "partnerTitle": "Do you run a tour or day pass?",
+    "partnerText": "List your service on RivieraMayaPass and reach travelers looking for plans in the Riviera Maya.",
+    "partnerButton": "List your service",
+    "formName": "Name",
+    "formNamePlaceholder": "Your name or business name",
+    "formService": "Service type",
+    "formServiceTour": "Tour / Excursion",
+    "formServiceDaypass": "Day pass / Beach club",
+    "formServiceOther": "Other",
+    "formPhone": "Phone / WhatsApp",
+    "formPhonePlaceholder": "e.g. +52 984 123 4567",
+    "formMessage": "Message",
+    "formMessagePlaceholder": "Tell us about your service",
+    "formSubmit": "Send via WhatsApp"
+  },
+  "whatsappBubble": {
+    "label": "Chat with us on WhatsApp",
+    "message": "Hi, I'd like information about RivieraMayaPass"
   },
   "property": {
     "backToAll": "← All properties",

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import PartnerForm from './PartnerForm';
 
 export default function Footer({
   lang,
@@ -23,6 +24,26 @@ export default function Footer({
 
   return (
     <footer className="bg-ink" id="contacto">
+      {/* Partner — formulario para prestadores de tours / day pass */}
+      <div className="border-b border-ink-soft/20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-center">
+            <div className="space-y-3 max-w-xl">
+              <span className="font-body text-xs font-semibold tracking-widest text-coral">
+                {footer.partnerEyebrow}
+              </span>
+              <h3 className="font-display text-2xl lg:text-3xl font-semibold text-sand">
+                {footer.partnerTitle}
+              </h3>
+              <p className="text-lagoon/70 text-sm leading-relaxed font-body">
+                {footer.partnerText}
+              </p>
+            </div>
+            <PartnerForm lang={lang} dict={footer} />
+          </div>
+        </div>
+      </div>
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* About */}
