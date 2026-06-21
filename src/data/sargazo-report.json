@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-06-21T03:17:44Z",
+  "updatedAt": "2026-06-21T15:32:37Z",
   "source": "ai",
   "confidence": "high",
   "zones": [
@@ -47,71 +47,79 @@
     }
   ],
   "summary": {
-    "es": "Hoy, 20 de junio de 2026, la Riviera Maya enfrenta una temporada intensa de sargazo, con arribazones récord en Quintana Roo. El viento del Este (110°), soplando desde el mar hacia la costa a 12.6 km/h con ráfagas de hasta 24.1 km/h, favorece la llegada de esta alga a la mayoría de las playas del litoral.",
-    "en": "Today, June 20, 2026, the Riviera Maya is experiencing an intense sargassum season, with record arrivals in Quintana Roo. The East wind (110°), blowing from the sea towards the coast at 12.6 km/h with gusts up to 24.1 km/h, favors the arrival of this seaweed to most coastal beaches."
+    "es": "Hoy, 21 de junio de 2026, las playas de Playa del Carmen presentan una abundancia excesiva de sargazo, afectando a gran parte de la costa, incluyendo Mamitas y Playacar. El viento del sureste sopla desde el mar hacia la costa, favoreciendo el arribo continuo de esta macroalga. La situación general en la Riviera Maya es de alto riesgo, con pronósticos de una temporada récord.",
+    "en": "Today, June 21, 2026, Playa del Carmen beaches are experiencing an excessive abundance of sargassum, affecting a large part of the coast, including Mamitas and Playacar. The southeast wind is blowing from the sea towards the coast, favoring the continuous arrival of this macroalgae. The general situation in the Riviera Maya is high risk, with forecasts of a record-breaking season."
   },
   "recommendation": {
-    "es": "Para disfrutar de un día de playa hoy, se recomienda encarecidamente visitar Holbox o Isla Mujeres, ya que sus playas se reportan limpias o con niveles mínimos de sargazo. En Cancún, algunas playas del norte presentan condiciones moderadas.",
-    "en": "To enjoy a beach day today, it is highly recommended to visit Holbox or Isla Mujeres, as their beaches are reported clean or with minimal sargassum levels. In Cancun, some northern beaches show moderate conditions."
+    "es": "Dado el intenso arribo de sargazo en Playa del Carmen, se recomienda evitar sus playas hoy. Las mejores opciones para disfrutar de playas limpias son Holbox e Isla Mujeres. En Cancún, algunas playas del norte aún ofrecen condiciones favorables.",
+    "en": "Given the intense sargassum arrival in Playa del Carmen, it is recommended to avoid its beaches today. The best options for enjoying clean beaches are Holbox and Isla Mujeres. In Cancún, some northern beaches still offer favorable conditions."
   },
   "forecast": {
-    "es": "El pronóstico de viento para los próximos días (21 al 23 de junio) indica vientos del Este con velocidades entre 19.7 y 21.0 km/h, lo que continuará empujando el sargazo hacia la costa. Por lo tanto, se espera que la situación se mantenga similar o empeore ligeramente en las zonas afectadas.",
-    "en": "The wind forecast for the next few days (June 21-23) indicates East winds with speeds between 19.7 and 21.0 km/h, which will continue to push sargassum towards the coast. Therefore, the situation is expected to remain similar or slightly worsen in affected areas."
+    "es": "El pronóstico de viento para los próximos días (22-24 de junio) indica vientos del este, lo que continuará empujando el sargazo hacia la costa. Por lo tanto, no se espera una mejora significativa en las condiciones de las playas afectadas.",
+    "en": "The wind forecast for the next few days (June 22-24) indicates easterly winds, which will continue to push sargassum towards the coast. Therefore, no significant improvement is expected in the conditions of the affected beaches."
   },
   "forecastDays": [
-    {
-      "date": "2026-06-21",
-      "dir_deg": 106,
-      "dir_cardinal": "E",
-      "speed_kmh": 21.0,
-      "gust_kmh": 52.2,
-      "temp_max_c": 30.5,
-      "temp_min_c": 22.9,
-      "onshore": true
-    },
     {
       "date": "2026-06-22",
       "dir_deg": 98,
       "dir_cardinal": "E",
-      "speed_kmh": 19.7,
-      "gust_kmh": 42.1,
-      "temp_max_c": 30.9,
-      "temp_min_c": 26.7,
+      "speed_kmh": 18.4,
+      "gust_kmh": 46.8,
+      "temp_max_c": 31.0,
+      "temp_min_c": 27.5,
       "onshore": true
     },
     {
       "date": "2026-06-23",
       "dir_deg": 83,
       "dir_cardinal": "E",
-      "speed_kmh": 19.8,
-      "gust_kmh": 46.1,
+      "speed_kmh": 20.0,
+      "gust_kmh": 47.2,
       "temp_max_c": 30.0,
-      "temp_min_c": 26.8,
+      "temp_min_c": 25.9,
+      "onshore": true
+    },
+    {
+      "date": "2026-06-24",
+      "dir_deg": 78,
+      "dir_cardinal": "E",
+      "speed_kmh": 14.8,
+      "gust_kmh": 34.2,
+      "temp_max_c": 30.7,
+      "temp_min_c": 25.9,
       "onshore": true
     }
   ],
   "wind": {
-    "speed_kmh": 12.6,
-    "gust_kmh": 24.1,
-    "dir_deg": 110,
-    "dir_cardinal": "E"
+    "speed_kmh": 14.7,
+    "gust_kmh": 33.8,
+    "dir_deg": 114,
+    "dir_cardinal": "SE"
   },
   "hurricaneAlert": {
     "active": false
   },
-  "temperatureC": 27.7,
+  "temperatureC": 29.3,
   "sources": [
     {
+      "title": "24horasqroo.mx",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHz5DExYcwxIsXChPmS8VNzfHXzoQfGo7B0JLnbzNvm7v_H_1GD91taynWtLWA6bNLvD5RztHkpuE0dgyQlq6TkortnC8IKZFn22pJUGbfCnkoim2dEiNm_aiJU8vuL9sVhMBAWVYxWwzpgrtAAXu2fZGM8sGJhdo9bOxQ="
+    },
+    {
+      "title": "sargassumreport.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFInrevPTa3nfp3SOJdrvfg7UdVy32nnRk99ytLLiKWM6nPt7D89qsRuuw84Wn3_cXh0xqJGEjmoH7aUf33dTlydleIDXdSTu3CrUnK2LV3duooO1KXCxOQ1I9wfImmcxIGmXHnMF6W92bR4Ieb9UNg8VqKiclOU7Q="
+    },
+    {
+      "title": "thecancunsun.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEYwqvQO2Jt049STjLnB_SKrAOF3IO7U4bdVthwLjVvFler6FjxtddpbEVVQ0pkdhZqDQznpK1s8-M8EQHhaRtCbuanPU9cnKZnuvqBqthKzCcxi5hqSn_zBvYAHDztI83slUoJdOtoZ0bNHbZfD2CG0K5es9UOI3Ko3gs898O_3xF1QTxwddoS0BdbfywVpJtGUz0tNrVIIeRMYOekBO8="
+    },
+    {
       "title": "heraldodemexico.com.mx",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHeCygbUekkIfdVPCVGI9UQJnWG-H_r91pmFXIa0lY5oAjrH-lFND0izrKvEtD7onttPRh6J2F_2hNJ_yr3rP3tTjJrnVAPRLgrM6ClaE8ZH-pzWzPhExMbV7ZCsDB07DVtBN1LnGP9HAp2YD0EmZ1-bY0P4_mUnEOsQbk2jsPtQSDps6wbNvlAutJTUA7bZLTHCqenKYzGWPc4x7nvlMMMqHUjlGp-HgMB0IrBYQh_OEUhsYLgrrmi8BYUOhiaSA=="
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFBJSjFzb-Z9vlw1Wt_BC4spEnZHwZ0bfLQ2HM0dqaeJ-Spv_ObBeW92k9NRdeXYJtdabJStk8aduuOObemfPsHUCIpXQikediEO23xR5hfFnFOJ_w_NtiNqzNRk-5BvG1qFWzyu0XZO6GwMyJNdVYPLR1RCrsdctzOCMS7CWRqdS33dV1A-yIorbttcDa3v_rmDHNjelgpDVCJ0FplOYqLp8qJyTtqLsuhXpb5eJ1r5smu5bmYWY6rCLgImxEQEHg="
     },
     {
-      "title": "debate.com.mx",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF9gi6pynSzM4V-nmUL1l02eB87gIxIKGN50KoMBriy6T-Ov-uZgZVRkY3vGJt6zC1SJHR_GI2FgXtWHaUFucJf1ZsjkB0DD1DmneECMNcpgf9vw9D1O26IGBTylRjdiJ1R_t8qAsGjnamBDDS6uiWuX7_XHSsrLa0PzN5xsWjgv1rPCXTY7OaPYYxtibukidnV_bYQsJHUvnpQxkzvd0cVgKc0KjV2Pp--NNF9yWMwgzyC0PIJr44Wzt5wmu3iu3KhVrNwlB8JwmM="
-    },
-    {
-      "title": "aztecaquintanaroo.com",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqPeD8CajL9TXHJckzi_5l00qVc-WcZjK9ab1ZnB8JZ1aItkGDQDvqo4Y2iC5Re_-kWqOh8bqOhF2d99GcswfCqJRGEXwD9JPwLYOuEVyzu-U-4RZipJITHu1ryDqOR8lBIb9cgvDFeqFAd3xmPaqG7xMyjERsFkwndZUaL-E0JHSj0I6gC1d9h4GFpayixBmJ6-2hV41ed_wwQ42a304ifM_fvtiOaZlLLff5wgxxhtT3iA=="
+      "title": "sargazo.today",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGlaKJzne0DddnBMUk-PAlTJlv3cTVXxVF6mAnq7QdasIXmgKpdDu2_ikCF6zW3vcKs6cvbDRfxOmyHPlLxHwizXZS211yUWoYgL1J594Q_OJwQixx1kBVOexl3Nd-8BWhdAvUk6y8gVjtc"
     }
   ],
   "prediction": {
@@ -123,21 +131,21 @@
     "nObs": 289,
     "days": [
       {
-        "date": "2026-06-21",
-        "level": "seaweed",
-        "score": 0.679,
-        "confidence": "medium"
-      },
-      {
         "date": "2026-06-22",
         "level": "seaweed",
-        "score": 0.675,
+        "score": 0.709,
         "confidence": "medium"
       },
       {
         "date": "2026-06-23",
         "level": "moderate",
-        "score": 0.614,
+        "score": 0.64,
+        "confidence": "low"
+      },
+      {
+        "date": "2026-06-24",
+        "level": "moderate",
+        "score": 0.555,
         "confidence": "low"
       }
     ]
