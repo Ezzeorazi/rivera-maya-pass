@@ -1,0 +1,58 @@
+name: Entrenar con datos verificados (Fase 2)
+
+# Manual: entrena el modelo usando TU semáforo oficial cargado a mano (la etiqueta
+# de oro), unido con clima + AFAI. Predice el estado real de playa por zona.
+# Deja el modelo + un reporte legible como artifact. No toca producción.
+on:
+  workflow_dispatch:
+    inputs:
+      start_date:
+        description: "Fecha inicio para clima/AFAI (YYYY-MM-DD)"
+        required: false
+        default: "2025-01-01"
+      end_date:
+        description: "Fecha fin (YYYY-MM-DD; vacío = reciente)"
+        required: false
+        default: ""
+
+jobs:
+  entrenar-verificado:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: |
+          pip install -r scripts/sargazo/requirements-historico.txt
+          pip install -r scripts/sargazo/requirements-ml.txt
+
+      - name: Bajar histórico de clima (features)
+        env:
+          HIST_START: ${{ inputs.start_date }}
+          HIST_END: ${{ inputs.end_date }}
+        run: python scripts/sargazo/fetch_historico.py
+
+      - name: Bajar AFAI satelital (feature regional)
+        env:
+          AFAI_START: ${{ inputs.start_date }}
+          AFAI_END: ${{ inputs.end_date }}
+        run: python scripts/sargazo/fetch_afai.py
+
+      - name: Entrenar con tus etiquetas verificadas
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python scripts/sargazo/train_verified_model.py
+
+      - name: Subir modelo + reporte (descargable)
+        uses: actions/upload-artifact@v4
+        with:
+          name: modelo-sargazo-verificado
+          path: |
+            scripts/sargazo/sargazo_verificado_model.joblib
+            scripts/sargazo/reporte_modelo_verificado.md
+          retention-days: 30
