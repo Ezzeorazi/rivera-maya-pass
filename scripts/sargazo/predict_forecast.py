@@ -30,6 +30,7 @@ REPORT_PATH = REPO_ROOT / "src" / "data" / "sargazo-report.json"
 MODEL_PATH = HERE / "sargazo_verificado_model.joblib"
 
 ONSHORE_DIRS = {"NE", "E", "SE", "S"}
+SEVERITY = {"clean": 0, "moderate": 1, "seaweed": 2}
 
 # Umbrales de "score de sargazo" (0 = limpio, 1 = con sargazo) → nivel mostrado.
 # Cómodos para 2 clases: el modelo da P(con sargazo).
@@ -42,8 +43,14 @@ def _ok(msg: str) -> int:
     return 0
 
 
-def features_for_day(day: dict, feature_names: list[str]) -> list[float] | None:
-    """Arma el vector de features de un día del pronóstico, en el orden del modelo."""
+def features_for_day(
+    day: dict, feature_names: list[str], prev_sev: int | None
+) -> list[float] | None:
+    """Arma el vector de features de un día del pronóstico, en el orden del modelo.
+
+    `prev_sev` = severidad (0/1/2) del día ANTERIOR, para la feature de
+    persistencia `estado_lag1` (el sargazo es inercial).
+    """
     try:
         doy = date.fromisoformat(day["date"]).timetuple().tm_yday
         mes = int(day["date"][5:7])
@@ -51,6 +58,7 @@ def features_for_day(day: dict, feature_names: list[str]) -> list[float] | None:
         return None
     card = str(day.get("dir_cardinal", ""))
     available = {
+        "estado_lag1": float(prev_sev) if prev_sev is not None else None,
         "estacion_sin": math.sin(2 * math.pi * doy / 365.25),
         "estacion_cos": math.cos(2 * math.pi * doy / 365.25),
         "mes": float(mes),
@@ -66,6 +74,12 @@ def features_for_day(day: dict, feature_names: list[str]) -> list[float] | None:
             return None
         vec.append(float(val))
     return vec
+
+
+def today_worst_sev(report: dict) -> int | None:
+    """Severidad del PEOR estado de hoy en Playa del Carmen (semilla de persistencia)."""
+    sevs = [SEVERITY[z["status"]] for z in report.get("zones", []) if z.get("status") in SEVERITY]
+    return max(sevs) if sevs else None
 
 
 def score_to_level(score: float) -> str:
@@ -122,9 +136,12 @@ def main() -> int:
     except Exception as exc:  # noqa: BLE001
         return _ok(f"No se pudo cargar el modelo ({exc}); se omite la predicción.")
 
+    # Semilla de persistencia: el estado real de HOY. Para el primer día del
+    # pronóstico, "ayer" es hoy; luego se arrastra la propia predicción.
+    prev_sev = today_worst_sev(report)
     pred_days = []
-    for day in days:
-        vec = features_for_day(day, feature_names)
+    for day in sorted(days, key=lambda d: d.get("date", "")):
+        vec = features_for_day(day, feature_names, prev_sev)
         if vec is None:
             continue
         try:
@@ -133,14 +150,16 @@ def main() -> int:
             print(f"AVISO: no se pudo predecir {day.get('date')} ({exc}).", file=sys.stderr)
             continue
         score = sargazo_score(model, clases, proba)
+        level = score_to_level(score)
         pred_days.append(
             {
                 "date": day["date"],
-                "level": score_to_level(score),
+                "level": level,
                 "score": round(score, 3),
                 "confidence": score_to_confidence(score),
             }
         )
+        prev_sev = SEVERITY[level]  # el día siguiente arranca de esta predicción
 
     if not pred_days:
         return _ok("No se pudo predecir ningún día; se omite (reporte intacto).")

@@ -35,6 +35,7 @@ import os
 import sys
 import urllib.parse
 import urllib.request
+from datetime import timedelta
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -175,10 +176,23 @@ def main() -> int:
             f"{df['zona'].nunique()} zonas"
         )
 
+    # PERSISTENCIA: el sargazo es inercial — el estado de AYER es la pista más
+    # fuerte de cómo estará HOY. Sin esto el modelo "salta" de rojo a verde de un
+    # día al otro (irreal). Severidad del día calendario previo, por zona.
+    sev_by = {
+        (r["zona"], r["fecha"].date()): STATUS_ORDER[r["estado"]]
+        for _, r in df.iterrows()
+    }
+    df["estado_lag1"] = [
+        sev_by.get((z, f.date() - timedelta(days=1)))
+        for z, f in zip(df["zona"], df["fecha"])
+    ]
+
     # Selección ROBUSTA de features: una columna sin datos (p. ej. el AFAI si no
     # tuvo cobertura en el rango) NO debe borrar todo el dataset. Descartamos las
     # columnas con <50% de datos e imputamos el resto con la mediana.
     candidate = [
+        "estado_lag1",
         "estacion_sin", "estacion_cos", "mes", "onshore",
         "viento_kmh", "rafagas_kmh", "temp_max_c", "afai_7d", "afai_lag7",
     ]
