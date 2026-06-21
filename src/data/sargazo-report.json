@@ -1,11 +1,11 @@
 {
-  "updatedAt": "2026-06-21T02:46:24Z",
+  "updatedAt": "2026-06-21T03:17:44Z",
   "source": "ai",
   "confidence": "high",
   "zones": [
     {
       "name": "Zona Norte",
-      "status": "moderate"
+      "status": "seaweed"
     },
     {
       "name": "Mamitas",
@@ -47,16 +47,16 @@
     }
   ],
   "summary": {
-    "es": "Hoy, 20 de junio de 2026, la Riviera Maya enfrenta un arribo significativo de sargazo, especialmente en sus costas centrales y del sur. El viento del este, soplando desde el mar hacia la costa, favorece la llegada de esta macroalga a las playas.",
-    "en": "Today, June 20, 2026, the Riviera Maya is experiencing a significant arrival of sargassum, particularly on its central and southern coasts. The easterly wind, blowing from the sea towards the shore, favors the arrival of this macroalgae to the beaches."
+    "es": "Hoy, 20 de junio de 2026, la Riviera Maya enfrenta una temporada intensa de sargazo, con arribazones récord en Quintana Roo. El viento del Este (110°), soplando desde el mar hacia la costa a 12.6 km/h con ráfagas de hasta 24.1 km/h, favorece la llegada de esta alga a la mayoría de las playas del litoral.",
+    "en": "Today, June 20, 2026, the Riviera Maya is experiencing an intense sargassum season, with record arrivals in Quintana Roo. The East wind (110°), blowing from the sea towards the coast at 12.6 km/h with gusts up to 24.1 km/h, favors the arrival of this seaweed to most coastal beaches."
   },
   "recommendation": {
-    "es": "Si buscas playas limpias hoy, te recomendamos encarecidamente visitar Holbox o Isla Mujeres, que reportan condiciones óptimas. En Playa del Carmen, las playas están mayormente afectadas, por lo que un día de alberca o un club de playa con barreras podría ser una mejor opción.",
-    "en": "If you are looking for clean beaches today, we strongly recommend visiting Holbox or Isla Mujeres, which report optimal conditions. In Playa del Carmen, most beaches are affected, so a pool day or a beach club with sargassum barriers might be a better option."
+    "es": "Para disfrutar de un día de playa hoy, se recomienda encarecidamente visitar Holbox o Isla Mujeres, ya que sus playas se reportan limpias o con niveles mínimos de sargazo. En Cancún, algunas playas del norte presentan condiciones moderadas.",
+    "en": "To enjoy a beach day today, it is highly recommended to visit Holbox or Isla Mujeres, as their beaches are reported clean or with minimal sargassum levels. In Cancun, some northern beaches show moderate conditions."
   },
   "forecast": {
-    "es": "El pronóstico de viento para los próximos tres días (21 al 23 de junio) indica vientos constantes del este, lo que sugiere que el arribo de sargazo a la costa continuará o incluso podría empeorar en las zonas ya afectadas.",
-    "en": "The wind forecast for the next three days (June 21-23) indicates consistent easterly winds, suggesting that sargassum arrival to the coast will continue or could even worsen in already affected areas."
+    "es": "El pronóstico de viento para los próximos días (21 al 23 de junio) indica vientos del Este con velocidades entre 19.7 y 21.0 km/h, lo que continuará empujando el sargazo hacia la costa. Por lo tanto, se espera que la situación se mantenga similar o empeore ligeramente en las zonas afectadas.",
+    "en": "The wind forecast for the next few days (June 21-23) indicates East winds with speeds between 19.7 and 21.0 km/h, which will continue to push sargassum towards the coast. Therefore, the situation is expected to remain similar or slightly worsen in affected areas."
   },
   "forecastDays": [
     {
@@ -91,9 +91,9 @@
     }
   ],
   "wind": {
-    "speed_kmh": 12.4,
-    "gust_kmh": 23.8,
-    "dir_deg": 111,
+    "speed_kmh": 12.6,
+    "gust_kmh": 24.1,
+    "dir_deg": 110,
     "dir_cardinal": "E"
   },
   "hurricaneAlert": {
@@ -103,24 +103,20 @@
   "sources": [
     {
       "title": "heraldodemexico.com.mx",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQETetDFVquu-5rllMDKpBjBMGRwIVMGgcUIKJuPKPv5UdrfCDREn4hLLnlIQduza0w_n7a7sta3kHBwVnyKmIG8t59K2gz9NJS57-hBrRVJQA4VN3tAuR5uRKZ9n8pLtkW3xWEHpaPdKBru8DGa8q59E6XlC_4LEFBBgQVSAkOWx4qCTlJJ_LM6Jd9iZlm4vLdnjh3JYGEVwskLrmnvb3OhIj1Sv_oRHRzGHGFOfBH1w_C-Y1b8l8bmx3gT9lI_Ew=="
-    },
-    {
-      "title": "24horasqroo.mx",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHo_xtG51wjbFmilB3a1grNBJ7aGLirx349Y4J8bK7Th2-jFdmpCzPsnFlUxT-8_RutCUdpDh7BcW9m15CRHfvtVvl4XHFcouhmUWPYbHLN0827dlAKOal8FIS9UBVzhyaubXkzHL3wqD3Oyb6Xqj-sCnpBVRBNgfT-2Q=="
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHeCygbUekkIfdVPCVGI9UQJnWG-H_r91pmFXIa0lY5oAjrH-lFND0izrKvEtD7onttPRh6J2F_2hNJ_yr3rP3tTjJrnVAPRLgrM6ClaE8ZH-pzWzPhExMbV7ZCsDB07DVtBN1LnGP9HAp2YD0EmZ1-bY0P4_mUnEOsQbk2jsPtQSDps6wbNvlAutJTUA7bZLTHCqenKYzGWPc4x7nvlMMMqHUjlGp-HgMB0IrBYQh_OEUhsYLgrrmi8BYUOhiaSA=="
     },
     {
       "title": "debate.com.mx",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEBqUcqmVe1maVrRTRWSLXgAHED-R_Y9oIuojVM8s_XCGB5ES8-1GmzavleM_UduQzBxiixoTpOOsIDTd8SPhZl8OL3zz4mSvKn9o59TmwtErNCmN3vlkFUhooaHPjJF_FY-0hXdYvbHB5Hxs8Ln-dSUhenSxZxe803gRo0er3BMAli7KxnI4QS2Qrn5-1-Z_JU85OMBsWkIWIqbMS4vG-a37Wm0Q9n2QcaKQg9jhNrw6bWWPaopR_G7axEYR6lgFYqaSqZs2DoUJk="
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF9gi6pynSzM4V-nmUL1l02eB87gIxIKGN50KoMBriy6T-Ov-uZgZVRkY3vGJt6zC1SJHR_GI2FgXtWHaUFucJf1ZsjkB0DD1DmneECMNcpgf9vw9D1O26IGBTylRjdiJ1R_t8qAsGjnamBDDS6uiWuX7_XHSsrLa0PzN5xsWjgv1rPCXTY7OaPYYxtibukidnV_bYQsJHUvnpQxkzvd0cVgKc0KjV2Pp--NNF9yWMwgzyC0PIJr44Wzt5wmu3iu3KhVrNwlB8JwmM="
     },
     {
       "title": "aztecaquintanaroo.com",
-      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFC1dYClClAcu6lr8hiS43kJwrlivcBPPxqvyRMKtvnJCcSbnLF2G86-GheCMzUyWN585KYynvqh3TJJ_Pg_XuL1r9gMSioFV_y5aF18JMf0EvQ8Hk2dj9ZGsQ7Ti4WmRXuGK0W9YMvoIAMSjOuX4gqaQ0F2BC-Aq7QzQmWaQkbJaQz-wG8wnGmCnvCEsxORcMeVusjyntNwSYFgpDax1CGIC29zBOLdPwSeV04DFxUtvNrSQ=="
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqPeD8CajL9TXHJckzi_5l00qVc-WcZjK9ab1ZnB8JZ1aItkGDQDvqo4Y2iC5Re_-kWqOh8bqOhF2d99GcswfCqJRGEXwD9JPwLYOuEVyzu-U-4RZipJITHu1ryDqOR8lBIb9cgvDFeqFAd3xmPaqG7xMyjERsFkwndZUaL-E0JHSj0I6gC1d9h4GFpayixBmJ6-2hV41ed_wwQ42a304ifM_fvtiOaZlLLff5wgxxhtT3iA=="
     }
   ],
   "prediction": {
     "model": "verificado-2clases",
-    "accuracy": 0.727,
+    "accuracy": 0.803,
     "baseline": 0.533,
     "trainedFrom": "2026-04-29",
     "trainedTo": "2026-06-16",
@@ -128,21 +124,21 @@
     "days": [
       {
         "date": "2026-06-21",
-        "level": "clean",
-        "score": 0.392,
-        "confidence": "low"
+        "level": "seaweed",
+        "score": 0.679,
+        "confidence": "medium"
       },
       {
         "date": "2026-06-22",
-        "level": "clean",
-        "score": 0.351,
-        "confidence": "low"
+        "level": "seaweed",
+        "score": 0.675,
+        "confidence": "medium"
       },
       {
         "date": "2026-06-23",
-        "level": "clean",
-        "score": 0.258,
-        "confidence": "medium"
+        "level": "moderate",
+        "score": 0.614,
+        "confidence": "low"
       }
     ]
   }
