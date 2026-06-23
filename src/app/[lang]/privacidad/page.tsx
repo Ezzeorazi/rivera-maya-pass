@@ -25,7 +25,7 @@ const content: Record<"es" | "en", Content> = {
       {
         heading: "1. Responsable del tratamiento",
         body: [
-          "RivieraMayaPass (en adelante, “el Responsable”), con operación en Playa del Carmen, Municipio de Solidaridad, Quintana Roo, México, y correo de contacto hola@rivieramayapass.com, es responsable del tratamiento y protección de los datos personales que usted (el “Titular”) llegue a proporcionar.",
+          "RivieraMayaPass (en adelante, “el Responsable”), con operación en Playa del Carmen, Municipio de Solidaridad, Quintana Roo, México, y correo de contacto contact@rivieramayapass.com, es responsable del tratamiento y protección de los datos personales que usted (el “Titular”) llegue a proporcionar.",
         ],
       },
       {
@@ -40,7 +40,7 @@ const content: Record<"es" | "en", Content> = {
         heading: "3. Finalidades del tratamiento",
         body: [
           "Finalidades primarias (necesarias para el servicio): (i) atender y dar seguimiento a sus consultas y solicitudes de reserva; (ii) poner al Titular en contacto con el hotel, beach club o establecimiento (el “Establecimiento”) de su interés; y (iii) cumplir obligaciones legales aplicables.",
-          "Finalidades secundarias (opcionales): (i) enviar información promocional, novedades y ofertas; y (ii) elaborar estadísticas para mejorar la Plataforma. Si no desea que sus datos se traten para estas finalidades secundarias, puede manifestarlo en cualquier momento escribiendo a hola@rivieramayapass.com; su negativa no será motivo para negarle los servicios.",
+          "Finalidades secundarias (opcionales): (i) enviar información promocional, novedades y ofertas; y (ii) elaborar estadísticas para mejorar la Plataforma. Si no desea que sus datos se traten para estas finalidades secundarias, puede manifestarlo en cualquier momento escribiendo a contact@rivieramayapass.com; su negativa no será motivo para negarle los servicios.",
         ],
       },
       {
@@ -54,13 +54,13 @@ const content: Record<"es" | "en", Content> = {
         heading: "5. Derechos ARCO y revocación del consentimiento",
         body: [
           "Usted tiene derecho a Acceder a sus datos personales, a Rectificarlos cuando sean inexactos, a Cancelarlos cuando considere que no se requieren para las finalidades señaladas, y a Oponerse a su tratamiento (derechos ARCO). También puede revocar el consentimiento otorgado.",
-          "Para ejercer cualquiera de estos derechos, envíe su solicitud a hola@rivieramayapass.com indicando su nombre, los datos sobre los que desea ejercer el derecho y una descripción clara de su petición. Daremos respuesta en los plazos que marca la ley.",
+          "Para ejercer cualquiera de estos derechos, envíe su solicitud a contact@rivieramayapass.com indicando su nombre, los datos sobre los que desea ejercer el derecho y una descripción clara de su petición. Daremos respuesta en los plazos que marca la ley.",
         ],
       },
       {
         heading: "6. Limitación del uso o divulgación",
         body: [
-          "Puede solicitar la limitación del uso o divulgación de sus datos enviando un correo a hola@rivieramayapass.com. De resultar procedente, su solicitud será atendida conforme a la normativa aplicable.",
+          "Puede solicitar la limitación del uso o divulgación de sus datos enviando un correo a contact@rivieramayapass.com. De resultar procedente, su solicitud será atendida conforme a la normativa aplicable.",
         ],
       },
       {
@@ -92,7 +92,7 @@ const content: Record<"es" | "en", Content> = {
       {
         heading: "1. Data controller",
         body: [
-          "RivieraMayaPass (the “Controller”), operating in Playa del Carmen, Municipality of Solidaridad, Quintana Roo, Mexico, with contact email hola@rivieramayapass.com, is responsible for the processing and protection of the personal data you (the “Data Subject”) may provide.",
+          "RivieraMayaPass (the “Controller”), operating in Playa del Carmen, Municipality of Solidaridad, Quintana Roo, Mexico, with contact email contact@rivieramayapass.com, is responsible for the processing and protection of the personal data you (the “Data Subject”) may provide.",
         ],
       },
       {
@@ -107,7 +107,7 @@ const content: Record<"es" | "en", Content> = {
         heading: "3. Purposes of processing",
         body: [
           "Primary purposes (necessary for the service): (i) to handle and follow up on your inquiries and booking requests; (ii) to put the Data Subject in contact with the hotel, beach club or establishment (the “Establishment”) of interest; and (iii) to comply with applicable legal obligations.",
-          "Secondary purposes (optional): (i) to send promotional information, news and offers; and (ii) to compile statistics to improve the Platform. If you do not want your data processed for these secondary purposes, you may state so at any time by writing to hola@rivieramayapass.com; your refusal will not be grounds to deny you the services.",
+          "Secondary purposes (optional): (i) to send promotional information, news and offers; and (ii) to compile statistics to improve the Platform. If you do not want your data processed for these secondary purposes, you may state so at any time by writing to contact@rivieramayapass.com; your refusal will not be grounds to deny you the services.",
         ],
       },
       {
@@ -121,13 +121,13 @@ const content: Record<"es" | "en", Content> = {
         heading: "5. ARCO rights and withdrawal of consent",
         body: [
           "You have the right to Access your personal data, to Rectify it when inaccurate, to Cancel it when you consider it is no longer required for the stated purposes, and to Object to its processing (ARCO rights). You may also withdraw the consent granted.",
-          "To exercise any of these rights, send your request to hola@rivieramayapass.com stating your name, the data over which you wish to exercise the right, and a clear description of your request. We will respond within the timeframes set by law.",
+          "To exercise any of these rights, send your request to contact@rivieramayapass.com stating your name, the data over which you wish to exercise the right, and a clear description of your request. We will respond within the timeframes set by law.",
         ],
       },
       {
         heading: "6. Limiting use or disclosure",
         body: [
-          "You may request the limitation of the use or disclosure of your data by emailing hola@rivieramayapass.com. Where applicable, your request will be handled in accordance with the relevant regulations.",
+          "You may request the limitation of the use or disclosure of your data by emailing contact@rivieramayapass.com. Where applicable, your request will be handled in accordance with the relevant regulations.",
         ],
       },
       {

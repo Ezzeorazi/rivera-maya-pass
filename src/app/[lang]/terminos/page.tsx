@@ -88,7 +88,7 @@ const content: Record<"es" | "en", Content> = {
       {
         heading: "11. Contacto",
         body: [
-          "Para cualquier duda o aclaración sobre estos Términos y Condiciones puede escribirnos a hola@rivieramayapass.com.",
+          "Para cualquier duda o aclaración sobre estos Términos y Condiciones puede escribirnos a contact@rivieramayapass.com.",
         ],
       },
     ],
@@ -165,7 +165,7 @@ const content: Record<"es" | "en", Content> = {
       {
         heading: "11. Contact",
         body: [
-          "For any questions about these Terms & Conditions you may write to us at hola@rivieramayapass.com.",
+          "For any questions about these Terms & Conditions you may write to us at contact@rivieramayapass.com.",
         ],
       },
     ],
