@@ -20,7 +20,7 @@ export default async function HomePage({
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang as Locale);
-  const [properties, tours] = await Promise.all([getProperties(), getTours()]);
+  const [properties, tours] = await Promise.all([getProperties(), getTours(lang)]);
 
   return (
     <>

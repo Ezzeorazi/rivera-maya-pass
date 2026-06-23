@@ -37,7 +37,7 @@ export default async function ToursPage({
   const { lang } = await params;
   const dict = await getDictionary(lang as Locale);
   const tours = dict.tours as Record<string, string>;
-  const allTours = await getTours();
+  const allTours = await getTours(lang);
 
   return (
     <>
@@ -69,23 +69,23 @@ export default async function ToursPage({
         </div>
       </section>
 
-      {/* JSON-LD structured data */}
+      {/* JSON-LD: solo metadatos propios de la página.
+          La licencia de la API de Viator prohíbe indexar su contenido exclusivo
+          (títulos/descripciones de productos), por eso NO los emitimos aquí. */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "ItemList",
+            "@type": "CollectionPage",
             name: tours.pageTitle,
             description: tours.metaDescription,
             url: `https://rivieramayapass.com/${lang}/tours`,
-            numberOfItems: allTours.length,
-            itemListElement: allTours.map((tour, i) => ({
-              "@type": "ListItem",
-              position: i + 1,
-              name: lang === "en" ? tour.titleEn : tour.title,
-              description: lang === "en" ? tour.descriptionEn : tour.description,
-            })),
+            isPartOf: {
+              "@type": "WebSite",
+              name: "RivieraMayaPass",
+              url: "https://rivieramayapass.com",
+            },
           }),
         }}
       />

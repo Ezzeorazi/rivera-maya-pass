@@ -26,7 +26,9 @@ import {
  * Docs: https://docs.viator.com/partner-api/affiliate/technical/
  */
 
-const VIATOR_API_BASE = 'https://api.viator.com/partner';
+// Producción por defecto. Para probar con key de sandbox:
+//   VIATOR_API_BASE=https://api.sandbox.viator.com/partner
+const VIATOR_API_BASE = process.env.VIATOR_API_BASE ?? 'https://api.viator.com/partner';
 const VIATOR_API_KEY = process.env.VIATOR_API_KEY;
 const VIATOR_DESTINATION_ID = process.env.VIATOR_DESTINATION_ID ?? '631'; // Cancún / Riviera Maya
 const VIATOR_TOURS_COUNT = Number(process.env.VIATOR_TOURS_COUNT ?? '12');
@@ -114,8 +116,10 @@ function mapProduct(product: ViatorProduct): Tour | null {
  * Tours para el sitio público. Intenta la API de Viator; si no está configurada
  * o falla, devuelve los tours curados. NUNCA lanza: el sitio no se rompe.
  */
-export async function getTours(): Promise<Tour[]> {
+export async function getTours(lang: string = 'es'): Promise<Tour[]> {
   if (!VIATOR_API_KEY) return getCuratedTours();
+
+  const acceptLanguage = lang === 'en' ? 'en-US' : 'es-MX';
 
   try {
     const res = await fetch(`${VIATOR_API_BASE}/products/search`, {
@@ -123,7 +127,7 @@ export async function getTours(): Promise<Tour[]> {
       headers: {
         'exp-api-key': VIATOR_API_KEY,
         Accept: 'application/json;version=2.0',
-        'Accept-Language': 'es-MX',
+        'Accept-Language': acceptLanguage,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -132,7 +136,7 @@ export async function getTours(): Promise<Tour[]> {
         pagination: { start: 1, count: VIATOR_TOURS_COUNT },
         currency: 'USD',
       }),
-      next: { revalidate: CACHE_SECONDS },
+      next: { revalidate: CACHE_SECONDS, tags: [`tours-${lang}`] },
     });
 
     if (!res.ok) return getCuratedTours();
