@@ -13,9 +13,11 @@ export const WHATSAPP_PHONE =
 
 /**
  * Teléfono en formato E.164 (+52...) para el schema LocalBusiness.
- * Si queda vacío, se OMITE del JSON-LD (mejor no publicar un teléfono falso).
+ * Por defecto usa el mismo número de WhatsApp (con "+"). Para usar otro,
+ * seteá NEXT_PUBLIC_CONTACT_PHONE; para ocultarlo del JSON-LD, ponelo vacío.
  */
-export const CONTACT_PHONE = process.env.NEXT_PUBLIC_CONTACT_PHONE ?? "";
+export const CONTACT_PHONE =
+  process.env.NEXT_PUBLIC_CONTACT_PHONE ?? `+${WHATSAPP_PHONE}`;
 
 export const CONTACT_EMAIL = "contact@rivieramayapass.com";
 
