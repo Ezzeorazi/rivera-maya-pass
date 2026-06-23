@@ -39,7 +39,12 @@
     "confidenceMedium": "Medium",
     "confidenceLow": "Low",
     "regionTitle": "Where's it clean today?",
-    "regionSubtitle": "If Playa del Carmen has sargassum, these nearby areas are usually your best bet."
+    "regionSubtitle": "If Playa del Carmen has sargassum, these nearby areas are usually your best bet.",
+    "seeFullStatus": "See full status & forecast",
+    "metaTitle": "Sargassum in Playa del Carmen today · Beach status | RivieraMayaPass",
+    "metaDescription": "Daily sargassum status by zone in Playa del Carmen and the Riviera Maya, with wind forecast. Find out which beaches are clean today.",
+    "pageTitle": "Sargassum in Playa del Carmen today",
+    "pageSubtitle": "Sargassum traffic-light by zone, updated daily with wind forecast. The local data no global OTA gives you."
   },
   "properties": {
     "sectionLabel": "PROPERTIES",

@@ -39,7 +39,12 @@
     "confidenceMedium": "Media",
     "confidenceLow": "Baja",
     "regionTitle": "¿Dónde está limpio hoy?",
-    "regionSubtitle": "Si Playa del Carmen está con sargazo, estas zonas de la región suelen ser tu mejor opción."
+    "regionSubtitle": "Si Playa del Carmen está con sargazo, estas zonas de la región suelen ser tu mejor opción.",
+    "seeFullStatus": "Ver estado completo y pronóstico",
+    "metaTitle": "Sargazo en Playa del Carmen hoy · Estado de playas | RivieraMayaPass",
+    "metaDescription": "Estado del sargazo por zona en Playa del Carmen y la Riviera Maya, actualizado a diario con pronóstico de viento. Descubrí qué playas están limpias hoy.",
+    "pageTitle": "Sargazo en Playa del Carmen hoy",
+    "pageSubtitle": "Semáforo de sargazo por zona, actualizado a diario con pronóstico de viento. El dato local que ninguna OTA global te da."
   },
   "properties": {
     "sectionLabel": "PROPIEDADES",

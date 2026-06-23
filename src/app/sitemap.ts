@@ -31,6 +31,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
+  // Sargazo / estado de playas (página clave, actualizada a diario)
+  for (const locale of locales) {
+    routes.push({
+      url: `${baseUrl}/${locale}/sargazo`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
+    });
+  }
+
   // Blog listing pages
   for (const locale of locales) {
     routes.push({

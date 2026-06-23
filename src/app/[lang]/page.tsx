@@ -5,7 +5,7 @@ import { getProperties } from "@/lib/get-properties";
 import { getTours } from "@/lib/get-tours";
 import { reviews } from "@/data/reviews";
 import Hero from "@/components/Hero";
-import BeachStatus from "@/components/BeachStatus";
+import BeachStatusSummary from "@/components/BeachStatusSummary";
 import PropertyGrid from "@/components/PropertyGrid";
 import ConciergeSection from "@/components/ConciergeSection";
 import ReviewSection from "@/components/ReviewSection";
@@ -29,10 +29,8 @@ export default async function HomePage({
       {/* Hero + Search */}
       <Hero dict={dict} lang={lang} />
 
-      {/* Beach Status Banner */}
-      <section id="estado-playa">
-        <BeachStatus dict={dict} lang={lang} />
-      </section>
+      {/* Beach Status — resumen; el detalle completo vive en /[lang]/sargazo */}
+      <BeachStatusSummary dict={dict} lang={lang} />
 
       {/* Tours / Experiences (lo que ya monetiza — dirección B: tours primero) */}
       <section id="tours" className="py-16 lg:py-24 bg-lagoon-bg/30">

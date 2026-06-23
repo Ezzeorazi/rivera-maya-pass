@@ -65,11 +65,14 @@ export default function BeachStatus({
   dict,
   lang,
   overrideAlert,
+  hideHeader = false,
 }: {
   dict: Record<string, unknown>;
   lang: string;
   /** Solo para vista previa en /admin: fuerza un banner de alerta sin publicarlo. */
   overrideAlert?: HurricaneAlert;
+  /** Oculta el título/subtítulo internos (la página /sargazo ya tiene su propio H1). */
+  hideHeader?: boolean;
 }) {
   const beachStatus = dict.beachStatus as Record<string, string>;
   const {
@@ -132,17 +135,19 @@ export default function BeachStatus({
           </div>
         )}
 
-        <div className="text-center mb-10">
-          <span className="inline-block uppercase tracking-widest text-sea font-semibold text-xs font-body mb-2">
-            {beachStatus.sectionLabel}
-          </span>
-          <h2 className="font-display font-bold text-3xl lg:text-4xl text-ink mb-3">
-            {beachStatus.title}
-          </h2>
-          <p className="text-ink-soft font-body max-w-lg mx-auto">
-            {beachStatus.subtitle}
-          </p>
-        </div>
+        {!hideHeader && (
+          <div className="text-center mb-10">
+            <span className="inline-block uppercase tracking-widest text-sea font-semibold text-xs font-body mb-2">
+              {beachStatus.sectionLabel}
+            </span>
+            <h2 className="font-display font-bold text-3xl lg:text-4xl text-ink mb-3">
+              {beachStatus.title}
+            </h2>
+            <p className="text-ink-soft font-body max-w-lg mx-auto">
+              {beachStatus.subtitle}
+            </p>
+          </div>
+        )}
 
         {beachStatus.pdcLabel && (
           <p className="font-display font-semibold text-sm text-ink mb-3 flex items-center gap-2">
@@ -214,7 +219,7 @@ export default function BeachStatus({
               </div>
             </div>
             <Link
-              href={`/${lang}#tours`}
+              href={`/${lang}/tours`}
               className="shrink-0 inline-flex items-center justify-center gap-2 bg-coral text-white font-body font-semibold text-sm px-5 py-2.5 rounded-xl hover:bg-coral/90 transition-colors shadow-sm"
             >
               {tours.sargazoCtaButton}

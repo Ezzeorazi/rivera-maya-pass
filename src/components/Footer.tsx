@@ -17,7 +17,7 @@ export default function Footer({
   const navLinks = [
     { label: nav.home, href: `/${lang}` },
     { label: nav.properties, href: `/${lang}#propiedades` },
-    { label: nav.beachStatus, href: `/${lang}#estado-playa` },
+    { label: nav.beachStatus, href: `/${lang}/sargazo` },
     { label: nav.tours, href: `/${lang}/tours` },
     { label: blog.sectionLabel, href: `/${lang}/blog` },
     { label: nav.contact, href: `/${lang}#contacto` },
