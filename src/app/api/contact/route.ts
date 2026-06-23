@@ -48,17 +48,18 @@ export async function POST(req: Request) {
       </div>
     `;
 
+    const fromAddress = process.env.RESEND_FROM_EMAIL || 'RivieraMayaPass <onboarding@resend.dev>';
+
     const { error } = await resend.emails.send({
-      from: 'RivieraMayaPass <no-reply@rivieramayapass.com>',
+      from: fromAddress,
       to: ['contact@rivieramayapass.com'],
       subject,
       html: htmlContent,
-      replyTo: phone ? undefined : undefined,
     });
 
     if (error) {
-      console.error('Resend error:', error);
-      return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
+      console.error('Resend error:', JSON.stringify(error));
+      return NextResponse.json({ error: error.message || 'Failed to send email' }, { status: 500 });
     }
 
     return NextResponse.json({ success: true });
