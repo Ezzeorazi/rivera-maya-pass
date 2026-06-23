@@ -206,6 +206,11 @@ export const tours: Tour[] = [
   },
 ];
 
-export function getTours(): Tour[] {
+/**
+ * Tours curados estáticos (fallback). El sitio público NO importa esto
+ * directamente: usa `getTours()` de `@/lib/get-tours`, que intenta la API de
+ * Viator y cae acá si no está configurada. Mismo patrón que `@/lib/get-properties`.
+ */
+export function getCuratedTours(): Tour[] {
   return [...tours].sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)));
 }

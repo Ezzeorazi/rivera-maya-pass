@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import type { Locale } from '@/i18n/config';
-import { getTours } from '@/data/tours';
+import type { Tour } from '@/data/tours';
 import TourCard from './TourCard';
 
 interface TourSectionProps {
+  /** Tours ya resueltos (vienen de `getTours()` del lib: API Viator o curados). */
+  tours: Tour[];
   lang: Locale;
   dict: Record<string, unknown>;
   /** Máximo de tours a mostrar (en el home limitamos; en /tours mostramos todos). */
@@ -14,15 +16,15 @@ interface TourSectionProps {
 }
 
 export default function TourSection({
+  tours,
   lang,
   dict,
   limit,
   showSeeAll = true,
   campaign = 'home',
 }: TourSectionProps) {
-  const tours = dict.tours as Record<string, string>;
-  const allTours = getTours();
-  const visible = limit ? allTours.slice(0, limit) : allTours;
+  const t = dict.tours as Record<string, string>;
+  const visible = limit ? tours.slice(0, limit) : tours;
 
   return (
     <div>
@@ -30,13 +32,13 @@ export default function TourSection({
       <div className="flex items-end justify-between mb-10 gap-4">
         <div>
           <p className="text-sea text-xs font-bold tracking-widest uppercase font-body mb-2">
-            {tours.sectionLabel}
+            {t.sectionLabel}
           </p>
           <h2 className="font-display text-3xl lg:text-4xl font-semibold text-ink">
-            {tours.title}
+            {t.title}
           </h2>
           <p className="text-ink-soft mt-2 max-w-lg font-body leading-relaxed">
-            {tours.subtitle}
+            {t.subtitle}
           </p>
         </div>
 
@@ -45,7 +47,7 @@ export default function TourSection({
             href={`/${lang}/tours`}
             className="hidden md:inline-flex items-center gap-2 text-sea text-sm font-semibold hover:gap-3 transition-all font-body whitespace-nowrap"
           >
-            {tours.seeAll}
+            {t.seeAll}
             <svg
               width="16"
               height="16"
@@ -71,7 +73,7 @@ export default function TourSection({
             key={tour.slug}
             tour={tour}
             lang={lang}
-            dict={tours}
+            dict={t}
             campaign={campaign}
           />
         ))}
@@ -84,7 +86,7 @@ export default function TourSection({
             href={`/${lang}/tours`}
             className="inline-flex items-center gap-2 bg-sea/10 text-sea font-semibold px-6 py-3 rounded-xl hover:bg-sea/20 transition-colors font-body"
           >
-            {tours.seeAll}
+            {t.seeAll}
             <svg
               width="16"
               height="16"
@@ -105,7 +107,7 @@ export default function TourSection({
 
       {/* Affiliate disclosure */}
       <p className="text-center text-[11px] text-ink-soft/60 font-body mt-8 max-w-2xl mx-auto">
-        {tours.affiliateDisclosure}
+        {t.affiliateDisclosure}
       </p>
     </div>
   );

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { getTours } from "@/data/tours";
+import { getTours } from "@/lib/get-tours";
 import TourSection from "@/components/TourSection";
 
 export async function generateMetadata({
@@ -37,7 +37,7 @@ export default async function ToursPage({
   const { lang } = await params;
   const dict = await getDictionary(lang as Locale);
   const tours = dict.tours as Record<string, string>;
-  const allTours = getTours();
+  const allTours = await getTours();
 
   return (
     <>
@@ -60,6 +60,7 @@ export default async function ToursPage({
       <section className="py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <TourSection
+            tours={allTours}
             lang={lang as Locale}
             dict={dict}
             showSeeAll={false}

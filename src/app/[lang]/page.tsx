@@ -1,6 +1,7 @@
 import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getProperties } from "@/lib/get-properties";
+import { getTours } from "@/lib/get-tours";
 import { reviews } from "@/data/reviews";
 import Hero from "@/components/Hero";
 import BeachStatus from "@/components/BeachStatus";
@@ -19,7 +20,7 @@ export default async function HomePage({
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang as Locale);
-  const properties = await getProperties();
+  const [properties, tours] = await Promise.all([getProperties(), getTours()]);
 
   return (
     <>
@@ -46,6 +47,7 @@ export default async function HomePage({
       <section id="tours" className="py-16 lg:py-24 bg-lagoon-bg/30">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <TourSection
+            tours={tours}
             lang={lang as Locale}
             dict={dict}
             limit={6}
