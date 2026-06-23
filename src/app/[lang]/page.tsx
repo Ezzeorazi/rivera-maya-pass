@@ -7,6 +7,7 @@ import { reviews } from "@/data/reviews";
 import Hero from "@/components/Hero";
 import BeachStatus from "@/components/BeachStatus";
 import PropertyGrid from "@/components/PropertyGrid";
+import ConciergeSection from "@/components/ConciergeSection";
 import ReviewSection from "@/components/ReviewSection";
 import TourSection from "@/components/TourSection";
 import BlogSection from "@/components/BlogSection";
@@ -26,7 +27,7 @@ export default async function HomePage({
   return (
     <>
       {/* Hero + Search */}
-      <Hero dict={dict} />
+      <Hero dict={dict} lang={lang} />
 
       {/* Beach Status Banner */}
       <section id="estado-playa">
@@ -46,14 +47,18 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* Properties Grid */}
+      {/* Propiedades reales (Supabase) si existen; si no, modo concierge "te lo conseguimos" */}
       <section id="propiedades" className="py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <PropertyGrid
-            properties={properties}
-            lang={lang as Locale}
-            dict={dict}
-          />
+          {properties.length > 0 ? (
+            <PropertyGrid
+              properties={properties}
+              lang={lang as Locale}
+              dict={dict}
+            />
+          ) : (
+            <ConciergeSection lang={lang} dict={dict} />
+          )}
         </div>
       </section>
 

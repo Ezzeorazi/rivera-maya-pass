@@ -52,6 +52,19 @@
     "schedule": "Schedule",
     "seeAll": "See all properties"
   },
+  "concierge": {
+    "sectionLabel": "CUSTOM DAY PASS",
+    "title": "Looking for a day pass in Playa del Carmen?",
+    "subtitle": "We're finalizing partnerships with the best beach clubs, pools and hotels. Tell us what you want and we'll get you access at the best price — without paying for a hotel night.",
+    "cat1Title": "Beachfront beach clubs",
+    "cat1Text": "Lounger, pool and beach service in the best areas of Playa del Carmen.",
+    "cat2Title": "Pools & rooftops",
+    "cat2Text": "Pool day at boutique hotels with a view — perfect for a relaxed day without waves.",
+    "cat3Title": "All-inclusive day pass",
+    "cat3Text": "Food, drinks and even parks included in a single day access.",
+    "ctaButton": "Request my day pass on WhatsApp",
+    "note": "We reply in minutes · no search fee"
+  },
   "reviews": {
     "sectionLabel": "REVIEWS",
     "title": "What our visitors say",

@@ -1,6 +1,12 @@
 import SearchBar from './SearchBar';
 
-export default function Hero({ dict }: { dict: Record<string, unknown> }) {
+export default function Hero({
+  dict,
+  lang,
+}: {
+  dict: Record<string, unknown>;
+  lang: string;
+}) {
   const hero = dict.hero as Record<string, string>;
 
   return (
@@ -29,7 +35,7 @@ export default function Hero({ dict }: { dict: Record<string, unknown> }) {
           </p>
 
           <div className="w-full flex justify-center">
-            <SearchBar dict={dict} />
+            <SearchBar dict={dict} lang={lang} />
           </div>
         </div>
       </div>

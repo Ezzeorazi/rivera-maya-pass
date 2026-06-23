@@ -1,5 +1,29 @@
-export default function SearchBar({ dict }: { dict: Record<string, unknown> }) {
+'use client';
+
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+export default function SearchBar({
+  dict,
+  lang,
+}: {
+  dict: Record<string, unknown>;
+  lang: string;
+}) {
   const search = dict.search as Record<string, string>;
+  const router = useRouter();
+  const [date, setDate] = useState(
+    () => new Date().toISOString().split('T')[0]
+  );
+
+  function handleSearch() {
+    // Por ahora el inventario reservable son los tours/experiencias.
+    // Llevamos la búsqueda al catálogo en vivo de tours.
+    const params = new URLSearchParams();
+    if (date) params.set('date', date);
+    router.push(`/${lang}/tours?${params.toString()}`);
+  }
+
   return (
     <div className="bg-shell rounded-2xl shadow-xl p-2 border border-line w-full max-w-2xl">
       <div className="flex flex-col sm:flex-row items-stretch gap-2">
@@ -55,8 +79,9 @@ export default function SearchBar({ dict }: { dict: Record<string, unknown> }) {
             </span>
             <input
               type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
               className="text-sm font-semibold text-ink font-body bg-transparent outline-none cursor-pointer"
-              defaultValue={new Date().toISOString().split('T')[0]}
             />
           </div>
         </div>
@@ -64,6 +89,7 @@ export default function SearchBar({ dict }: { dict: Record<string, unknown> }) {
         {/* Search Button */}
         <button
           type="button"
+          onClick={handleSearch}
           className="bg-coral text-white font-body font-bold rounded-xl px-6 py-3 sm:py-0 hover:bg-coral/90 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-coral/25 flex items-center justify-center gap-2 shrink-0"
         >
           <svg

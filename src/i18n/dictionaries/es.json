@@ -52,6 +52,19 @@
     "schedule": "Horario",
     "seeAll": "Ver todas las propiedades"
   },
+  "concierge": {
+    "sectionLabel": "DAY PASS A MEDIDA",
+    "title": "¿Buscás un day pass en Playa del Carmen?",
+    "subtitle": "Estamos cerrando alianzas con los mejores beach clubs, albercas y hoteles. Decinos qué buscás y te conseguimos el acceso al mejor precio — sin pagar la noche de hotel.",
+    "cat1Title": "Beach clubs frente al mar",
+    "cat1Text": "Camastro, alberca y servicio en la playa en las mejores zonas de Playa del Carmen.",
+    "cat2Title": "Albercas y rooftops",
+    "cat2Text": "Pool day en hoteles boutique con vista, ideal para un día relajado sin oleaje.",
+    "cat3Title": "All-inclusive por el día",
+    "cat3Text": "Comida, bebidas y hasta parques incluidos en un solo acceso de día.",
+    "ctaButton": "Pedir mi day pass por WhatsApp",
+    "note": "Te respondemos en minutos · sin costo por la búsqueda"
+  },
   "reviews": {
     "sectionLabel": "RESEÑAS",
     "title": "Lo que dicen nuestros visitantes",
