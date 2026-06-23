@@ -12,6 +12,8 @@ interface TourSectionProps {
   limit?: number;
   /** Mostrar el link "ver todos" hacia /tours. */
   showSeeAll?: boolean;
+  /** Mostrar el header de la sección (en /tours lo ocultamos: el hero ya lo cubre). */
+  showHeader?: boolean;
   campaign?: string;
 }
 
@@ -21,6 +23,7 @@ export default function TourSection({
   dict,
   limit,
   showSeeAll = true,
+  showHeader = true,
   campaign = 'home',
 }: TourSectionProps) {
   const t = dict.tours as Record<string, string>;
@@ -29,6 +32,7 @@ export default function TourSection({
   return (
     <div>
       {/* Section Header */}
+      {showHeader && (
       <div className="flex items-end justify-between mb-10 gap-4">
         <div>
           <p className="text-sea text-xs font-bold tracking-widest uppercase font-body mb-2">
@@ -65,6 +69,7 @@ export default function TourSection({
           </Link>
         )}
       </div>
+      )}
 
       {/* Tours Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

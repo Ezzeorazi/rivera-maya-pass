@@ -64,6 +64,7 @@ export default async function ToursPage({
             lang={lang as Locale}
             dict={dict}
             showSeeAll={false}
+            showHeader={false}
             campaign="tours-page"
           />
         </div>
