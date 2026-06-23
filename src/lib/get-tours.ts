@@ -34,6 +34,19 @@ const VIATOR_DESTINATION_ID = process.env.VIATOR_DESTINATION_ID ?? '631'; // Can
 const VIATOR_TOURS_COUNT = Number(process.env.VIATOR_TOURS_COUNT ?? '12');
 const CACHE_SECONDS = 60 * 60 * 6; // 6 h: no golpeamos la API en cada request.
 
+/**
+ * Filtro de relevancia: la sección es "alternativas a la playa/sargazo".
+ * Excluimos productos fuera de tema (traslados, choferes, clases, bienestar,
+ * fiestas) por palabra clave en el título (bilingüe). Tags de Viator son IDs
+ * numéricos opacos, así que el título es la señal más confiable y fácil de tunear.
+ */
+const EXCLUDE_RE =
+  /\b(traslad\w*|transfer|aeropuerto|airport|private driver|driver|chofer|limusina|limousine|shuttle|cooking class|clase de cocina|chef|yoga|pilates|spa|masaje|massage|despedida de soltera|bachelor\w*|pub crawl|bar crawl|nightlife|party boat)\b/i;
+
+function isOnTheme(title: string): boolean {
+  return !EXCLUDE_RE.test(title);
+}
+
 const GRADIENTS = [
   'from-sea via-sea-deep to-lagoon',
   'from-amber-500 via-orange-600 to-amber-800',
@@ -133,7 +146,8 @@ export async function getTours(lang: string = 'es'): Promise<Tour[]> {
       body: JSON.stringify({
         filtering: { destination: VIATOR_DESTINATION_ID },
         sorting: { sort: 'TRAVELER_RATING', order: 'DESCENDING' },
-        pagination: { start: 1, count: VIATOR_TOURS_COUNT },
+        // Sobre-pedimos para tener de dónde elegir tras filtrar por tema.
+        pagination: { start: 1, count: Math.min(50, VIATOR_TOURS_COUNT * 4) },
         currency: 'USD',
       }),
       next: { revalidate: CACHE_SECONDS, tags: [`tours-${lang}`] },
@@ -143,8 +157,10 @@ export async function getTours(lang: string = 'es'): Promise<Tour[]> {
 
     const data = (await res.json()) as { products?: ViatorProduct[] };
     const mapped = (data.products ?? [])
+      .filter((p) => typeof p.title === 'string' && isOnTheme(p.title))
       .map(mapProduct)
-      .filter((t): t is Tour => t !== null);
+      .filter((t): t is Tour => t !== null)
+      .slice(0, VIATOR_TOURS_COUNT);
 
     return mapped.length > 0 ? mapped : getCuratedTours();
   } catch {
