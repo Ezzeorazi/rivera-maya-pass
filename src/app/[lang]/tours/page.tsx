@@ -17,8 +17,8 @@ export async function generateMetadata({
     title: tours.metaTitle,
     description: tours.metaDescription,
     alternates: {
-      languages: { es: "/es/tours", en: "/en/tours" },
       canonical: `/${lang}/tours`,
+      languages: { es: "/es/tours", en: "/en/tours", "x-default": "/es/tours" },
     },
     openGraph: {
       title: tours.metaTitle,

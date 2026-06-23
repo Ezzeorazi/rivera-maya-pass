@@ -21,9 +21,11 @@ export async function generateMetadata({
     title: dict.metadata.title,
     description: dict.metadata.description,
     alternates: {
+      canonical: `/${lang}`,
       languages: {
         es: "/es",
         en: "/en",
+        "x-default": "/es",
       },
     },
   };
@@ -42,6 +44,13 @@ export default async function LangLayout({
 
   return (
     <>
+      {/* El <html lang> vive en el root layout (siempre "es"); lo sincronizamos
+          con el idioma real de la URL para accesibilidad y crawlers. */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `document.documentElement.lang=${JSON.stringify(lang)}`,
+        }}
+      />
       <Header lang={lang} dict={dict} />
       <main>{children}</main>
       <Footer lang={lang} dict={dict} />

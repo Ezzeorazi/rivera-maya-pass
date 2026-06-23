@@ -1,4 +1,4 @@
-const WHATSAPP_PHONE = '5219841234567';
+import { WHATSAPP_PHONE } from '@/lib/site';
 
 export default function FloatingWhatsApp({
   label,

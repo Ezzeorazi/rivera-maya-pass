@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-
-const WHATSAPP_PHONE = '5219841234567';
+import { WHATSAPP_PHONE } from '@/lib/site';
 
 export default function PartnerForm({
   lang,

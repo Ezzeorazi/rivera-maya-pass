@@ -37,10 +37,19 @@ export async function generateMetadata({
   return {
     title: `${property.name} · Day Pass`,
     description,
+    alternates: {
+      canonical: `/${lang}/propiedad/${slug}`,
+      languages: {
+        es: `/es/propiedad/${slug}`,
+        en: `/en/propiedad/${slug}`,
+        "x-default": `/es/propiedad/${slug}`,
+      },
+    },
     openGraph: {
       title: `${property.name} · Day Pass en ${property.zone}`,
       description,
       type: "website",
+      locale: lang === "en" ? "en_US" : "es_MX",
     },
   };
 }

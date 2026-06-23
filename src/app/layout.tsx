@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Fraunces, Hanken_Grotesk } from "next/font/google";
+import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { GA_ID, GSC_VERIFICATION, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -15,7 +19,7 @@ const hanken = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rivieramayapass.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "RivieraMayaPass · Day Passes en Playa del Carmen",
     template: "%s | RivieraMayaPass",
@@ -26,7 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_MX",
     siteName: "RivieraMayaPass",
-    images: [{ url: "/imagotipo.svg", width: 1200, height: 630 }],
+    // La imagen OG la genera src/app/opengraph-image.tsx (PNG 1200x630).
   },
   icons: {
     icon: "/isotipo-logo.webp",
@@ -36,6 +40,7 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  verification: GSC_VERIFICATION ? { google: GSC_VERIFICATION } : undefined,
 };
 
 export default function RootLayout({
@@ -49,6 +54,24 @@ export default function RootLayout({
         className={`${fraunces.variable} ${hanken.variable} font-body antialiased`}
       >
         {children}
+        <Analytics />
+        <SpeedInsights />
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );

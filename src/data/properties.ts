@@ -42,7 +42,7 @@ export const properties: Property[] = [
     beachStatus: 'clean',
     rating: 4.7,
     reviewCount: 234,
-    whatsappNumber: '5219841234567',
+    whatsappNumber: '529982017863',
     gradient: 'from-sea via-sea-deep to-lagoon',
   },
   {
@@ -82,7 +82,7 @@ export const properties: Property[] = [
     beachStatus: 'clean',
     rating: 4.9,
     reviewCount: 512,
-    whatsappNumber: '5219841234567',
+    whatsappNumber: '529982017863',
     gradient: 'from-sea-deep via-lagoon to-sea',
   },
   {
@@ -108,7 +108,7 @@ export const properties: Property[] = [
     beachStatus: 'clean',
     rating: 4.5,
     reviewCount: 187,
-    whatsappNumber: '5219841234567',
+    whatsappNumber: '529982017863',
     gradient: 'from-lagoon via-sea to-sea-deep',
   },
   {
@@ -134,7 +134,7 @@ export const properties: Property[] = [
     beachStatus: 'moderate',
     rating: 4.8,
     reviewCount: 156,
-    whatsappNumber: '5219841234567',
+    whatsappNumber: '529982017863',
     gradient: 'from-sea via-sea-deep to-ink',
   },
   {
@@ -160,7 +160,7 @@ export const properties: Property[] = [
     beachStatus: 'clean',
     rating: 4.6,
     reviewCount: 98,
-    whatsappNumber: '5219841234567',
+    whatsappNumber: '529982017863',
     gradient: 'from-ink via-sea-deep to-sea',
   },
   {
@@ -186,7 +186,7 @@ export const properties: Property[] = [
     beachStatus: 'clean',
     rating: 4.7,
     reviewCount: 143,
-    whatsappNumber: '5219841234567',
+    whatsappNumber: '529982017863',
     gradient: 'from-lagoon-bg via-lagoon to-sea',
   },
 ];

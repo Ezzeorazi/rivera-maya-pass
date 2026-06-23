@@ -6,6 +6,7 @@ import { locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { blogPosts } from "@/data/blog-posts";
 import MarkdownContent from "@/components/MarkdownContent";
+import { WHATSAPP_PHONE } from "@/lib/site";
 
 export async function generateStaticParams() {
   return locales.flatMap((lang) =>
@@ -165,7 +166,7 @@ export default async function BlogPostPage({
           </h2>
           <p className="text-ink-soft mb-6 font-body">{blog.ctaSubtitle}</p>
           <a
-            href="https://wa.me/5219841234567?text=Hola%2C%20quiero%20reservar%20un%20day%20pass%20en%20Playa%20del%20Carmen"
+            href={`https://wa.me/${WHATSAPP_PHONE}?text=Hola%2C%20quiero%20reservar%20un%20day%20pass%20en%20Playa%20del%20Carmen`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-coral text-white font-body font-bold px-8 py-4 rounded-xl hover:bg-coral/90 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-coral/25"

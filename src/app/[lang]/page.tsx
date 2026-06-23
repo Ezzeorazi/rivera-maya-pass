@@ -1,4 +1,5 @@
 import type { Locale } from "@/i18n/config";
+import { CONTACT_PHONE, SITE_URL, WHATSAPP_PHONE } from "@/lib/site";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getProperties } from "@/lib/get-properties";
 import { getTours } from "@/lib/get-tours";
@@ -32,18 +33,7 @@ export default async function HomePage({
         <BeachStatus dict={dict} lang={lang} />
       </section>
 
-      {/* Properties Grid */}
-      <section id="propiedades" className="py-16 lg:py-24">
-        <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <PropertyGrid
-            properties={properties}
-            lang={lang as Locale}
-            dict={dict}
-          />
-        </div>
-      </section>
-
-      {/* Tours / Experiences (alternativa al sargazo) */}
+      {/* Tours / Experiences (lo que ya monetiza — dirección B: tours primero) */}
       <section id="tours" className="py-16 lg:py-24 bg-lagoon-bg/30">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <TourSection
@@ -52,6 +42,17 @@ export default async function HomePage({
             dict={dict}
             limit={6}
             campaign="home"
+          />
+        </div>
+      </section>
+
+      {/* Properties Grid */}
+      <section id="propiedades" className="py-16 lg:py-24">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8">
+          <PropertyGrid
+            properties={properties}
+            lang={lang as Locale}
+            dict={dict}
           />
         </div>
       </section>
@@ -90,7 +91,7 @@ export default async function HomePage({
                 {dict.cta.subtitle}
               </p>
               <a
-                href="https://wa.me/5219841234567?text=Hola%2C%20tengo%20un%20hotel%2Fbeach%20club%20y%20me%20interesa%20unirme%20a%20RivieraMayaPass"
+                href={`https://wa.me/${WHATSAPP_PHONE}?text=Hola%2C%20tengo%20un%20hotel%2Fbeach%20club%20y%20me%20interesa%20unirme%20a%20RivieraMayaPass`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-coral text-white font-body font-bold px-8 py-4 text-lg rounded-xl hover:bg-coral/90 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-coral/25"
@@ -120,8 +121,9 @@ export default async function HomePage({
             name: "RivieraMayaPass",
             description:
               "El especialista local del day pass en la Riviera Maya. Acceso a albercas, beach clubs y playas limpias en Playa del Carmen.",
-            url: "https://rivieramayapass.com",
-            telephone: "+52-984-123-4567",
+            url: SITE_URL,
+            // Solo publicamos teléfono si hay uno real configurado (NEXT_PUBLIC_CONTACT_PHONE).
+            ...(CONTACT_PHONE ? { telephone: CONTACT_PHONE } : {}),
             address: {
               "@type": "PostalAddress",
               addressLocality: "Playa del Carmen",
