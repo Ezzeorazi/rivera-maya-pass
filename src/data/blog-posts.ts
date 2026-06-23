@@ -12,13 +12,109 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "lanzamiento-rivieramayapass-day-pass-sargazo-tours-riviera-maya",
+    title:
+      "Ya lanzamos RivieraMayaPass: day passes, sargazo al día y tours que no dependen de la playa",
+    excerpt:
+      "RivieraMayaPass ya está online. Te contamos qué encontrás en el sitio: el estado del sargazo actualizado a diario, day passes a los mejores beach clubs y albercas de Playa del Carmen y, lo nuevo, una selección de tours y experiencias para disfrutar la Riviera Maya pase lo que pase con el mar.",
+    coverImage: "/images/blog/lanzamiento-rivieramayapass.webp",
+    publishedAt: "2026-06-23",
+    readTime: 5,
+    keywords: [
+      "rivieramayapass",
+      "day pass playa del carmen",
+      "qué hacer si hay sargazo en la riviera maya",
+      "tours riviera maya sin playa",
+      "experiencias playa del carmen",
+      "cenotes ruinas riviera maya",
+      "alternativas al sargazo",
+    ],
+    category: "Novedades",
+    content: `## Ya está online: RivieraMayaPass, tu plan local para la Riviera Maya
+
+Lo hicimos oficial: **[RivieraMayaPass](https://rivieramayapass.com) ya está en línea**. Nació de una idea simple pero que ningún portal global resuelve bien: disfrutar la Riviera Maya **sin jugártela** al estado del mar, al sargazo o a la playa que te tocó en el hotel.
+
+Somos locales, conocemos cada beach club, cada alberca y cada playa limpia —y ahora también las mejores experiencias de la zona— y armamos todo en un solo lugar para que llegues con un plan, no con los dedos cruzados.
+
+Acá te contamos qué vas a encontrar en el sitio desde hoy.
+
+---
+
+## 1. El estado del sargazo, actualizado todos los días
+
+La gran incógnita de la Riviera Maya es siempre la misma: **¿voy a encontrar sargazo?** Por eso publicamos a diario el **[estado de las playas zona por zona](https://rivieramayapass.com/es/#estado-playa)** —Zona Norte, Mamitas, Centro, Playacar y Xcalacoco— con un semáforo simple y una **tendencia para los próximos 3 días**.
+
+Si querés entender cómo funciona y cómo planificar con esa info, lo explicamos a fondo en esta guía: **[Sargazo en la Riviera Maya hoy: estado de las playas y pronóstico a 3 días](https://rivieramayapass.com/es/blog/sargazo-riviera-maya-hoy-estado-playas-pronostico)**.
+
+---
+
+## 2. Day passes: el Caribe sin depender de la orilla
+
+¿La playa de tu hotel amaneció con sargazo? No pierdas el día. Con un **[day pass](https://rivieramayapass.com/es/#propiedades)** accedés por el día a beach clubs y hoteles con **alberca limpia, vista al mar y servicio**, sin tener que hospedarte.
+
+Curamos una selección de los mejores de Playa del Carmen, con precio claro y reserva directa por WhatsApp. Más sobre esta jugada en: **[Albercas y beach clubs con día de pase cuando hay sargazo](https://rivieramayapass.com/es/blog/sargazo-playa-del-carmen-alberca-beach-club-day-pass)**.
+
+---
+
+## 3. Lo nuevo: tours y experiencias que no dependen de la playa
+
+La novedad más grande de este lanzamiento: una sección de **[experiencias en la Riviera Maya](https://rivieramayapass.com/es/tours)** pensada justo para los días en que el mar no acompaña.
+
+Cuando hay sargazo, estos planes siguen siendo un día perfecto porque **no dependen de la orilla**:
+
+- 🐠 **Cenotes** de agua cristalina, escondidos en la selva.
+- 🏛️ **Ruinas mayas** como [Chichén Itzá](https://whc.unesco.org/es/list/483) —Patrimonio de la Humanidad— y [Tulum](https://www.inah.gob.mx), la única ciudad maya frente al mar.
+- 🏝️ **Islas** como Isla Mujeres y Holbox, que suelen quedar limpias de sargazo.
+- 🎢 **Parques** y 🏍️ **aventura**: ATVs, tirolesas, kayak y más.
+
+Son experiencias reservables al instante y curadas para que encajen con la zona. Mirá la selección completa en **[/tours](https://rivieramayapass.com/es/tours)**.
+
+> Te lo decimos de frente: en esa sección trabajamos con socios de reservas de actividades. Si reservás a través de esos enlaces podemos recibir una comisión, **sin costo adicional para vos** —y vos te llevás la experiencia igual.
+
+---
+
+## ¿Por qué un sitio local y no un portal global?
+
+Porque el dato que mueve la aguja en la Riviera Maya —**dónde está limpio hoy**— ninguna OTA global lo tiene. Nosotros lo monitoreamos todos los días, zona por zona, y armamos el plan alrededor de eso:
+
+- ¿Playa limpia? → te mandamos al mejor beach club.
+- ¿Sargazo en tu zona? → te mostramos **dónde sí está limpio** o el plan B perfecto (cenote, ruinas, isla).
+- ¿Todo complicado? → un day pass con alberca y listo.
+
+Información local, real y al día. Esa es la diferencia.
+
+---
+
+## Empezá tu plan hoy
+
+1. Entrá a **[rivieramayapass.com](https://rivieramayapass.com/es)** y mirá el **estado de playa** del día.
+2. Si está limpio, elegí tu **[day pass](https://rivieramayapass.com/es/#propiedades)**.
+3. Si hay sargazo, mové el plan a una **[experiencia que no dependa de la playa](https://rivieramayapass.com/es/tours)**.
+4. ¿Dudas? Escribinos por WhatsApp y te armamos el día según cómo esté el mar.
+
+La Riviera Maya tiene un plan perfecto **todos los días del año** —solo hay que saber cuál. Para eso estamos.
+
+---
+
+## Preguntas frecuentes
+
+**¿Qué es RivieraMayaPass?**
+Un sitio local que reúne el estado diario del sargazo, day passes a beach clubs y albercas, y tours/experiencias en la Riviera Maya y Playa del Carmen.
+
+**¿Cuánto cuesta usarlo?**
+Consultar el estado de playa y navegar es gratis. Pagás solo si reservás un day pass o una experiencia.
+
+**¿Qué hago si hay sargazo el día que llego?**
+Mirá las zonas limpias del día, asegurate un day pass con alberca, o elegí una experiencia tierra adentro como un cenote o las ruinas. Te ayudamos a decidir.`,
+  },
+  {
     slug: "sargazo-riviera-maya-hoy-estado-playas-pronostico",
     title:
       "Sargazo en la Riviera Maya hoy: estado de las playas y pronóstico a 3 días",
     excerpt:
       "¿Vas a la playa y no sabés si vas a encontrar sargazo? Te mostramos el estado de las playas de la Riviera Maya actualizado a diario, dónde están las zonas limpias hoy y, además, cómo viene la tendencia para los próximos días. Planificá sin sorpresas.",
     coverImage:
-      "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80",
+      "/images/blog/alberca-playa-riviera-maya.webp",
     publishedAt: "2026-06-20",
     readTime: 6,
     keywords: [
