@@ -97,6 +97,8 @@ export default async function HomePage({
                 href={`https://wa.me/${WHATSAPP_PHONE}?text=Hola%2C%20tengo%20un%20hotel%2Fbeach%20club%20y%20me%20interesa%20unirme%20a%20RivieraMayaPass`}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-track="whatsapp_click"
+                data-track-label="b2b_partner"
                 className="inline-flex items-center gap-2 bg-coral text-white font-body font-bold px-8 py-4 text-lg rounded-xl hover:bg-coral/90 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-coral/25"
               >
                 <svg

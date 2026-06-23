@@ -80,6 +80,8 @@ export default function ConciergeSection({
         href={waHref}
         target="_blank"
         rel="noopener noreferrer"
+        data-track="whatsapp_click"
+        data-track-label="concierge"
         className="inline-flex items-center gap-2 bg-coral text-white font-body font-bold px-8 py-4 text-lg rounded-xl hover:bg-coral/90 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-coral/25"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

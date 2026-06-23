@@ -35,6 +35,8 @@ export default function TourCard({ tour, lang, dict, campaign }: TourCardProps) 
       href={href}
       target="_blank"
       rel={AFFILIATE_LINK_REL}
+      data-track="tour_click"
+      data-track-label={campaign ? `${campaign}:${title}` : title}
       className="group flex flex-col bg-shell rounded-[20px] border border-line overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
     >
       {/* Image / visual area */}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { trackEvent } from '@/lib/analytics';
 
 export default function SearchBar({
   dict,
@@ -17,6 +18,7 @@ export default function SearchBar({
   );
 
   function handleSearch() {
+    trackEvent('search', { date });
     // Por ahora el inventario reservable son los tours/experiencias.
     // Llevamos la búsqueda al catálogo en vivo de tours.
     const params = new URLSearchParams();

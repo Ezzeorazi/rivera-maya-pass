@@ -95,6 +95,8 @@ export default function Footer({
                 href={`https://wa.me/${WHATSAPP_PHONE}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-track="whatsapp_click"
+                data-track-label="footer"
                 className="flex items-center gap-2 text-lagoon/70 hover:text-lagoon text-sm transition-colors font-body"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -105,6 +107,8 @@ export default function Footer({
 
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
+                data-track="email_click"
+                data-track-label="footer"
                 className="flex items-center gap-2 text-lagoon/70 hover:text-lagoon text-sm transition-colors font-body"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

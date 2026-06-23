@@ -3,6 +3,7 @@ import { Fraunces, Hanken_Grotesk } from "next/font/google";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import ClickTracker from "@/components/ClickTracker";
 import { GA_ID, GSC_VERIFICATION, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -54,6 +55,7 @@ export default function RootLayout({
         className={`${fraunces.variable} ${hanken.variable} font-body antialiased`}
       >
         {children}
+        <ClickTracker />
         <Analytics />
         <SpeedInsights />
         {GA_ID && (

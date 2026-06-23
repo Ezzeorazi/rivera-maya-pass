@@ -25,6 +25,8 @@ export default function WhatsAppButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      data-track="whatsapp_click"
+      data-track-label={`property:${propertyName}`}
       className={`inline-flex items-center gap-2 bg-coral text-white font-body font-bold rounded-xl hover:bg-coral/90 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-coral/25 ${sizeClasses}`}
     >
       <svg

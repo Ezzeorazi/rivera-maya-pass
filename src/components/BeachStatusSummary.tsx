@@ -88,6 +88,7 @@ export default function BeachStatusSummary({
         <div className="text-center mt-8">
           <Link
             href={`/${lang}/sargazo`}
+            data-track="sargazo_full_view"
             className="inline-flex items-center gap-2 bg-sea text-white font-body font-semibold px-6 py-3 rounded-xl hover:bg-sea-deep transition-colors shadow-sm shadow-sea/25"
           >
             {beachStatus.seeFullStatus ??

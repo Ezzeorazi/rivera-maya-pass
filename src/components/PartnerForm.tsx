@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { WHATSAPP_PHONE } from '@/lib/site';
+import { trackEvent } from '@/lib/analytics';
 
 export default function PartnerForm({
   lang,
@@ -31,6 +32,8 @@ export default function PartnerForm({
       phone ? `${dict.formPhone}: ${phone}` : '',
       message ? `${dict.formMessage}: ${message}` : '',
     ].filter(Boolean);
+
+    trackEvent('partner_submit', { service: service || 'unspecified' });
 
     const href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(
       lines.join('\n')
