@@ -714,6 +714,41 @@ def apply_overrides(report: dict, overrides: dict) -> None:
         print("Override manual aplicado a una o más zonas.")
 
 
+def record_degraded_day(
+    zones: list[str],
+    wind: dict | None,
+    storms: list[dict],
+    temp_today: float | None,
+) -> None:
+    """El bot no pudo generar un reporte válido hoy (Gemini caído o JSON ilegible).
+
+    NO toca la web (se mantiene el reporte anterior, para no mostrarle «sin dato»
+    al visitante), pero igual deja constancia del día en el historial y en
+    Supabase con estado 'unknown'. Así el dataset diario no queda con huecos y en
+    el panel /admin se ve que el bot intentó pero no consiguió datos.
+    """
+    report = {
+        "updatedAt": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "source": "degraded",
+        "confidence": "low",
+        "zones": [{"name": z, "status": "unknown"} for z in zones],
+        "regionZones": [{"name": z, "status": "unknown"} for z in REGION_ZONES],
+        "summary": {
+            "es": "El bot no pudo obtener datos de sargazo hoy; se mantiene el reporte anterior en la web.",
+            "en": "The bot could not retrieve sargassum data today; the previous report stays on the site.",
+        },
+        "hurricaneAlert": build_hurricane_alert(storms),
+    }
+    if temp_today is not None:
+        report["temperatureC"] = temp_today
+    try:
+        append_history(report, wind)
+        upsert_supabase(report, wind)
+        print("Día registrado como 'sin dato' (historial + Supabase); la web no se tocó.")
+    except Exception as exc:  # noqa: BLE001
+        print(f"AVISO: no se pudo registrar el día degradado ({exc}).", file=sys.stderr)
+
+
 def main() -> int:
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
@@ -758,6 +793,7 @@ def main() -> int:
             "Se mantiene el reporte anterior; no se publica hoy.",
             file=sys.stderr,
         )
+        record_degraded_day(zones, wind, storms, temp_today)
         return 0
 
     text = response.text or ""
@@ -775,6 +811,7 @@ def main() -> int:
         print("Se mantiene el reporte anterior; no se publica hoy.", file=sys.stderr)
         print("--- Respuesta cruda ---", file=sys.stderr)
         print(text, file=sys.stderr)
+        record_degraded_day(zones, wind, storms, temp_today)
         return 0
 
     if temp_today is not None:

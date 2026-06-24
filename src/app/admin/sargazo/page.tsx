@@ -166,8 +166,8 @@ function DayCard({ r }: { r: SargazoHistoryRow }) {
         <p className="font-display font-semibold text-ink">{formatDateLong(r.date)}</p>
         <div className="flex flex-wrap items-center gap-1.5">
           {r.source && (
-            <Badge className={r.source === 'official-map' ? 'bg-green-100 text-green-700' : 'bg-line/60 text-ink-soft'}>
-              {r.source === 'official-map' ? '✓ verificado' : r.source}
+            <Badge className={SOURCE_META[r.source]?.cls ?? 'bg-line/60 text-ink-soft'}>
+              {SOURCE_META[r.source]?.label ?? r.source}
             </Badge>
           )}
           {r.confidence && (
@@ -431,6 +431,13 @@ const STATUS_META: Record<string, { label: string; dot: string; chip: string }> 
   moderate: { label: 'Moderado', dot: 'bg-yellow-500', chip: 'bg-yellow-100 text-yellow-700' },
   seaweed: { label: 'Sargazo', dot: 'bg-red-500', chip: 'bg-red-100 text-red-700' },
   unknown: { label: 'Sin dato', dot: 'bg-gray-400', chip: 'bg-gray-100 text-gray-600' },
+};
+
+const SOURCE_META: Record<string, { label: string; cls: string }> = {
+  'official-map': { label: '✓ verificado', cls: 'bg-green-100 text-green-700' },
+  degraded: { label: '⚠️ sin dato (bot sin datos)', cls: 'bg-orange-100 text-orange-700' },
+  ai: { label: 'ai', cls: 'bg-line/60 text-ink-soft' },
+  'ai+manual': { label: 'ai+manual', cls: 'bg-sky-100 text-sky-700' },
 };
 
 const CONF_CLS: Record<string, string> = {
