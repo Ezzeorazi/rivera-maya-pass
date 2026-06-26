@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { locales, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { sargazoReport } from "@/lib/sargazo";
 import { SITE_URL } from "@/lib/site";
+import { getLiveReport } from "@/lib/get-live-report";
 import BeachStatus from "@/components/BeachStatus";
+
+// ISR: las correcciones cargadas en /admin (Supabase) aparecen sin redeploy.
+export const revalidate = 60;
 
 export async function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -46,6 +49,7 @@ export default async function SargazoPage({
   const { lang } = await params;
   const dict = await getDictionary(lang as Locale);
   const beachStatus = dict.beachStatus as Record<string, string>;
+  const beachReport = await getLiveReport();
 
   return (
     <>
@@ -64,7 +68,7 @@ export default async function SargazoPage({
         </div>
       </section>
 
-      <BeachStatus dict={dict} lang={lang} hideHeader />
+      <BeachStatus dict={dict} lang={lang} hideHeader report={beachReport} />
 
       {/* JSON-LD: dataset/observación de sargazo del día */}
       <script
@@ -76,7 +80,7 @@ export default async function SargazoPage({
             name: beachStatus.metaTitle,
             description: beachStatus.metaDescription,
             url: `${SITE_URL}/${lang}/sargazo`,
-            dateModified: sargazoReport.updatedAt,
+            dateModified: beachReport.updatedAt,
             isPartOf: {
               "@type": "WebSite",
               name: "RivieraMayaPass",

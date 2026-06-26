@@ -60,6 +60,9 @@ export async function addSargazoDay(formData: FormData) {
   );
 
   revalidatePath('/admin/sargazo');
+  // Refresca también la web pública (home + /sargazo) para que la corrección
+  // manual aparezca enseguida (la web lee el "live" de Supabase).
+  revalidatePath('/', 'layout');
   if (error) redirect(`/admin/sargazo?error=${encodeURIComponent(error.message)}`);
   redirect('/admin/sargazo?ok=added');
 }
@@ -95,6 +98,9 @@ export async function updateSargazoDay(formData: FormData) {
     .eq('date', date);
 
   revalidatePath('/admin/sargazo');
+  // Refresca también la web pública (home + /sargazo) para que la corrección
+  // manual aparezca enseguida (la web lee el "live" de Supabase).
+  revalidatePath('/', 'layout');
   if (error) redirect(`/admin/sargazo?error=${encodeURIComponent(error.message)}`);
   redirect('/admin/sargazo?ok=verified');
 }

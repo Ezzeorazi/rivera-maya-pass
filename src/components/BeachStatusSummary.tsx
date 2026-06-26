@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { sargazoReport, type BeachStatusType } from "@/lib/sargazo";
+import { sargazoReport, type BeachStatusType, type SargazoReport } from "@/lib/sargazo";
 
 // Resumen compacto del estado de playas para el home. El detalle completo
 // (recomendación, región, pronóstico, fuentes) vive en /[lang]/sargazo.
@@ -19,12 +19,15 @@ const chipClass: Record<BeachStatusType, string> = {
 export default function BeachStatusSummary({
   dict,
   lang,
+  report = sargazoReport,
 }: {
   dict: Record<string, unknown>;
   lang: string;
+  /** Reporte a mostrar. Por defecto el JSON estático; la web pasa el "live" (Supabase). */
+  report?: SargazoReport;
 }) {
   const beachStatus = dict.beachStatus as Record<string, string>;
-  const { zones, summary } = sargazoReport;
+  const { zones, summary } = report;
   const isEn = lang === "en";
   const summaryText = summary[lang as keyof typeof summary] ?? summary.es;
 

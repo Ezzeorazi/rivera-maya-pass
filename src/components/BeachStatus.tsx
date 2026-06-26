@@ -1,5 +1,10 @@
 import Link from "next/link";
-import { sargazoReport, type BeachStatusType, type HurricaneAlert } from "@/lib/sargazo";
+import {
+  sargazoReport,
+  type BeachStatusType,
+  type HurricaneAlert,
+  type SargazoReport,
+} from "@/lib/sargazo";
 
 const statusConfig: Record<
   BeachStatusType,
@@ -66,6 +71,7 @@ export default function BeachStatus({
   lang,
   overrideAlert,
   hideHeader = false,
+  report = sargazoReport,
 }: {
   dict: Record<string, unknown>;
   lang: string;
@@ -73,6 +79,8 @@ export default function BeachStatus({
   overrideAlert?: HurricaneAlert;
   /** Oculta el título/subtítulo internos (la página /sargazo ya tiene su propio H1). */
   hideHeader?: boolean;
+  /** Reporte a mostrar. Por defecto el JSON estático; la web pasa el "live" (Supabase). */
+  report?: SargazoReport;
 }) {
   const beachStatus = dict.beachStatus as Record<string, string>;
   const {
@@ -89,7 +97,7 @@ export default function BeachStatus({
     overrideNote,
     temperatureC,
     prediction,
-  } = sargazoReport;
+  } = report;
   const predictionDays = prediction?.days ?? [];
   const predictionByDate: Record<string, (typeof predictionDays)[number]> = {};
   for (const p of predictionDays) predictionByDate[p.date] = p;

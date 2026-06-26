@@ -3,6 +3,7 @@ import { CONTACT_PHONE, SITE_URL, WHATSAPP_PHONE } from "@/lib/site";
 import { getDictionary } from "@/i18n/dictionaries";
 import { getProperties } from "@/lib/get-properties";
 import { getTours } from "@/lib/get-tours";
+import { getLiveReport } from "@/lib/get-live-report";
 import { reviews } from "@/data/reviews";
 import Hero from "@/components/Hero";
 import BeachStatusSummary from "@/components/BeachStatusSummary";
@@ -22,7 +23,11 @@ export default async function HomePage({
 }) {
   const { lang } = await params;
   const dict = await getDictionary(lang as Locale);
-  const [properties, tours] = await Promise.all([getProperties(), getTours(lang)]);
+  const [properties, tours, beachReport] = await Promise.all([
+    getProperties(),
+    getTours(lang),
+    getLiveReport(),
+  ]);
 
   return (
     <>
@@ -30,7 +35,7 @@ export default async function HomePage({
       <Hero dict={dict} lang={lang} />
 
       {/* Beach Status — resumen; el detalle completo vive en /[lang]/sargazo */}
-      <BeachStatusSummary dict={dict} lang={lang} />
+      <BeachStatusSummary dict={dict} lang={lang} report={beachReport} />
 
       {/* Tours / Experiences (lo que ya monetiza — dirección B: tours primero) */}
       <section id="tours" className="py-16 lg:py-24 bg-lagoon-bg/30">
